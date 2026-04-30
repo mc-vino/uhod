@@ -3,290 +3,363 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌱 Ароидные: план ухода от микроклона до взрослого (TDS в ppm)</title>
+    <title>Aroid OS — Система управления растениями</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        *{box-sizing:border-box;margin:0;padding:0}
-        body{background:#1a231b;color:#e0e4d0;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.5}
-        header{background:#121a13;padding:18px 24px;text-align:center;border-bottom:1px solid #3a4a3a}
-        header h1{font-size:1.8rem;color:#c4d6a0;margin-bottom:6px}
-        header .sub{color:#82967e;font-size:0.9rem}
-        .container{max-width:1000px;margin:0 auto;padding:20px}
-        .tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
-        .tab-btn{background:#263026;border:none;color:#b0c0a0;padding:10px 18px;border-radius:8px 8px 0 0;cursor:pointer;font-weight:600;font-size:0.95rem;transition:0.2s;border:1px solid transparent}
-        .tab-btn.active{background:#2d3d2d;color:#e0c76a;border-color:#4a6a4a;box-shadow:0 -2px 8px rgba(0,0,0,0.3)}
-        .tab-content{display:none;background:#1e2b1e;border-radius:0 12px 12px 12px;padding:24px;border:1px solid #304030;box-shadow:0 4px 20px rgba(0,0,0,0.4)}
-        .tab-content.active{display:block}
-        h2{font-size:1.4rem;margin-bottom:16px;color:#c8da90;border-bottom:1px solid #304030;padding-bottom:8px}
-        h3{font-size:1.1rem;color:#d4e0b0;margin:20px 0 10px}
-        .card{background:#263026;border-radius:8px;padding:16px;margin-bottom:16px;border:1px solid #3a503a}
-        .flex-row{display:flex;gap:20px;flex-wrap:wrap}
-        .flex-col{flex:1;min-width:250px}
-        label{display:block;color:#b0c0a0;font-size:0.85rem;margin-bottom:4px}
-        input[type="number"],select{width:100%;padding:8px 10px;background:#1a2a1a;border:1px solid #406040;color:#e0e8d0;border-radius:6px;font-size:1rem}
-        .result-box{background:#1a2a1a;border:1px solid #3a5a3a;border-radius:6px;padding:12px;margin-top:10px;font-family:monospace;font-size:0.95rem}
-        table{width:100%;border-collapse:collapse;margin:16px 0}
-        th{background:#2a3a2a;color:#c0d090;padding:8px 10px;text-align:left;font-size:0.85rem}
-        td{padding:8px 10px;border-bottom:1px solid #2a3a2a;font-size:0.9rem}
-        .note{background:#262e1a;border-left:4px solid #c0b050;padding:10px 14px;margin:16px 0;border-radius:0 6px 6px 0;font-size:0.9rem;color:#d0d8b0}
-        .highlight{background:#1e2e1e;padding:2px 6px;border-radius:4px;font-weight:600;color:#e0c76a}
-        .meter{width:100%;height:20px;background:#1a2a1a;border-radius:10px;overflow:hidden;margin:8px 0}
-        .meter-fill{height:100%;background:linear-gradient(90deg,#4a8040,#90b040);border-radius:10px;transition:0.3s}
-        .ec-info{font-size:0.9rem;color:#a0b090}
-        .warning{color:#e0a060}
+        :root {
+            --bg: #0f1210;
+            --card-bg: #1a1f1c;
+            --accent: #78e08f;
+            --accent-dim: #2d4a35;
+            --text-main: #e0e0e0;
+            --text-dim: #a0a0a0;
+            --border: #2d3430;
+            --danger: #eb4d4b;
+            --warning: #f1c40f;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        nav {
+            width: 260px;
+            background: var(--card-bg);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 1rem;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-link {
+            padding: 0.8rem 1rem;
+            color: var(--text-dim);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: var(--accent-dim);
+            color: var(--accent);
+        }
+
+        /* Main Content */
+        main {
+            margin-left: 260px;
+            padding: 2rem 3rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .section { display: none; animation: fadeIn 0.4s ease; }
+        .section.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 { margin-bottom: 1.5rem; font-weight: 600; color: var(--accent); }
+
+        /* Form Elements */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+        .input-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        label { font-size: 0.85rem; color: var(--text-dim); }
+        input, select, textarea {
+            background: #0f1210;
+            border: 1px solid var(--border);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 8px;
+            outline: none;
+        }
+        input:focus { border-color: var(--accent); }
+
+        /* Calculator Special Styles */
+        .calc-result {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--accent-dim);
+            border-radius: 12px;
+            border: 1px solid var(--accent);
+        }
+
+        .res-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; border-bottom: 1px solid #ffffff1a; padding-bottom: 0.5rem; }
+        .res-val { font-weight: 600; color: var(--accent); }
+
+        /* Checklist */
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+        }
+        .checklist-item input { width: 20px; height: 20px; }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            background: var(--border);
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 900px) {
+            nav { width: 70px; padding: 1rem 0.5rem; }
+            .nav-link span { display: none; }
+            main { margin-left: 70px; padding: 1rem; }
+            .logo span { display: none; }
+        }
     </style>
 </head>
 <body>
-<header>
-    <h1>🌿 Ароидные: от микроклона до взрослого</h1>
-    <div class="sub">Кокос + перлит · Фитильный полив · Plagron Coco A+B · CalMag · Fulvic+ · <b>TDS в ppm</b></div>
-</header>
-<div class="container">
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('stage1')">1. Адаптация микроклонов</button>
-        <button class="tab-btn" onclick="switchTab('stage2')">2. Подготовка субстрата</button>
-        <button class="tab-btn" onclick="switchTab('stage3')">3. Высадка в горшки</button>
-        <button class="tab-btn" onclick="switchTab('stage4')">4. Питание и полив</button>
-        <button class="tab-btn" onclick="switchTab('stage5')">5. Мониторинг и коррекция</button>
-        <button class="tab-btn" onclick="switchTab('calc')">🧪 Калькулятор раствора (ppm)</button>
-    </div>
 
-    <!-- Этап 1: Адаптация -->
-    <div id="stage1" class="tab-content active">
-        <h2>🧫 Адаптация лабораторных микроклонов</h2>
-        <div class="card">
-            <h3>Цель</h3>
-            <p>Плавный переход из стерильной среды в комнатные условия. Длительность: <span class="highlight">7–14 дней</span>.</p>
-        </div>
-        <div class="flex-row">
-            <div class="flex-col card">
-                <h3>Оборудование</h3>
-                <ul><li>Прозрачный контейнер с крышкой</li><li>Мох сфагнум / перлит</li><li>Датчик температуры/влажности</li><li>LED 4000K, 15–20 Вт</li></ul>
-            </div>
-            <div class="flex-col card">
-                <h3>Первые дни</h3>
-                <ul>
-                    <li>Промыть корни от агара <span class="highlight">тёплой водой (30°C)</span>.</li>
-                    <li>Высадить в сфагнум, смоченный раствором CalMag <span class="highlight">0.3 мл/л</span> (~40 ppm Ca/Mg).</li>
-                    <li>Влажность <span class="highlight">90–100%</span>, температура <span class="highlight">24–26°C</span>.</li>
-                    <li>Свет: <span class="highlight">12–14 часов</span>, ~3000 люкс.</li>
-                </ul>
-            </div>
-        </div>
-        <div class="note">⚠️ Первые 5 дней – только вода с pH 5.8, TDS < 100 ppm.<br>
-        С 5-го дня: <span class="highlight">Plagron Coco A+B</span> по 0.3 мл/л каждого + <span class="highlight">Fulvic+ 0.25 мл/л</span> (общий TDS ≈ 200–250 ppm).<br>
-        Ежедневно приоткрывать крышку, снижая влажность на 5–10%.</div>
-    </div>
+    <nav>
+        <div class="logo">🌿 <span>Aroid OS</span></div>
+        <div class="nav-link active" onclick="showTab('tab-calc')">🧪 <span>Калькулятор</span></div>
+        <div class="nav-link" onclick="showTab('tab-stages')">📊 <span>Стадии роста</span></div>
+        <div class="nav-link" onclick="showTab('tab-buffer')">🥥 <span>Буферизация</span></div>
+        <div class="nav-link" onclick="showTab('tab-plants')">🔎 <span>Библиотека</span></div>
+        <div class="nav-link" onclick="showTab('tab-journal')">📓 <span>Дневник</span></div>
+    </nav>
 
-    <!-- Этап 2: Подготовка субстрата -->
-    <div id="stage2" class="tab-content">
-        <h2>🪴 Подготовка кокосового субстрата</h2>
-        <div class="card">
-            <h3>Состав</h3>
-            <p><span class="highlight">70% кокосового субстрата</span> (промытого) + <span class="highlight">30% перлита</span> (3–5 мм).</p>
-        </div>
-        <div class="card">
-            <h3>Промывка и буферизация</h3>
-            <ol>
-                <li>Замочить кокос в воде с <span class="highlight">CalMag 2 мл/л</span> (≈ 300 ppm) на 12–24 ч.</li>
-                <li>Промывать, пока TDS стока не станет <span class="highlight">< 200 ppm</span> (т.е. почти чистая вода).</li>
-                <li>Финальная замочка: раствор Plagron A+B (0.5 мл/л каждого) + Fulvic+ (0.5 мл/л), TDS ~350 ppm, pH 5.8.</li>
-            </ol>
-        </div>
-        <div class="note">✅ Субстрат сбалансирован по Ca/Mg и микроэлементам.</div>
-    </div>
-
-    <!-- Этап 3: Высадка -->
-    <div id="stage3" class="tab-content">
-        <h2>🌳 Высадка адаптированного растения</h2>
-        <div class="flex-row">
-            <div class="flex-col card">
-                <h3>Горшок и фитиль</h3>
-                <ul>
-                    <li>Прозрачный горшок.</li>
-                    <li>Фитиль из синтетического шнура (Ø 4–5 мм).</li>
-                    <li>Резервуар с раствором (не касается дна).</li>
-                </ul>
-            </div>
-            <div class="flex-col card">
-                <h3>Процесс</h3>
-                <ol>
-                    <li>На дно – перлит 1 см.</li>
-                    <li>Заполнить субстратом, расправить корни.</li>
-                    <li>Не уплотнять.</li>
-                    <li>Первый полив сверху раствором с <span class="highlight">TDS 200–250 ppm</span> (EC 0.4–0.5 мСм/см).</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-
-    <!-- Этап 4: Питание и полив с ppm -->
-    <div id="stage4" class="tab-content">
-        <h2>💧 График питания и полива (TDS в ppm)</h2>
-        <div class="card">
-            <h3>Общие принципы</h3>
-            <p>Резервуар с раствором. Менять <span class="highlight">раз в 7–10 дней</span>, промывать резервуар.</p>
-            <p class="ec-info">Пересчёт: 1 мСм/см ≈ 500 ppm (шкала NaCl).</p>
-        </div>
-        <table>
-            <tr><th>Стадия</th><th>EC (мСм/см)</th><th>TDS (ppm)</th><th>Plagron A+B (мл/л)</th><th>CalMag (мл/л)</th><th>Fulvic+ (мл/л)</th><th>pH</th></tr>
-            <tr><td>Молодые (после адаптации)</td><td>0.6–0.8</td><td>300–400</td><td>0.6–0.8 каждого</td><td>0.2</td><td>0.25</td><td>5.8–6.0</td></tr>
-            <tr><td>Активный рост</td><td>1.0–1.2</td><td>500–600</td><td>1.0–1.2 каждого</td><td>0.3</td><td>0.5</td><td>5.8–6.0</td></tr>
-            <tr><td>Взрослые (крупные листья)</td><td>1.4–1.6</td><td>700–800</td><td>1.4–1.6 каждого</td><td>0.4–0.5</td><td>0.5</td><td>5.8–6.2</td></tr>
-        </table>
-        <div class="note">
-            <strong>Порядок смешивания:</strong><br>
-            Вода → CalMag → Plagron Coco A → Plagron Coco B → Fulvic+.<br>
-            Проверить pH (5.8–6.2), затем TDS. При необходимости разбавить водой.
-        </div>
-    </div>
-
-    <!-- Этап 5: Мониторинг и коррекция -->
-    <div id="stage5" class="tab-content">
-        <h2>🔍 Мониторинг и коррекция</h2>
-        <div class="card">
-            <h3>Ежедневно</h3>
-            <ul>
-                <li>TDS и pH раствора из резервуара.</li>
-                <li>Уровень раствора.</li>
-                <li>Состояние листьев.</li>
-            </ul>
-        </div>
-        <div class="card">
-            <h3>Проблемы и решения</h3>
-            <table>
-                <tr><th>Симптом</th><th>Причина</th><th>Действие</th></tr>
-                <tr><td>Светлые межжилковые пятна</td><td>Дефицит Mg/Ca</td><td>Увеличить CalMag до 0.5 мл/л (≈ +50 ppm Ca/Mg)</td></tr>
-                <tr><td>Коричневые края листьев</td><td>Избыток солей</td><td>Промыть субстрат водой pH 5.8, снизить TDS на 100–200 ppm</td></tr>
-                <tr><td>Медленный рост, бледность</td><td>Низкий TDS</td><td>Повысить TDS на 100–150 ppm</td></tr>
-                <tr><td>TDS в резервуаре растёт</td><td>Вода испаряется быстрее</td><td>Разбавить раствор, увеличить частоту смены</td></tr>
-            </table>
-        </div>
-    </div>
-
-    <!-- Калькулятор с учётом исходной воды -->
-    <div id="calc" class="tab-content">
-        <h2>🧪 Калькулятор питательного раствора (учёт исходной воды)</h2>
-        <div class="flex-row">
-            <div class="flex-col card">
-                <label>Объём воды (литров)</label>
-                <input type="number" id="waterVol" value="1" min="0.5" step="0.5" oninput="calculate()">
-                <label>Исходный TDS воды (ppm) <span class="ec-info">(0 для осмоса, 100–300 для водопровода)</span></label>
-                <input type="number" id="sourcePPM" value="0" min="0" max="800" step="10" oninput="calculate()">
-                <label>Стадия</label>
-                <select id="stageSelect" oninput="calculate()">
-                    <option value="young">Молодые (цель 350 ppm)</option>
-                    <option value="growth">Активный рост (цель 550 ppm)</option>
-                    <option value="adult">Взрослые (цель 750 ppm)</option>
-                    <option value="custom">Свой целевой TDS</option>
-                </select>
-                <div id="customTDSdiv" style="display:none">
-                    <label>Целевой TDS (ppm)</label>
-                    <input type="number" id="customTDS" value="500" min="200" max="1500" step="50" oninput="calculate()">
+    <main>
+        <section id="tab-calc" class="section active">
+            <h2>Профессиональный расчет раствора</h2>
+            <div class="card">
+                <div class="grid">
+                    <div class="input-group">
+                        <label>Коэффициент TDS метра</label>
+                        <select id="cfg-factor" onchange="calculate()">
+                            <option value="0.5">0.5 (NaCl / Hanna)</option>
+                            <option value="0.7">0.7 (442 / Myron L)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>TDS исходной воды (ppm)</label>
+                        <input type="number" id="in-water-ppm" value="180" oninput="calculate()">
+                    </div>
+                    <div class="input-group">
+                        <label>Объем воды (л)</label>
+                        <input type="number" id="in-volume" value="1" oninput="calculate()">
+                    </div>
                 </div>
-                <button onclick="calculate()" style="margin-top:10px; background:#4a6a4a; border:none; color:white; padding:8px 16px; border-radius:6px; cursor:pointer;">Рассчитать</button>
-            </div>
-            <div class="flex-col card" id="resultBox">
-                <h3>Рецепт</h3>
-                <div class="result-box" id="recipe"></div>
-            </div>
-        </div>
-    </div>
-</div>
+                <div class="grid" style="margin-top: 1.5rem;">
+                    <div class="input-group">
+                        <label>Целевой вид растения</label>
+                        <select id="in-plant-type" onchange="calculate()">
+                            <option value="alocasia">Алоказия (Любит поесть)</option>
+                            <option value="anthurium">Антуриум (Осторожно)</option>
+                            <option value="monstera">Монстера (Активный рост)</option>
+                            <option value="philodendron">Филодендрон</option>
+                            <option value="aglaonema">Аглаонема</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Стадия</label>
+                        <select id="in-stage" onchange="calculate()">
+                            <option value="micro">Адаптация микроклона</option>
+                            <option value="veg">Вегетация (Подросток)</option>
+                            <option value="adult">Взрослое растение</option>
+                        </select>
+                    </div>
+                </div>
 
-<script>
-function switchTab(id) {
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    // активируем нужную кнопку
-    const btns = document.querySelectorAll('.tab-btn');
-    btns.forEach(b => {
-        if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) {
-            b.classList.add('active');
+                <div class="calc-result" id="calc-output">
+                    </div>
+            </div>
+        </section>
+
+        <section id="tab-buffer" class="section">
+            <h2>Подготовка кокосового субстрата</h2>
+            <div class="card">
+                <div class="badge">Методика FloraGrowing</div>
+                <div class="checklist-item" onclick="toggleTask(this)">
+                    <input type="checkbox"> <span><strong>Шаг 1: Промывка.</strong> Пролить кокос водой, пока дренаж не станет чистым (удаляем Na и K).</span>
+                </div>
+                <div class="checklist-item" onclick="toggleTask(this)">
+                    <input type="checkbox"> <span><strong>Шаг 2: Буферизация.</strong> Замочить в растворе CalMag (2 мл/л) на 12-24 часа. Это замещает K на Ca в волокнах.</span>
+                </div>
+                <div class="checklist-item" onclick="toggleTask(this)">
+                    <input type="checkbox"> <span><strong>Шаг 3: Контроль.</strong> Промыть чистой водой до TDS < 150 ppm (0.5 шкала).</span>
+                </div>
+                <div class="checklist-item" onclick="toggleTask(this)">
+                    <input type="checkbox"> <span><strong>Шаг 4: Зарядка.</strong> Пролить финальным раствором (Stage: Adult) и высаживать.</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-journal" class="section">
+            <h2>Дневник ухода</h2>
+            <div class="card">
+                <div class="grid">
+                    <textarea id="journal-text" placeholder="Запиши изменения: новый лист, смена раствора, корректировка pH..." rows="4"></textarea>
+                </div>
+                <button onclick="saveNote()" style="margin-top: 1rem; background: var(--accent); color: black; border: none; padding: 0.7rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer;">Сохранить запись</button>
+            </div>
+            <div id="journal-entries"></div>
+        </section>
+
+        <section id="tab-stages" class="section">
+            <h2>Физиология стадий</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Микроклоны</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-dim);">VPD: 0.4-0.6 kPa. Влажность 95% -> 70% постепенно. Освещение 3000-5000 Lux. Главная цель — развитие корневых волосков.</p>
+                </div>
+                <div class="card">
+                    <h3>Вегетация</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-dim);">VPD: 0.8-1.1 kPa. Активное потребление Азота и Кальция. Формирование скелета растения.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-plants" class="section">
+            <h2>Параметры по родам</h2>
+            <div id="plant-library" class="grid"></div>
+        </section>
+    </main>
+
+    <script>
+        // БАЗОВЫЕ ДАННЫЕ РАСТЕНИЙ
+        const plantData = {
+            alocasia: { name: 'Алоказия', maxTds: 800, ph: '5.8-6.2', light: 'High/Medium' },
+            anthurium: { name: 'Антуриум', maxTds: 500, ph: '5.5-6.0', light: 'Medium' },
+            monstera: { name: 'Монстера', maxTds: 900, ph: '5.8-6.5', light: 'High' },
+            philodendron: { name: 'Филодендрон', maxTds: 600, ph: '5.8-6.2', light: 'Medium' },
+            aglaonema: { name: 'Аглаонема', maxTds: 450, ph: '6.0-6.5', light: 'Low/Medium' }
+        };
+
+        const stageMods = {
+            micro: 0.4,
+            veg: 0.8,
+            adult: 1.1
+        };
+
+        // ТАБЫ
+        function showTab(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.currentTarget.classList.add('active');
         }
-    });
-    if (id === 'calc') calculate();
-}
 
-document.getElementById('stageSelect').addEventListener('change', function() {
-    document.getElementById('customTDSdiv').style.display = (this.value === 'custom') ? 'block' : 'none';
-    calculate();
-});
+        // КАЛЬКУЛЯТОР
+        function calculate() {
+            const factor = parseFloat(document.getElementById('cfg-factor').value);
+            const sourcePpm = parseFloat(document.getElementById('in-water-ppm').value) || 0;
+            const vol = parseFloat(document.getElementById('in-volume').value) || 1;
+            const plant = document.getElementById('in-plant-type').value;
+            const stage = document.getElementById('in-stage').value;
 
-// Примерный вклад удобрений в ppm (на 1 мл/л):
-const PPM_PER_ML_AB = 450; // Plagron Coco A+B вместе дают около 450 ppm при 1 мл/л каждого
-const PPM_PER_ML_CALMAG = 150; // CalMag примерно 150 ppm на 1 мл/л
-const PPM_PER_ML_FULVIC = 50;  // Fulvic+ около 50 ppm на 1 мл/л
+            // Логика питания
+            let targetPpm = plantData[plant].maxTds * stageMods[stage];
+            
+            // Расчет CalMag: Если вода мягкая (< 100 ppm), нужно больше.
+            // Simplex CalMag: 1 мл/л дает примерно 150-200 ppm (0.5)
+            let calmagDose = 0;
+            if (sourcePpm < 150) {
+                calmagDose = (180 - sourcePpm) / (150 * factor) + 0.3; 
+            } else {
+                calmagDose = 0.2; // минималка для кокоса
+            }
 
-function calculate() {
-    const vol = parseFloat(document.getElementById('waterVol').value) || 1;
-    const sourcePPM = parseFloat(document.getElementById('sourcePPM').value) || 0;
-    const stage = document.getElementById('stageSelect').value;
-    let targetPPM = 500;
-    if (stage === 'young') targetPPM = 350;
-    else if (stage === 'growth') targetPPM = 550;
-    else if (stage === 'adult') targetPPM = 750;
-    else if (stage === 'custom') targetPPM = parseFloat(document.getElementById('customTDS').value) || 500;
+            // Plagron Coco A+B (1 мл/л каждой дает примерно 400-500 ppm 0.5)
+            let remainingPpm = targetPpm - (sourcePpm + (calmagDose * 150 * factor));
+            let baseDose = Math.max(0.3, remainingPpm / (450 * factor));
 
-    // Оставшийся ppm, который нужно набрать удобрениями
-    const ppmFromWater = sourcePPM;
-    const ppmNeeded = Math.max(0, targetPPM - ppmFromWater);
+            // Fulvic+ (стимулятор, доза стабильна)
+            let fulvicDose = stage === 'micro' ? 0.5 : 0.3;
 
-    // Определяем дозы удобрений, максимум чтобы не превысить целевой ppm
-    let calMagML = 0;
-    let fulvicML = 0;
-    let abML = 0;
-    let currentPPM = ppmFromWater;
+            const output = document.getElementById('calc-output');
+            output.innerHTML = `
+                <div class="res-row"><span>Целевой TDS (Total):</span><span class="res-val">${Math.round(targetPpm)} ppm</span></div>
+                <div class="res-row"><span>Plagron Coco A:</span><span class="res-val">${(baseDose * vol).toFixed(2)} мл</span></div>
+                <div class="res-row"><span>Plagron Coco B:</span><span class="res-val">${(baseDose * vol).toFixed(2)} мл</span></div>
+                <div class="res-row"><span>Simplex CalMag:</span><span class="res-val">${(calmagDose * vol).toFixed(2)} мл</span></div>
+                <div class="res-row"><span>Plantix Fulvic+:</span><span class="res-val">${(fulvicDose * vol).toFixed(2)} мл</span></div>
+                <div class="res-row" style="border:none"><span>Рекомендуемый pH:</span><span class="res-val">${plantData[plant].ph}</span></div>
+                <p style="font-size:0.75rem; color:var(--text-dim); margin-top:10px;">* Порядок смешивания: Вода -> CalMag -> A -> B -> Fulvic -> pH корректор</p>
+            `;
+        }
 
-    // CalMag (если ppmNeeded > 50)
-    if (ppmNeeded > 50) {
-        calMagML = Math.min(0.5, (ppmNeeded * 0.1) / PPM_PER_ML_CALMAG); // примерно 10% от потребности
-        calMagML = Math.round(calMagML * 10) / 10;
-        currentPPM += calMagML * PPM_PER_ML_CALMAG;
-    }
+        // БИБЛИОТЕКА
+        function buildLibrary() {
+            const container = document.getElementById('plant-library');
+            for (let key in plantData) {
+                const p = plantData[key];
+                container.innerHTML += `
+                    <div class="card">
+                        <h3>${p.name}</h3>
+                        <p>Max TDS: ${p.maxTds} ppm</p>
+                        <p>pH: ${p.ph}</p>
+                        <p>Свет: ${p.light}</p>
+                    </div>
+                `;
+            }
+        }
 
-    // Fulvic+
-    if (ppmNeeded > 30) {
-        fulvicML = Math.min(0.5, ((ppmNeeded - (currentPPM - ppmFromWater)) * 0.05) / PPM_PER_ML_FULVIC);
-        fulvicML = Math.round(fulvicML * 10) / 10;
-        currentPPM += fulvicML * PPM_PER_ML_FULVIC;
-    }
+        // ДНЕВНИК
+        function saveNote() {
+            const text = document.getElementById('journal-text').value;
+            if(!text) return;
+            const notes = JSON.parse(localStorage.getItem('plant_notes') || '[]');
+            notes.unshift({ date: new Date().toLocaleString(), content: text });
+            localStorage.setItem('plant_notes', JSON.stringify(notes));
+            document.getElementById('journal-text').value = '';
+            renderNotes();
+        }
 
-    // Оставшийся ppm для A+B
-    const remainingPPM = Math.max(0, targetPPM - currentPPM);
-    abML = remainingPPM / PPM_PER_ML_AB;
-    abML = Math.round(abML * 10) / 10;
-    if (abML < 0.3) abML = 0.3; // минимальная доза
-    currentPPM += abML * PPM_PER_ML_AB;
+        function renderNotes() {
+            const notes = JSON.parse(localStorage.getItem('plant_notes') || '[]');
+            const container = document.getElementById('journal-entries');
+            container.innerHTML = notes.map(n => `
+                <div class="card" style="font-size:0.9rem">
+                    <div style="color:var(--accent); font-size:0.75rem">${n.date}</div>
+                    <div>${n.content}</div>
+                </div>
+            `).join('');
+        }
 
-    const finalPPM = Math.round(currentPPM);
+        function toggleTask(el) {
+            el.querySelector('input').checked = !el.querySelector('input').checked;
+        }
 
-    document.getElementById('recipe').innerHTML = `
-        <strong>Исходная вода:</strong> ${sourcePPM} ppm<br>
-        <strong>Целевой TDS:</strong> ${targetPPM} ppm<br>
-        <strong>Ожидаемый итоговый TDS:</strong> ≈ ${finalPPM} ppm<br>
-        <strong>EC (расчётно):</strong> ≈ ${(finalPPM/500).toFixed(2)} мСм/см<br><hr>
-        <strong>Plagron Coco A:</strong> ${(abML * vol).toFixed(1)} мл<br>
-        <strong>Plagron Coco B:</strong> ${(abML * vol).toFixed(1)} мл<br>
-        <strong>CalMag:</strong> ${(calMagML * vol).toFixed(1)} мл<br>
-        <strong>Fulvic+:</strong> ${(fulvicML * vol).toFixed(1)} мл<br><br>
-        <small>pH довести до 5.8–6.0. Сначала добавь CalMag, потом A, потом B, потом Fulvic+.</small>
-    `;
-
-    // Подсказки по коррекции
-    let correctionHint = '';
-    if (finalPPM < targetPPM - 20) {
-        correctionHint = `<span class="warning">⚠️ TDS немного ниже целевого. Можно увеличить A+B на 0.1 мл/л.</span>`;
-    } else if (finalPPM > targetPPM + 30) {
-        correctionHint = `<span class="warning">⚠️ TDS выше целевого. Разбавь раствор чистой водой (осмосом) в пропорции 1 часть раствора + 1 часть воды.</span>`;
-    }
-    if (correctionHint) {
-        document.getElementById('recipe').innerHTML += `<br>${correctionHint}`;
-    }
-}
-
-// инициализация
-calculate();
-</script>
+        // Инициализация
+        buildLibrary();
+        calculate();
+        renderNotes();
+    </script>
 </body>
 </html>
