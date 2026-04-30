@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Уход за ароидными — Кокос + Фитиль</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #2a2e2c;
+    --surface:  #333836;
+    --surface2: #3c4240;
+    --border:   #505854;
+    --accent:   #78a87c;
+    --accent2:  #9dc4a0;
+    --accent3:  #5a8a5e;
+    --warn:     #b89a52;
+    --danger:   #a8695c;
+    --text:     #d4d8cc;
+    --text2:    #96a090;
+    --text3:    #6a7268;
+    --mono: 'DM Mono', monospace;
+    --serif: 'Fraunces', Georgia, serif;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+background: var(–bg);
+color: var(–text);
+font-family: var(–mono);
+font-size: 13px;
+line-height: 1.6;
+min-height: 100vh;
+}
+
+.header {
+padding: 32px 24px 24px;
+border-bottom: 1px solid var(–border);
+}
+.header-label {
+font-size: 10px;
+letter-spacing: 0.2em;
+color: var(–text3);
+text-transform: uppercase;
+margin-bottom: 8px;
+}
+.header h1 {
+font-family: var(–serif);
+font-size: 26px;
+font-weight: 300;
+color: var(–accent2);
+line-height: 1.2;
+}
+.header h1 em { font-style: italic; color: var(–accent); }
+.header-sub { color: var(–text3); font-size: 11px; margin-top: 6px; }
+
+.nav {
+display: flex;
+gap: 2px;
+padding: 12px 24px;
+border-bottom: 1px solid var(–border);
+background: var(–surface);
+overflow-x: auto;
+scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+
+.nav-btn {
+background: none;
+border: 1px solid transparent;
+color: var(–text3);
+font-family: var(–mono);
+font-size: 11px;
+padding: 6px 14px;
+cursor: pointer;
+white-space: nowrap;
+border-radius: 3px;
+transition: all 0.15s;
+letter-spacing: 0.05em;
+}
+.nav-btn:hover { color: var(–text2); border-color: var(–border); }
+.nav-btn.active { background: var(–surface2); border-color: var(–accent3); color: var(–accent2); }
+
+.main { padding: 24px; max-width: 900px; }
+
+.section { display: none; }
+.section.active { display: block; animation: fadeIn 0.2s ease; }
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(4px); }
+to   { opacity: 1; transform: translateY(0); }
+}
+
+.section-title {
+font-family: var(–serif);
+font-size: 20px;
+font-weight: 300;
+color: var(–accent2);
+margin-bottom: 20px;
+padding-bottom: 10px;
+border-bottom: 1px solid var(–border);
+}
+
+.card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 6px;
+padding: 18px;
+margin-bottom: 16px;
+}
+.card-title {
+font-size: 11px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–text2);
+margin-bottom: 12px;
+}
+.card-note { font-size: 11px; color: var(–text3); margin-top: 10px; font-style: italic; }
+
+.params {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+gap: 10px;
+margin-bottom: 16px;
+}
+.param {
+background: var(–surface2);
+border: 1px solid var(–border);
+border-radius: 4px;
+padding: 12px 14px;
+}
+.param-label { font-size: 10px; color: var(–text3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+.param-value { font-size: 18px; font-family: var(–serif); font-weight: 600; color: var(–accent2); }
+.param-unit  { font-size: 11px; color: var(–text3); font-family: var(–mono); }
+
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th {
+text-align: left;
+padding: 8px 12px;
+font-size: 10px;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–text3);
+border-bottom: 1px solid var(–border);
+}
+td {
+padding: 9px 12px;
+border-bottom: 1px solid var(–border);
+color: var(–text);
+vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(–surface2); }
+
+.val-accent { color: var(–accent2); font-weight: 500; }
+.val-warn   { color: var(–warn); }
+.val-danger { color: var(–danger); }
+
+.stage-tabs { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.stage-tab {
+background: var(–surface2);
+border: 1px solid var(–border);
+color: var(–text2);
+font-family: var(–mono);
+font-size: 11px;
+padding: 7px 16px;
+cursor: pointer;
+border-radius: 3px;
+transition: all 0.15s;
+}
+.stage-tab.active { background: var(–accent3); border-color: var(–accent2); color: var(–bg); }
+
+.stage-panel { display: none; }
+.stage-panel.active { display: block; animation: fadeIn 0.15s ease; }
+
+.calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+
+@media (max-width: 480px) {
+.calc-grid { grid-template-columns: 1fr; }
+.params    { grid-template-columns: 1fr 1fr; }
+}
+
+.input-group { display: flex; flex-direction: column; gap: 6px; }
+.input-group label { font-size: 10px; color: var(–text3); letter-spacing: 0.1em; text-transform: uppercase; }
+.input-group input,
+.input-group select {
+background: var(–surface2);
+border: 1px solid var(–border);
+color: var(–text);
+font-family: var(–mono);
+font-size: 13px;
+padding: 8px 12px;
+border-radius: 3px;
+outline: none;
+transition: border-color 0.15s;
+}
+.input-group input:focus,
+.input-group select:focus { border-color: var(–accent3); }
+.input-group select option { background: var(–surface2); color: var(–text); }
+
+.calc-result {
+background: var(–surface2);
+border: 1px solid var(–accent3);
+border-radius: 6px;
+padding: 16px 18px;
+margin-top: 4px;
+}
+.calc-result-title { font-size: 10px; color: var(–text3); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px; }
+.result-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 5px 0;
+border-bottom: 1px solid var(–border);
+font-size: 12px;
+}
+.result-row:last-child { border-bottom: none; }
+.result-label { color: var(–text2); }
+.result-val   { color: var(–accent2); font-weight: 500; font-size: 13px; }
+
+.checklist { list-style: none; }
+.checklist li {
+display: flex;
+align-items: flex-start;
+gap: 12px;
+padding: 8px 0;
+border-bottom: 1px solid var(–border);
+cursor: pointer;
+transition: opacity 0.15s;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist li.done { opacity: 0.35; }
+.check-box {
+width: 16px; height: 16px;
+border: 1px solid var(–accent3);
+border-radius: 2px;
+flex-shrink: 0;
+margin-top: 2px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 10px;
+color: var(–accent2);
+transition: background 0.15s;
+}
+.checklist li.done .check-box { background: var(–accent3); }
+.check-text { color: var(–text); font-size: 12px; line-height: 1.5; }
+.check-sub  { color: var(–text3); font-size: 11px; margin-top: 2px; }
+
+.reset-btn {
+background: none;
+border: 1px solid var(–border);
+color: var(–text3);
+font-family: var(–mono);
+font-size: 11px;
+padding: 6px 14px;
+cursor: pointer;
+border-radius: 3px;
+margin-top: 12px;
+transition: all 0.15s;
+}
+.reset-btn:hover { border-color: var(–accent3); color: var(–text2); }
+
+.alert {
+display: flex;
+gap: 10px;
+padding: 12px 14px;
+border-radius: 4px;
+font-size: 12px;
+margin-bottom: 10px;
+line-height: 1.5;
+}
+.alert-warn   { background: var(–surface2); border: 1px solid var(–warn);   color: var(–warn); }
+.alert-danger { background: var(–surface2); border: 1px solid var(–danger); color: var(–danger); }
+.alert-info   { background: var(–surface2); border: 1px solid var(–accent3); color: var(–text2); }
+.alert-icon   { font-size: 14px; flex-shrink: 0; }
+
+.order-list { list-style: none; counter-reset: steps; }
+.order-list li {
+counter-increment: steps;
+display: flex;
+gap: 14px;
+padding: 10px 0;
+border-bottom: 1px solid var(–border);
+align-items: flex-start;
+}
+.order-list li:last-child { border-bottom: none; }
+.order-list li::before {
+content: counter(steps);
+width: 22px; height: 22px;
+background: var(–surface2);
+border: 1px solid var(–accent3);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 10px;
+color: var(–accent2);
+flex-shrink: 0;
+margin-top: 1px;
+}
+
+.tds-adj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .tds-adj-grid { grid-template-columns: 1fr; } }
+
+.divider { height: 1px; background: var(–border); margin: 20px 0; }
+
+.tag {
+display: inline-block;
+background: var(–surface2);
+border: 1px solid var(–border);
+color: var(–text3);
+font-size: 10px;
+padding: 2px 8px;
+border-radius: 2px;
+letter-spacing: 0.08em;
+}
+</style>
+
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">Система ухода · v1.0</div>
+  <h1>Ароидные на <em>кокосе</em> + фитиль</h1>
+  <div class="header-sub">Plagron Coco A+B · Simplex CalMag · Plantix Fulvic+</div>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showSection('params',this)">Параметры</button>
+  <button class="nav-btn" onclick="showSection('stages',this)">Стадии</button>
+  <button class="nav-btn" onclick="showSection('calc',this)">Калькулятор</button>
+  <button class="nav-btn" onclick="showSection('tds',this)">Коррекция TDS</button>
+  <button class="nav-btn" onclick="showSection('mixing',this)">Приготовление</button>
+  <button class="nav-btn" onclick="showSection('symptoms',this)">Симптомы</button>
+  <button class="nav-btn" onclick="showSection('checklist',this)">Чек-лист</button>
+  <button class="nav-btn" onclick="showSection('storage',this)">Хранение</button>
+</nav>
+
+<div class="main">
+
+  <!-- ПАРАМЕТРЫ -->
+
+  <div class="section active" id="params">
+    <div class="section-title">Ключевые параметры системы</div>
+    <div class="card">
+      <div class="card-title">Раствор и среда</div>
+      <div class="params">
+        <div class="param"><div class="param-label">pH раствора</div><div class="param-value">5.8<span class="param-unit">–6.2</span></div></div>
+        <div class="param"><div class="param-label">Темп. раствора</div><div class="param-value">18<span class="param-unit">–24 °C</span></div></div>
+        <div class="param"><div class="param-label">Темп. воздуха</div><div class="param-value">22<span class="param-unit">–28 °C</span></div></div>
+        <div class="param"><div class="param-label">Влажность</div><div class="param-value">60<span class="param-unit">–80%</span></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Субстрат</div>
+      <table>
+        <tr><th>Компонент</th><th>Доля</th><th>Примечание</th></tr>
+        <tr><td>Кокосовое волокно</td><td class="val-accent">70%</td><td>Промытое, буферизованное</td></tr>
+        <tr><td>Перлит</td><td class="val-accent">30%</td><td>Дренаж, аэрация корней</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Буферизация кокоса — обязательно перед первой посадкой</div>
+      <ol class="order-list">
+        <li>Растворить <strong>2 г/л кальциевой селитры</strong> или CalMag в двойной дозе</li>
+        <li>Залить субстрат, выдержать <strong>30–60 минут</strong></li>
+        <li>Слить раствор</li>
+        <li>Промыть чистой водой до TDS остатка <strong>&lt; 200 ppm</strong></li>
+      </ol>
+      <div class="card-note">Без буферизации кокос «украдёт» Ca²⁺ и Mg²⁺ из первых поливов</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Фитильный полив — нюансы</div>
+      <table>
+        <tr><th>Параметр</th><th>Рекомендация</th></tr>
+        <tr><td>Фитиль</td><td>Хлопковый шнур 6–8 мм, несколько витков через дренаж</td></tr>
+        <tr><td>Уровень резервуара</td><td class="val-accent">Не выше 1/3 высоты горшка</td></tr>
+        <tr><td>Смена раствора</td><td>Каждые 5–7 дней</td></tr>
+        <tr><td>Промывка субстрата</td><td>Раз в 3–4 недели</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">pH и блокировки элементов</div>
+      <table>
+        <tr><th>pH</th><th>Что блокируется</th><th>Статус</th></tr>
+        <tr><td>&lt; 5.5</td><td>Ca, фосфор → деформация точки роста</td><td class="val-danger">Опасно</td></tr>
+        <tr><td>5.5–5.8</td><td>Частичная блокировка Ca</td><td class="val-warn">Допустимо краткосрочно</td></tr>
+        <tr><td class="val-accent">5.8–6.2</td><td>Всё усваивается нормально</td><td class="val-accent">Цель</td></tr>
+        <tr><td>6.2–6.5</td><td>Начало блокировки Fe, Mn</td><td class="val-warn">Нежелательно</td></tr>
+        <tr><td>&gt; 6.5</td><td>Fe, Mn → хлороз молодых листьев</td><td class="val-danger">Опасно</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- СТАДИИ -->
+
+  <div class="section" id="stages">
+    <div class="section-title">Стадии роста и дозировки</div>
+    <div class="stage-tabs">
+      <button class="stage-tab active" onclick="showStage('s1',this)">1 — Высадка</button>
+      <button class="stage-tab" onclick="showStage('s2',this)">2 — Активный рост</button>
+      <button class="stage-tab" onclick="showStage('s3',this)">3 — Зрелое растение</button>
+    </div>
+    <div class="stage-panel active" id="s1">
+      <div class="card">
+        <div class="card-title">Стадия 1 · Высадка адаптированных микроклонов</div>
+        <div class="tag">Недели 1–2</div>
+        <div style="margin-top:12px">
+          <table>
+            <tr><th>Препарат</th><th>Доза</th></tr>
+            <tr><td>Plagron Coco A</td><td class="val-accent">0.5 мл/л</td></tr>
+            <tr><td>Plagron Coco B</td><td class="val-accent">0.5 мл/л</td></tr>
+            <tr><td>Simplex CalMag</td><td class="val-accent">0.3 мл/л</td></tr>
+            <tr><td>Plantix Fulvic+</td><td class="val-accent">0.5 мл/л</td></tr>
+          </table>
+        </div>
+        <div class="divider"></div>
+        <div class="params">
+          <div class="param"><div class="param-label">TDS</div><div class="param-value">300<span class="param-unit">–450 ppm</span></div></div>
+          <div class="param"><div class="param-label">EC</div><div class="param-value">0.6<span class="param-unit">–0.9</span></div></div>
+          <div class="param"><div class="param-label">pH</div><div class="param-value">5.8<span class="param-unit">–6.0</span></div></div>
+        </div>
+        <div class="divider"></div>
+        <div class="alert alert-info"><span class="alert-icon">🌿</span><span>После высадки накрой стаканом/пакетом на 3–5 дней. Влажность 85–90%, снижай постепенно. Fulvic+ работает как стимулятор корней — не убирай.</span></div>
+      </div>
+    </div>
+    <div class="stage-panel" id="s2">
+      <div class="card">
+        <div class="card-title">Стадия 2 · Активный рост</div>
+        <div class="tag">Недели 3–8 · Появились новые листья</div>
+        <div style="margin-top:12px">
+          <table>
+            <tr><th>Препарат</th><th>Доза</th></tr>
+            <tr><td>Plagron Coco A</td><td class="val-accent">1.5 мл/л</td></tr>
+            <tr><td>Plagron Coco B</td><td class="val-accent">1.5 мл/л</td></tr>
+            <tr><td>Simplex CalMag</td><td class="val-accent">0.5 мл/л</td></tr>
+            <tr><td>Plantix Fulvic+</td><td class="val-accent">0.5 мл/л</td></tr>
+          </table>
+        </div>
+        <div class="divider"></div>
+        <div class="params">
+          <div class="param"><div class="param-label">TDS</div><div class="param-value">700<span class="param-unit">–1000 ppm</span></div></div>
+          <div class="param"><div class="param-label">EC</div><div class="param-value">1.4<span class="param-unit">–2.0</span></div></div>
+          <div class="param"><div class="param-label">pH</div><div class="param-value">5.8<span class="param-unit">–6.2</span></div></div>
+          <div class="param"><div class="param-label">Смена раствора</div><div class="param-value" style="font-size:14px">7<span class="param-unit"> дней</span></div></div>
+        </div>
+        <div class="divider"></div>
+        <div class="alert alert-warn"><span class="alert-icon">⚠️</span><span>Ароидные в активном росте потребляют много кальция. Листья мельчают — TDS +100–150 ppm. Буреют кончики — TDS −100–150 ppm + промывка.</span></div>
+      </div>
+    </div>
+    <div class="stage-panel" id="s3">
+      <div class="card">
+        <div class="card-title">Стадия 3 · Зрелое растение / поддержка</div>
+        <div class="tag">Крупные экземпляры · Стабильный рост</div>
+        <div style="margin-top:12px">
+          <table>
+            <tr><th>Препарат</th><th>Доза</th></tr>
+            <tr><td>Plagron Coco A</td><td class="val-accent">2.0 мл/л</td></tr>
+            <tr><td>Plagron Coco B</td><td class="val-accent">2.0 мл/л</td></tr>
+            <tr><td>Simplex CalMag</td><td class="val-accent">0.7 мл/л</td></tr>
+            <tr><td>Plantix Fulvic+</td><td class="val-accent">0.3 мл/л</td></tr>
+          </table>
+        </div>
+        <div class="divider"></div>
+        <div class="params">
+          <div class="param"><div class="param-label">TDS</div><div class="param-value">1000<span class="param-unit">–1300 ppm</span></div></div>
+          <div class="param"><div class="param-label">EC</div><div class="param-value">2.0<span class="param-unit">–2.6</span></div></div>
+          <div class="param"><div class="param-label">pH</div><div class="param-value">6.0<span class="param-unit">–6.2</span></div></div>
+        </div>
+        <div class="divider"></div>
+        <div class="alert alert-info"><span class="alert-icon">💡</span><span>Fulvic+ можно снизить до раза в 2 недели. Следи за промывками — на этой стадии соли накапливаются быстрее.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- КАЛЬКУЛЯТОР -->
+
+  <div class="section" id="calc">
+    <div class="section-title">Калькулятор раствора</div>
+    <div class="card">
+      <div class="card-title">Параметры</div>
+      <div class="calc-grid">
+        <div class="input-group">
+          <label>Объём воды (литры)</label>
+          <input type="number" id="vol" value="5" min="0.1" step="0.1" oninput="calcSolution()">
+        </div>
+        <div class="input-group">
+          <label>Стадия роста</label>
+          <select id="stage-sel" onchange="calcSolution()">
+            <option value="1">1 — Высадка (0–2 нед.)</option>
+            <option value="2">2 — Активный рост (3–8 нед.)</option>
+            <option value="3">3 — Зрелое растение</option>
+          </select>
+        </div>
+      </div>
+      <div class="calc-result" id="calc-result"></div>
+      <div class="card-note" id="calc-note"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Расчёт разбавления TDS</div>
+      <div class="calc-grid">
+        <div class="input-group">
+          <label>Текущий TDS (ppm)</label>
+          <input type="number" id="tds-cur" value="1200" oninput="calcDilute()">
+        </div>
+        <div class="input-group">
+          <label>Целевой TDS (ppm)</label>
+          <input type="number" id="tds-tgt" value="900" oninput="calcDilute()">
+        </div>
+        <div class="input-group">
+          <label>Объём раствора (л)</label>
+          <input type="number" id="tds-vol" value="1" min="0.1" step="0.1" oninput="calcDilute()">
+        </div>
+      </div>
+      <div class="calc-result" id="dilute-result"></div>
+    </div>
+  </div>
+
+  <!-- КОРРЕКЦИЯ TDS -->
+
+  <div class="section" id="tds">
+    <div class="section-title">Коррекция TDS</div>
+    <div class="tds-adj-grid">
+      <div class="card">
+        <div class="card-title">TDS высокий → снизить</div>
+        <div class="alert alert-warn"><span class="alert-icon">↓</span><span>Разбавить чистой водой с pH 6.0</span></div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8;margin-top:8px">
+          <strong style="color:var(--accent2)">Формула:</strong><br>
+          V_воды = V_р-ра × (TDS_факт / TDS_цель − 1)
+        </div>
+        <div class="card-note">Пример: 1 л с TDS 1200, нужно 900 → добавить 0.33 л воды</div>
+      </div>
+      <div class="card">
+        <div class="card-title">TDS низкий → поднять</div>
+        <div class="alert alert-info"><span class="alert-icon">↑</span><span>Добавить удобрения A+B 1:1 + CalMag</span></div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8;margin-top:8px">
+          Проще приготовить <strong style="color:var(--accent2)">свежий раствор</strong> нужной концентрации
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Правило порядка</div>
+      <div class="alert alert-warn"><span class="alert-icon">⚠️</span><span>Сначала вноси удобрения → замеряй TDS → только потом корректируй pH. Корректоры pH сами дают прирост TDS ~10–30 ppm.</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Динамика TDS в резервуаре</div>
+      <table>
+        <tr><th>Ситуация</th><th>Что происходит с TDS</th></tr>
+        <tr><td>Жарко, растение активно</td><td class="val-warn">Растёт — вода испаряется, соли остаются</td></tr>
+        <tr><td>Холодно, болезнь</td><td>Падает — потребление минимальное</td></tr>
+        <tr><td>Доливаешь чистую воду</td><td class="val-accent">Снижается</td></tr>
+        <tr><td>Растёт от замены к замене</td><td class="val-danger">Сигнал к промывке субстрата</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Промывка субстрата</div>
+      <ol class="order-list">
+        <li>Пролить сверху чистой водой pH 6.0 в объёме <strong>2–3 горшка</strong></li>
+        <li>Дать полностью стечь</li>
+        <li>Следующие 1–2 дня — раствор на <strong>50% от рабочей дозы</strong></li>
+        <li>Вернуться к рабочей дозе</li>
+      </ol>
+      <div class="divider"></div>
+      <div class="alert alert-danger"><span class="alert-icon">🚨</span><span>Сигналы к внеплановой промывке: белый налёт на субстрате · массовое побурение краёв листьев · TDS вытекающей воды резко выше вносимой</span></div>
+    </div>
+  </div>
+
+  <!-- ПРИГОТОВЛЕНИЕ -->
+
+  <div class="section" id="mixing">
+    <div class="section-title">Приготовление раствора</div>
+    <div class="card">
+      <div class="card-title">Порядок внесения — строго соблюдать</div>
+      <ol class="order-list">
+        <li>Набрать воду комнатной температуры</li>
+        <li>Добавить <strong>CalMag</strong> → перемешать</li>
+        <li>Добавить <strong>Coco A</strong> → перемешать</li>
+        <li>Добавить <strong>Coco B</strong> → перемешать</li>
+        <li>Добавить <strong>Fulvic+</strong> → перемешать</li>
+        <li>Замерить <strong>TDS</strong></li>
+        <li>Замерить <strong>pH</strong>, скорректировать при необходимости</li>
+      </ol>
+      <div class="divider"></div>
+      <div class="alert alert-danger"><span class="alert-icon">⛔</span><span>Никогда не смешивай концентраты A и B напрямую — только по отдельности в воде. При прямом смешении выпадает осадок, теряются микроэлементы.</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Коррекция pH</div>
+      <table>
+        <tr><th>Действие</th><th>Препарат</th></tr>
+        <tr><td>Поднять pH</td><td>KOH или карбонат калия (pH Up)</td></tr>
+        <tr><td>Снизить pH</td><td>Ортофосфорная или лимонная кислота (pH Down)</td></tr>
+      </table>
+      <div class="divider"></div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.7">
+        Добавляй <strong style="color:var(--accent2)">по каплям</strong>, перемешивай, жди 30 сек перед следующим замером.<br>
+        Финальный замер — через <strong style="color:var(--accent2)">5 минут</strong> после последней корректировки.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Хранение готового раствора</div>
+      <table>
+        <tr><th>Параметр</th><th>Требование</th></tr>
+        <tr><td>Максимальный срок</td><td class="val-accent">5–7 дней</td></tr>
+        <tr><td>Тара</td><td>Непрозрачная, плотно закрытая</td></tr>
+        <tr><td>Температура</td><td>15–20 °C</td></tr>
+        <tr><td>Свет</td><td class="val-danger">Полная темнота — хелаты разрушаются на свету</td></tr>
+      </table>
+      <div class="alert alert-warn" style="margin-top:12px"><span class="alert-icon">⚠️</span><span>Перед использованием хранившегося раствора — всегда замеряй pH и TDS заново. pH дрейфует вверх при хранении.</span></div>
+    </div>
+  </div>
+
+  <!-- СИМПТОМЫ -->
+
+  <div class="section" id="symptoms">
+    <div class="section-title">Диагностика по симптомам</div>
+    <div class="card">
+      <table>
+        <tr><th>Симптом</th><th>Вероятная причина</th><th>Действие</th></tr>
+        <tr><td>Деформация новых листьев</td><td class="val-warn">Дефицит Ca или pH &gt; 6.5</td><td>CalMag ↑, проверить pH</td></tr>
+        <tr><td>Пожелтение между жилками молодых листьев</td><td class="val-warn">Дефицит Fe (высокий pH)</td><td>Снизить pH до 5.8</td></tr>
+        <tr><td>Пожелтение старых листьев снизу вверх</td><td class="val-warn">Дефицит N или Mg</td><td>Coco A+B ↑, CalMag ↑</td></tr>
+        <tr><td>Бурые кончики листьев</td><td class="val-warn">Передоз солей или низкая влажность</td><td>Промывка + TDS снизить</td></tr>
+        <tr><td>Белый налёт на субстрате</td><td class="val-danger">Накопление солей</td><td>Промывка субстрата</td></tr>
+        <tr><td>Вялость без пересушки</td><td class="val-danger">Корневые проблемы</td><td>Осмотр корней, Fulvic+ ↑</td></tr>
+        <tr><td>Мелкие новые листья</td><td class="val-warn">Нехватка питания</td><td>TDS +100–150 ppm</td></tr>
+        <tr><td>Остановка роста</td><td class="val-warn">pH вне зоны или корневой стресс</td><td>Проверить pH, TDS, корни</td></tr>
+        <tr><td>Коричневые пятна на листьях</td><td class="val-warn">Дефицит Ca или ожог краями</td><td>CalMag ↑, промывка</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Быстрая диагностика по локализации</div>
+      <table>
+        <tr><th>Где появляется</th><th>Обычно указывает на</th></tr>
+        <tr><td>Только новые листья</td><td>Дефицит <strong>Ca, Fe, B</strong> (неподвижные элементы)</td></tr>
+        <tr><td>Только старые листья</td><td>Дефицит <strong>N, Mg, K</strong> (мобильные элементы)</td></tr>
+        <tr><td>Все листья равномерно</td><td>Системная проблема — pH, корни, освещение</td></tr>
+        <tr><td>Кончики и края</td><td>Передоз солей, низкая влажность</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ЧЕК-ЛИСТ -->
+
+  <div class="section" id="checklist">
+    <div class="section-title">Чек-листы</div>
+    <div class="card">
+      <div class="card-title">При смене раствора (каждые 7 дней)</div>
+      <ul class="checklist" id="cl-weekly">
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Замерить TDS остатка в резервуаре</div><div class="check-sub">Если сильно вырос — промывка субстрата</div></div></li>
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Вымыть резервуар</div></div></li>
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Приготовить свежий раствор в правильном порядке</div><div class="check-sub">CalMag → Coco A → Coco B → Fulvic+</div></div></li>
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Замерить TDS готового раствора</div></div></li>
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Скорректировать pH до целевого</div></div></li>
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Записать показания и дату в журнал</div></div></li>
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Осмотреть растения — новые симптомы</div></div></li>
+      </ul>
+      <button class="reset-btn" onclick="resetChecklist('cl-weekly')">Сбросить</button>
+    </div>
+    <div class="card">
+      <div class="card-title">Раз в 3–4 недели</div>
+      <ul class="checklist" id="cl-monthly">
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Промывка субстрата</div><div class="check-sub">2–3 объёма горшка чистой водой pH 6.0</div></div></li>
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Осмотр корней (если возможно)</div><div class="check-sub">Цвет, запах, гнили</div></div></li>
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Оценить текущую стадию роста</div><div class="check-sub">Возможно, пора увеличить дозировку</div></div></li>
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Проверить состояние фитиля</div><div class="check-sub">Не залип, не засолился</div></div></li>
+      </ul>
+      <button class="reset-btn" onclick="resetChecklist('cl-monthly')">Сбросить</button>
+    </div>
+    <div class="card">
+      <div class="card-title">При первой высадке</div>
+      <ul class="checklist" id="cl-first">
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Буферизация кокоса</div><div class="check-sub">CalMag × 2 или кальциевая селитра 2 г/л, 30–60 мин, промыть до TDS &lt; 200</div></div></li>
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Подготовить горшок с фитилём</div></div></li>
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Приготовить раствор Стадии 1</div><div class="check-sub">TDS 300–450 ppm, pH 5.8–6.0</div></div></li>
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Высадить, накрыть колпаком на 3–5 дней</div></div></li>
+        <li onclick="toggleCheck(this)"><div class="check-box">✓</div><div><div class="check-text">Постепенно снижать влажность под колпаком</div></div></li>
+      </ul>
+      <button class="reset-btn" onclick="resetChecklist('cl-first')">Сбросить</button>
+    </div>
+  </div>
+
+  <!-- ХРАНЕНИЕ -->
+
+  <div class="section" id="storage">
+    <div class="section-title">Хранение раствора</div>
+    <div class="card">
+      <div class="params">
+        <div class="param"><div class="param-label">Макс. срок</div><div class="param-value">5<span class="param-unit">–7 дней</span></div></div>
+        <div class="param"><div class="param-label">Температура</div><div class="param-value">15<span class="param-unit">–20 °C</span></div></div>
+      </div>
+      <div class="divider"></div>
+      <table>
+        <tr><th>Требование</th><th>Детали</th></tr>
+        <tr><td>Тара</td><td>Непрозрачная, плотно закрытая</td></tr>
+        <tr><td>Свет</td><td class="val-danger">Полная темнота — хелаты разрушаются на свету</td></tr>
+        <tr><td>Аэрация</td><td>Без доступа воздуха</td></tr>
+        <tr><td>Перед использованием</td><td class="val-warn">Всегда замерять pH и TDS заново</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Что деградирует со временем</div>
+      <table>
+        <tr><th>Компонент</th><th>Скорость деградации</th></tr>
+        <tr><td>Хелаты Fe и микроэлементов</td><td class="val-danger">Быстро — свет и тепло ускоряют</td></tr>
+        <tr><td>Fulvic+</td><td class="val-warn">Умеренно — в смеси быстрее, чем в концентрате</td></tr>
+        <tr><td>pH</td><td class="val-warn">Дрейфует вверх — всегда перемерять</td></tr>
+        <tr><td>Основное NPK</td><td class="val-accent">Стабильно при правильном хранении</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Раствор испорчен если</div>
+      <div class="alert alert-danger"><span class="alert-icon">🚨</span><span>Помутнение или осадок · Кисловатый или гнилостной запах · pH ушёл далеко от исходного · Изменился цвет</span></div>
+      <div class="card-note">При любом сомнении — проще приготовить свежий. Стоимость одного замеса минимальна.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function showStage(id, btn) {
+  document.querySelectorAll('.stage-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.stage-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const stages = {
+  1: { cocoA:0.5, cocoB:0.5, calMag:0.3, fulvic:0.5, tdsMin:300,  tdsMax:450,  ph:'5.8–6.0', note:'Минимальное питание — приоритет корнеобразования' },
+  2: { cocoA:1.5, cocoB:1.5, calMag:0.5, fulvic:0.5, tdsMin:700,  tdsMax:1000, ph:'5.8–6.2', note:'Активный рост — контролируй симптомы Ca-дефицита' },
+  3: { cocoA:2.0, cocoB:2.0, calMag:0.7, fulvic:0.3, tdsMin:1000, tdsMax:1300, ph:'6.0–6.2', note:'Зрелое растение — следи за накоплением солей' }
+};
+
+function fmt(n) { return n % 1 === 0 ? n.toString() : n.toFixed(2); }
+
+function calcSolution() {
+  const vol = parseFloat(document.getElementById('vol').value) || 1;
+  const s = stages[parseInt(document.getElementById('stage-sel').value)];
+  document.getElementById('calc-result').innerHTML = `
+    <div class="calc-result-title">Дозировки на ${fmt(vol)} л</div>
+    <div class="result-row"><span class="result-label">Plagron Coco A</span><span class="result-val">${fmt(s.cocoA*vol)} мл</span></div>
+    <div class="result-row"><span class="result-label">Plagron Coco B</span><span class="result-val">${fmt(s.cocoB*vol)} мл</span></div>
+    <div class="result-row"><span class="result-label">Simplex CalMag</span><span class="result-val">${fmt(s.calMag*vol)} мл</span></div>
+    <div class="result-row"><span class="result-label">Plantix Fulvic+</span><span class="result-val">${fmt(s.fulvic*vol)} мл</span></div>
+    <div class="result-row"><span class="result-label">Целевой TDS</span><span class="result-val">${s.tdsMin}–${s.tdsMax} ppm</span></div>
+    <div class="result-row"><span class="result-label">Целевой pH</span><span class="result-val">${s.ph}</span></div>`;
+  document.getElementById('calc-note').textContent = s.note;
+}
+
+function calcDilute() {
+  const cur = parseFloat(document.getElementById('tds-cur').value) || 0;
+  const tgt = parseFloat(document.getElementById('tds-tgt').value) || 0;
+  const vol = parseFloat(document.getElementById('tds-vol').value) || 1;
+  const res = document.getElementById('dilute-result');
+  if (cur <= tgt) {
+    res.innerHTML = `<div class="calc-result-title">Результат</div><div class="result-row"><span class="result-label">TDS уже ≤ целевого</span><span class="result-val" style="color:var(--warn)">Разбавлять не нужно</span></div>`;
+    return;
+  }
+  const add = vol * (cur / tgt - 1);
+  res.innerHTML = `
+    <div class="calc-result-title">Результат</div>
+    <div class="result-row"><span class="result-label">Добавить чистой воды</span><span class="result-val">${add.toFixed(2)} л</span></div>
+    <div class="result-row"><span class="result-label">Итоговый объём</span><span class="result-val">${(vol+add).toFixed(2)} л</span></div>`;
+}
+
+function toggleCheck(el) { el.classList.toggle('done'); }
+function resetChecklist(id) { document.querySelectorAll(`#${id} li`).forEach(li => li.classList.remove('done')); }
+
+calcSolution();
+calcDilute();
+</script>
+
+</body>
+</html>
