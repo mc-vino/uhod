@@ -1149,6 +1149,533 @@ function switchStage(plantId, idx) {
   page.querySelectorAll('.stage-detail').forEach((d,i) => d.classList.toggle('active', i===idx));
 }
 
+// ===================== CALCULATOR =====================
+const MERISTEM_STAGE = {
+  name:'Меристемный клон (адаптация)',
+  ppm:120, ph:'5.8–6.0',
+  cocoA:0, cocoB:0,
+  calmag:0,
+  radifarm:2,
+  nitrozyme:1,
+  megafol:3,
+  siiplant:0,
+  note:'Меристемный клон: 0 питания, только Радифарм + Нитрозим + Мегафол (лист).',
+  mandatory: ['radifarm','nitrozyme','fulvic','hb101'],
+  optional:  ['previcur'],
+  leafOnly:  ['megafol','aminovit'],
+};
+
+const STAGE_MANDATORY = {
+  meristem: ['radifarm','nitrozyme','fulvic','hb101'],
+  0: ['calmag','cocoA','cocoB','radifarm','nitrozyme','fulvic'],
+  1: ['calmag','cocoA','cocoB','radifarm','nitrozyme','fulvic','hb101'],
+  2: ['calmag','cocoA','cocoB','nitrozyme','fulvic','hb101','siiplant'],
+  3: ['calmag','cocoA','cocoB','nitrozyme','fulvic','hb101','siiplant'],
+};
+const STAGE_OPTIONAL = {
+  meristem: ['previcur','megafol','aminovit'],
+  0: ['megafol','aminovit','previcur'],
+  1: ['megafol','aminovit','previcur','siiplant'],
+  2: ['megafol','aminovit','previcur','radifarm'],
+  3: ['megafol','aminovit','previcur','radifarm'],
+};
+
+const COMPAT_RULES = [
+  {
+    ids:['radifarm','cocoA'], conflict:'partial',
+    title:'Радифарм + Coco A/B одновременно постоянно',
+    risk:'Ауксины (Радифарм) и цитокинины/питание (Coco A+B) снижают эффект друг друга при постоянном совместном применении. Рекомендуется чередовать: Неделя 1–2 — только Радифарм, Неделя 3–4 — только Coco A+B.',
+    severity:'warn'
+  },
+  {
+    ids:['previcur','nitrozyme'], conflict:'strict',
+    title:'Превикур + биостимуляторы (Нитрозим, Мегафол, HB-101)',
+    risk:'Превикур — фунгицид (пропамокарб + фосэтил). При смешивании с живыми биостимуляторами и водорослевыми экстрактами (Нитрозим) угнетает полезную микрофлору и снижает активность биостимуляторов. Применять строго с интервалом 2–3 дня.',
+    severity:'strict'
+  },
+  {
+    ids:['previcur','megafol'], conflict:'strict',
+    title:'Превикур + Мегафол',
+    risk:'Фунгицид нейтрализует активные аминокислоты Мегафола. Применять с интервалом минимум 2 дня.',
+    severity:'strict'
+  },
+  {
+    ids:['previcur','hb101'], conflict:'strict',
+    title:'Превикур + HB-101',
+    risk:'HB-101 содержит активные терпены и экстракты. Превикур деградирует биологически активные компоненты. Разделять поливы на 2–3 дня.',
+    severity:'strict'
+  },
+  {
+    ids:['megafol','aminovit'], conflict:'partial',
+    title:'Мегафол + Супераминовит в один день',
+    risk:'Оба препарата содержат аминокислоты. Избыток аминокислот в один приём не усваивается и создаёт избыточную азотную нагрузку. Чередовать: Мегафол — через 10 дней, Супераминовит — через 10 дней, со сдвигом.',
+    severity:'warn'
+  },
+  {
+    ids:['cocoA','cocoB'], conflict:'info',
+    title:'Coco A + Coco B — очерёдность внесения',
+    risk:'Coco A и Coco B нельзя смешивать концентратами напрямую — выпадает осадок фосфата кальция. Правильно: сначала CalMag в воде → затем Coco A (размешать) → затем Coco B (размешать).',
+    severity:'info'
+  },
+];
+
+function buildCalcPlantCheckboxes() {
+  const container = document.getElementById('calcPlantCheckboxes');
+  container.innerHTML = plantsData.map(p =>
+    `<label style="display:flex;align-items:center;gap:5px;font-size:0.84rem;cursor:pointer;padding:4px 10px;background:#fff;border:1.5px solid var(--border);border-radius:14px;transition:0.15s;" id="plabel-${p.id}">
+      <input type="checkbox" value="${p.id}" style="width:14px;height:14px;accent-color:var(--primary);" onchange="onPlantChange()">
+      ${p.emoji} ${p.name}
+    </label>`
+  ).join('');
+}
+
+function buildFertCheckboxes() {
+  const container = document.getElementById('fertCheckboxes');
+  const showLeaf = document.getElementById('leafTreatmentToggle').checked;
+  container.innerHTML = FERTS.map(f => {
+    const isLeaf = f.leafOnly;
+    const displayStyle = (isLeaf && !showLeaf) ? 'display:none;' : '';
+    return `<label class="fert-checkbox-label${f.optional?' optional-label':''}" id="flabel-${f.id}" title="${isLeaf?'Листовая обработка':'Корневой полив'}" style="${displayStyle}">
+      <input type="checkbox" id="chk-${f.id}" onchange="onFertChange('${f.id}')">
+      ${f.name}
+      ${f.optional?'<span class="optional-marker">опц.</span>':''}
+      ${isLeaf?'<span class="optional-marker" style="background:#eaf4fb;color:#2572a8;border-color:#9ecde0;">лист</span>':''}
+    </label>`;
+  }).join('');
+}
+
+function onSubstrateChange() {
+  const sub = document.getElementById('calcSubstrate').value;
+  const baseSelect = document.getElementById('calcBaseFert');
+  if (sub === 'coco') { baseSelect.value = 'plagron_coco'; }
+  else if (sub === 'soil' || sub === 'sphagnum') { baseSelect.value = 'simplex_terra'; }
+  else if (sub === 'mineral' || sub === 'semihydro') { baseSelect.value = 'plantix_p13'; }
+  onBaseFertChange();
+}
+
+function onBaseFertChange() {
+  const plantIds = getSelectedPlants();
+  const stageKey = document.getElementById('calcStageKey').value;
+  if (stageKey && plantIds.length) {
+    setMandatoryFerts(stageKey, plantIds);
+    autoSetLeafTreatment(stageKey, plantIds);
+  }
+  calcUpdate();
+}
+
+function onLeafTreatmentToggle() {
+  const showLeaf = document.getElementById('leafTreatmentToggle').checked;
+  FERTS.forEach(f => {
+    if (f.leafOnly) {
+      const lbl = document.getElementById('flabel-'+f.id);
+      if (lbl) lbl.style.display = showLeaf ? '' : 'none';
+    }
+  });
+  if (!showLeaf) {
+    FERTS.filter(f=>f.leafOnly).forEach(f => {
+      const cb = document.getElementById('chk-'+f.id);
+      if (cb) cb.checked = false;
+    });
+  }
+  onFertChange();
+}
+
+function onPlantChange() {
+  const plantIds = getSelectedPlants();
+  const stageKey = document.getElementById('calcStageKey').value;
+  if (stageKey && plantIds.length) {
+    setMandatoryFerts(stageKey, plantIds);
+    autoSetLeafTreatment(stageKey, plantIds);
+  }
+  calcUpdate();
+}
+
+function onStageChange() {
+  const plantIds = getSelectedPlants();
+  const stageKey = document.getElementById('calcStageKey').value;
+  if (stageKey && plantIds.length) {
+    setMandatoryFerts(stageKey, plantIds);
+    autoSetLeafTreatment(stageKey, plantIds);
+  }
+  calcUpdate();
+}
+
+function autoSetLeafTreatment(stageKey, plantIds) {
+  const mandatory = STAGE_MANDATORY[stageKey] || [];
+  const optional = STAGE_OPTIONAL[stageKey] || [];
+  const allRec = [...mandatory, ...optional];
+  const leafFerts = FERTS.filter(f => f.leafOnly).map(f => f.id);
+  const needLeaf = leafFerts.some(id => allRec.includes(id));
+  const toggle = document.getElementById('leafTreatmentToggle');
+  toggle.checked = needLeaf;
+  onLeafTreatmentToggle();
+}
+
+function onFertChange(id) { checkCompatibility(); calcUpdateDosesOnly(); }
+
+function getSelectedPlants() {
+  return Array.from(document.querySelectorAll('#calcPlantCheckboxes input:checked')).map(i => i.value);
+}
+
+function getStageData(plantId, stageKey) {
+  if (stageKey === 'meristem') return {...MERISTEM_STAGE};
+  const plant = plantsData.find(p => p.id === plantId);
+  if (!plant) return null;
+  const idx = parseInt(stageKey);
+  return plant.stages[idx] || null;
+}
+
+function computeGroupStage(plantIds, stageKey) {
+  if (!plantIds.length) return null;
+  if (stageKey === 'meristem') return {...MERISTEM_STAGE};
+  const stages = plantIds.map(pid => getStageData(pid, stageKey)).filter(Boolean);
+  if (!stages.length) return null;
+  const avg = (key) => stages.reduce((s,st) => s + (st[key]||0), 0) / stages.length;
+  const min = (key) => Math.min(...stages.map(st => st[key]||0));
+  const max = (key) => Math.max(...stages.map(st => st[key]||0));
+  const minPPM = min('ppm');
+  const maxPPM = max('ppm');
+  const phs = [...new Set(stages.map(s=>s.ph))];
+  const phStr = phs.length === 1 ? phs[0] : phs.join(' / ');
+  return {
+    name: 'Групповой раствор',
+    ppm: minPPM,
+    maxPpm: maxPPM,
+    ph: phStr,
+    cocoA: parseFloat(avg('cocoA').toFixed(2)),
+    cocoB: parseFloat(avg('cocoB').toFixed(2)),
+    calmag: parseFloat(avg('calmag').toFixed(2)),
+    radifarm: parseFloat(avg('radifarm').toFixed(2)),
+    nitrozyme: parseFloat(avg('nitrozyme').toFixed(2)),
+    megafol: parseFloat(avg('megafol').toFixed(2)),
+    siiplant: parseFloat(avg('siiplant').toFixed(2)),
+    note: `Групповой раствор для: ${plantIds.map(pid => { const p = plantsData.find(x=>x.id===pid); return p?p.name:pid; }).join(', ')}. PPM = минимальный из группы (${minPPM}). Дозы усреднены.`,
+    _isGroup: true,
+    _plants: plantIds,
+    _stages: stages,
+  };
+}
+
+function setMandatoryFerts(stageKey, plantIds) {
+  const mandatory = STAGE_MANDATORY[stageKey] || STAGE_MANDATORY[2];
+  const optional  = STAGE_OPTIONAL[stageKey]  || STAGE_OPTIONAL[2];
+  FERTS.forEach(f => {
+    const el = document.getElementById('chk-'+f.id);
+    const lbl = document.getElementById('flabel-'+f.id);
+    if (!el) return;
+    if (mandatory.includes(f.id)) {
+      el.checked = true;
+      if (lbl) { lbl.style.borderColor = 'var(--primary)'; lbl.style.background = 'var(--primary-light)'; }
+    } else if (optional.includes(f.id) || f.optional) {
+      el.checked = false;
+      if (lbl) { lbl.style.borderColor = '#c8b8e8'; lbl.style.background = '#faf7ff'; }
+    } else {
+      el.checked = false;
+      if (lbl) { lbl.style.borderColor = 'var(--border)'; lbl.style.background = '#fff'; }
+    }
+  });
+}
+
+function checkCompatibility() {
+  const checkedIds = FERTS.filter(f => document.getElementById('chk-'+f.id)?.checked).map(f=>f.id);
+  const conflicts = [];
+  COMPAT_RULES.forEach(rule => {
+    if (rule.ids.every(id => checkedIds.includes(id))) {
+      conflicts.push(rule);
+    }
+  });
+  const inlineEl = document.getElementById('compatWarningInline');
+  if (conflicts.length) {
+    const strictConflicts = conflicts.filter(c=>c.severity==='strict');
+    const warnConflicts = conflicts.filter(c=>c.severity==='warn');
+    let html = '';
+    if (strictConflicts.length) {
+      html += `<strong>🚫 Несовместимые препараты в одном поливе:</strong><ul style="margin:6px 0 0 16px;">` +
+        strictConflicts.map(c=>`<li style="margin:3px 0;">${c.title} <a href="#" onclick="showCompatModal('${c.title.replace(/'/g,'&#39;')}');return false;" style="color:var(--danger);font-size:0.78rem;">подробнее</a></li>`).join('') + '</ul>';
+    }
+    if (warnConflicts.length) {
+      html += `<strong style="color:var(--warning);">⚠ Предупреждения:</strong><ul style="margin:6px 0 0 16px;">` +
+        warnConflicts.map(c=>`<li style="margin:3px 0;">${c.title} <a href="#" onclick="showCompatModal('${c.title.replace(/'/g,'&#39;')}');return false;" style="color:var(--warning);font-size:0.78rem;">подробнее</a></li>`).join('') + '</ul>';
+    }
+    inlineEl.innerHTML = html;
+    inlineEl.style.display='block';
+    if (strictConflicts.length) {
+      showCompatModalMulti(strictConflicts);
+    }
+  } else {
+    inlineEl.style.display='none';
+  }
+  return conflicts;
+}
+
+function showCompatModal(title) {
+  const rule = COMPAT_RULES.find(r=>r.title===title);
+  if (!rule) return;
+  document.getElementById('compatModalBody').innerHTML =
+    `<p style="margin-bottom:10px;"><strong>${rule.title}</strong></p>
+     <p>${rule.risk}</p>
+     <div style="margin-top:12px;padding:8px 12px;background:${rule.severity==='strict'?'#fdecea':'#fef8ec'};border-radius:6px;font-size:0.82rem;">
+     ${rule.severity==='strict'?'🚫 Не рекомендуется смешивать в одном поливе.':'⚠ Применять с осторожностью, чередовать.'}</div>`;
+  document.getElementById('compatModal').style.display='flex';
+}
+function showCompatModalMulti(rules) {
+  document.getElementById('compatModalBody').innerHTML = rules.map(rule =>
+    `<div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f0dada;">
+      <p style="font-weight:600;color:var(--danger);margin-bottom:6px;">🚫 ${rule.title}</p>
+      <p style="font-size:0.86rem;">${rule.risk}</p>
+    </div>`
+  ).join('') + `<div style="font-size:0.82rem;color:var(--text-muted);">Снимите галочку с одного из конфликтующих препаратов или разделите поливы по дням.</div>`;
+  document.getElementById('compatModal').style.display='flex';
+}
+
+function buildCompatTable() {
+  const tbody = document.getElementById('compatTableBody');
+  if (!tbody) return;
+  tbody.innerHTML = COMPAT_RULES.map(r => {
+    const color = r.severity==='strict'?'var(--danger)':r.severity==='warn'?'var(--warning)':'var(--info)';
+    const icon = r.severity==='strict'?'🚫':r.severity==='warn'?'⚠️':'ℹ️';
+    return `<tr>
+      <td style="color:${color};font-weight:600;">${icon} ${r.title}</td>
+      <td style="font-size:0.82rem;">${r.risk}</td>
+    </tr>`;
+  }).join('');
+}
+
+function calcUpdate() {
+  const plantIds = getSelectedPlants();
+  const stageKey = document.getElementById('calcStageKey').value;
+  if (!plantIds.length || !stageKey) {
+    document.getElementById('calcResults').style.display='none';
+    document.getElementById('calcEmpty').style.display='block';
+    document.getElementById('calcGroupInfo').style.display='none';
+    return;
+  }
+
+  const allCarnivore = plantIds.every(id => id === 'carnivore');
+  const hasCarnivore = plantIds.includes('carnivore');
+  if (allCarnivore) {
+    document.getElementById('calcGroupInfo').innerHTML =
+      `<div style="background:#fdecea;border:1px solid #e8a0a0;border-radius:var(--radius);padding:12px 16px;font-size:0.88rem;">
+        <strong>🚫 Хищные растения (Drosera / Dionaea)</strong><br>
+        Полив исключительно дистиллятом или дождевой водой. PPM = 0–10. <strong>Никаких удобрений, стимуляторов, минеральных добавок.</strong><br>
+        Кормление — насекомые или рыбные хлопья раз в 2–3 нед.
+      </div>`;
+    document.getElementById('calcGroupInfo').style.display='block';
+    document.getElementById('calcResults').style.display='none';
+    document.getElementById('calcEmpty').style.display='none';
+    FERTS.forEach(f => { const el = document.getElementById('chk-'+f.id); if(el) el.checked = false; });
+    return;
+  }
+
+  const calcPlantIds = hasCarnivore ? plantIds.filter(id => id !== 'carnivore') : plantIds;
+
+  const s = computeGroupStage(calcPlantIds, stageKey);
+  if (!s) return;
+
+  const substrate = document.getElementById('calcSubstrate').value;
+  const baseFert = document.getElementById('calcBaseFert').value;
+
+  let substrateFactor = 1.0;
+  if (substrate === 'mineral' || substrate === 'semihydro') substrateFactor = 1.2;
+  if (substrate === 'sphagnum') substrateFactor = 0.8;
+
+  const srcPPM = parseInt(document.getElementById('calcSrcPPM').value)||0;
+  const userTgt = document.getElementById('calcTgtPPM').value;
+  document.getElementById('calcTgtPPM').value = '';
+  const tgtPPM = userTgt ? parseInt(userTgt) : Math.round(s.ppm * substrateFactor);
+  document.getElementById('calcTgtPPM').value = tgtPPM;
+
+  let pH = s.ph;
+  if (substrate === 'mineral' || substrate === 'semihydro') pH = '5.5–6.0';
+  if (substrate === 'sphagnum') pH = '5.0–5.5';
+  document.getElementById('calcPH').value = pH;
+
+  const vol = parseFloat(document.getElementById('calcVol').value)||1;
+  const needed = Math.max(0, tgtPPM - srcPPM);
+  const scale = s.ppm > 0 ? Math.min(needed/s.ppm, 3) : 0;
+
+  document.getElementById('calcVolDisplay').textContent = vol;
+  document.querySelectorAll('.calcVolLeaf').forEach(el=>el.textContent=vol);
+
+  const groupEl = document.getElementById('calcGroupInfo');
+  if (calcPlantIds.length > 1) {
+    const names = calcPlantIds.map(pid => { const p=plantsData.find(x=>x.id===pid); return p?p.emoji+' '+p.name:pid; });
+    const stageIdx = stageKey === 'meristem' ? null : parseInt(stageKey);
+    const stagePPMs = stageIdx !== null
+      ? calcPlantIds.map(pid => { const p=plantsData.find(x=>x.id===pid); return p&&p.stages[stageIdx]?p.stages[stageIdx].ppm:null; }).filter(v=>v!==null)
+      : [MERISTEM_STAGE.ppm];
+    const minP = Math.min(...stagePPMs);
+    const maxP = Math.max(...stagePPMs);
+    const diffNote = (maxP - minP) > 150 ? `<br><span style="color:var(--danger);font-size:0.8rem;">⚠️ Разброс целевых PPM значительный (мин ${minP}, макс ${maxP}). Рекомендуется готовить отдельные растворы для этих растений.</span>` : '';
+    const carnNote = hasCarnivore ? `<br><span style="color:var(--danger);font-size:0.8rem;">⚠ Хищники исключены из расчёта — для них готовится отдельный дистиллят.</span>` : '';
+    const substrateNote = `<br><span style="color:var(--info);font-size:0.8rem;">Субстрат: ${substrate}. Базовое удобрение: ${BASE_FERTS[baseFert]?.name||baseFert}.</span>`;
+    groupEl.innerHTML = `<div style="background:var(--accent-light);border:1px solid #e8c88a;border-radius:var(--radius);padding:10px 14px;font-size:0.85rem;">
+      <strong>🌿 Групповой раствор для ${calcPlantIds.length} растений:</strong> ${names.join(', ')}<br>
+      <span style="color:var(--text-muted);font-size:0.8rem;">
+        PPM по группе: мин <strong>${minP}</strong> · макс <strong>${maxP}</strong> · используется <strong>${tgtPPM}</strong> (минимальный — безопасно для всех).
+        Дозы усреднены.
+      </span>${diffNote}${carnNote}${substrateNote}
+    </div>`;
+    groupEl.style.display='block';
+  } else {
+    groupEl.style.display='none';
+  }
+
+  calcUpdateDosesOnly(s, scale, vol, srcPPM, tgtPPM);
+}
+
+function calcUpdateDosesOnly(s, scale, vol, srcPPM, tgtPPM) {
+  if (!s) {
+    const plantIds = getSelectedPlants().filter(id => id !== 'carnivore');
+    const stageKey = document.getElementById('calcStageKey').value;
+    if (!plantIds.length || !stageKey) return;
+    s = computeGroupStage(plantIds, stageKey);
+    if (!s) return;
+    srcPPM = parseInt(document.getElementById('calcSrcPPM').value)||0;
+    tgtPPM = parseInt(document.getElementById('calcTgtPPM').value)||s.ppm;
+    vol = parseFloat(document.getElementById('calcVol').value)||1;
+    const needed = Math.max(0, tgtPPM - srcPPM);
+    scale = s.ppm > 0 ? Math.min(needed/s.ppm, 3) : 0;
+    document.getElementById('calcVolDisplay').textContent = vol;
+    document.querySelectorAll('.calcVolLeaf').forEach(el=>el.textContent=vol);
+  }
+
+  const leafActive = document.getElementById('leafTreatmentToggle').checked;
+  const checked = id => {
+    const cb = document.getElementById('chk-'+id);
+    if (!cb) return false;
+    const fert = FERTS.find(f=>f.id===id);
+    if (fert && fert.leafOnly && !leafActive) return false;
+    return cb.checked;
+  };
+
+  const baseFert = document.getElementById('calcBaseFert').value;
+  const bf = BASE_FERTS[baseFert];
+
+  const rootDoses = [
+    {id:'calmag',   label:'1. CalMag',     val:checked('calmag')  ? (s.calmag*scale*vol).toFixed(2) +' мл' : null},
+    {id:'cocoA',    label:'2. '+ (bf?.name||'Coco A'), val:checked('cocoA') && s.cocoA>0 ? (s.cocoA*scale*vol).toFixed(2) +' мл' : null},
+    {id:'cocoB',    label:'3. Coco B',     val:checked('cocoB') && s.cocoB>0 ? (s.cocoB*scale*vol).toFixed(2) +' мл' : null, warn:'После Coco A!'},
+    {id:'nitrozyme',label:'Нитрозим',      val:checked('nitrozyme')&&s.nitrozyme>0 ? (s.nitrozyme*scale*vol).toFixed(2)+' мл' : null},
+    {id:'radifarm', label:'Радифарм',      val:checked('radifarm')&&s.radifarm>0  ? (s.radifarm*scale*vol).toFixed(2) +' мл' : null},
+    {id:'siiplant', label:'Силиплант',     val:checked('siiplant')&&s.siiplant>0  ? (s.siiplant*scale*vol).toFixed(2) +' мл' : null, warn:'Проверить pH после!'},
+    {id:'hb101',    label:'HB-101',        val:checked('hb101')   ? Math.round(2*scale*vol)+' кап' : null},
+    {id:'fulvic',   label:'Фульвик',       val:checked('fulvic')  ? (0.75*scale*vol).toFixed(2)+' мл' : null},
+    {id:'previcur', label:'Превикур ⚠',    val:checked('previcur') ? (3*vol).toFixed(1)+' мл' : null, opt:true, warn:'Отдельным поливом! +2–3 дня'},
+  ].filter(d=>d.val);
+
+  const leafDoses = leafActive ? [
+    {id:'megafol',  label:'Мегафол',         val:checked('megafol') &&s.megafol>0 ? (s.megafol*vol).toFixed(2)+' мл' : null, freq:'раз в 10 дней'},
+    {id:'aminovit', label:'Супераминовит',    val:checked('aminovit') ? '2-3 мл/л' : null, freq:'раз в 10 дней (чередовать)'},
+    {id:'nitrozyme',label:'Нитрозим (доп.)',  val:checked('nitrozyme')&&s.nitrozyme>0 ? (s.nitrozyme*vol*0.8).toFixed(2)+' мл' : null, freq:'раз в 2 нед'},
+    {id:'hb101',    label:'HB-101 (доп.)',    val:checked('hb101') ? Math.round(2*vol)+' кап' : null, freq:'раз в 2 нед'},
+  ].filter(d=>d.val) : [];
+
+  const renderDoseRow = (d) =>
+    `<div class="result-item" style="${d.opt?'opacity:0.85;background:#faf7ff;border-radius:4px;padding:5px 6px;':''}">
+      <span style="font-size:0.85rem;">${d.opt?'⚠ ':''}<strong>${d.label}</strong>${d.opt?'<span class="opt-tag" style="margin-left:4px;">[опц.]</span>':''}
+        ${d.warn?`<span style="font-size:0.72rem;color:var(--warning);margin-left:4px;">${d.warn}</span>`:''}
+        ${d.freq?`<span style="font-size:0.72rem;color:var(--info);margin-left:4px;">${d.freq}</span>`:''}
+      </span>
+      <span class="val">${d.val}</span>
+    </div>`;
+
+  document.getElementById('calcDosagesRoot').innerHTML = rootDoses.length
+    ? rootDoses.map(renderDoseRow).join('') + `<div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;font-size:0.8rem;color:var(--text-muted);">EC ~${(tgtPPM/500).toFixed(2)} мС/см · PPM цель: ${tgtPPM}</div>`
+    : '<div style="color:var(--text-muted);padding:10px;font-size:0.85rem;">Нет корневых препаратов выбрано</div>';
+
+  document.getElementById('calcDosagesLeaf').innerHTML = leafDoses.length
+    ? leafDoses.map(renderDoseRow).join('') + `<div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;font-size:0.8rem;color:var(--text-muted);">Разводить в чистой воде · EC листового ~0.3–0.5</div>`
+    : '<div style="color:var(--text-muted);padding:10px;font-size:0.85rem;">Листовые препараты не выбраны</div>';
+
+  const leafCompatDiv = document.getElementById('leafCompatNote');
+  if (leafActive && leafDoses.length > 0) {
+    const leafChecked = leafDoses.map(d=>d.id);
+    const leafConflicts = COMPAT_RULES.filter(r => r.ids.every(id => leafChecked.includes(id)) && r.severity !== 'info');
+    if (leafConflicts.length) {
+      leafCompatDiv.innerHTML = `<div class="alert-warning" style="margin-top:6px;">${leafConflicts.map(c=>`⚠️ ${c.risk}`).join('<br>')}</div>`;
+    } else {
+      leafCompatDiv.innerHTML = '';
+    }
+  } else {
+    leafCompatDiv.innerHTML = '';
+  }
+
+  const steps = [];
+  let runPPM = srcPPM;
+  steps.push({text:`Налить ${vol} л дистиллята в ёмкость.`, ppm:runPPM});
+  if (bf && bf.note) {
+    steps.push({text:`ℹ️ ${bf.note}`, ppm:null, info:true});
+  }
+  if (checked('calmag') && s.calmag>0) {
+    runPPM += Math.round(s.calmag*scale*30);
+    steps.push({text:`Добавить CalMag — ${(s.calmag*scale*vol).toFixed(2)} мл. Перемешать.`, ppm:runPPM});
+  }
+  if (checked('cocoA') && s.cocoA>0) {
+    runPPM += Math.round(s.cocoA*scale*60);
+    steps.push({text:`Добавить Coco A — ${(s.cocoA*scale*vol).toFixed(2)} мл. Хорошо перемешать.`, ppm:runPPM});
+  }
+  if (checked('cocoB') && s.cocoB>0) {
+    runPPM += Math.round(s.cocoB*scale*60);
+    steps.push({text:`Добавить Coco B — ${(s.cocoB*scale*vol).toFixed(2)} мл (только после A!). Перемешать.`, ppm:runPPM});
+  }
+  if (checked('nitrozyme') && s.nitrozyme>0) {
+    runPPM += Math.round(s.nitrozyme*scale*5);
+    steps.push({text:`Добавить Нитрозим — ${(s.nitrozyme*scale*vol).toFixed(2)} мл. Перемешать.`, ppm:runPPM});
+  }
+  if (checked('radifarm') && s.radifarm>0) {
+    runPPM += Math.round(s.radifarm*scale*5);
+    steps.push({text:`Добавить Радифарм — ${(s.radifarm*scale*vol).toFixed(2)} мл. Перемешать.`, ppm:runPPM});
+  }
+  if (checked('siiplant') && s.siiplant>0) {
+    runPPM += Math.round(s.siiplant*scale*8);
+    steps.push({text:`Добавить Силиплант — ${(s.siiplant*scale*vol).toFixed(2)} мл. Перемешать.`, ppm:runPPM, warn:'Si поднимает pH — проверить!'});
+  }
+  if (checked('hb101')) {
+    steps.push({text:`Добавить HB-101 — ${Math.round(2*scale*vol)} кап. Перемешать.`, ppm:runPPM});
+  }
+  if (checked('fulvic')) {
+    steps.push({text:`Добавить Фульвик — ${(0.75*scale*vol).toFixed(2)} мл. Перемешать.`, ppm:runPPM});
+  }
+  steps.push({text:`Замерить pH → скорректировать до ${s.ph}.`, ppm:runPPM});
+  steps.push({text:`Замерить EC → должно быть ~${(tgtPPM/500).toFixed(2)} мС/см (${tgtPPM} ppm). Готово ✅`, ppm:tgtPPM, final:true});
+  if (checked('previcur')) {
+    steps.push({text:`⚠ ОТДЕЛЬНЫЙ ПОЛИВ (через 2–3 дня): Превикур — ${(3*vol).toFixed(1)} мл на ${vol} л. Не смешивать с биостимуляторами!`, ppm:null, isWarn:true});
+  }
+
+  document.getElementById('mixingSteps').innerHTML = steps.map(st =>
+    `<li style="${st.final?'background:var(--primary-light);font-weight:600;':st.isWarn?'background:#fef8ec;':st.info?'background:#eaf4fb;':''}">${st.text}
+      ${st.ppm!=null?`<span style="margin-left:8px;font-size:0.72rem;color:var(--text-muted);font-weight:400;">≈${st.ppm} ppm</span>`:''}
+    </li>`
+  ).join('');
+
+  buildCompatTable();
+  document.getElementById('calcResults').style.display='block';
+  document.getElementById('calcEmpty').style.display='none';
+  checkCompatibility();
+}
+
+function exportCalcToLog() {
+  const plantIds = getSelectedPlants().filter(id => id !== 'carnivore');
+  const stageKey = document.getElementById('calcStageKey').value;
+  if (!plantIds.length || !stageKey) { alert('Сначала выберите растения и этап в калькуляторе.'); return; }
+  const stageNames = {'meristem':'Адаптация/клон','0':'Молодое (1-3 мес)','1':'Молодое (1-3 мес)','2':'Активный рост','3':'Взрослое'};
+  const stage = stageNames[stageKey] || stageKey;
+  const tgtPPM = parseInt(document.getElementById('calcTgtPPM').value)||0;
+  const ph = document.getElementById('calcPH').value;
+  const ferts = FERTS.filter(f => document.getElementById('chk-'+f.id)?.checked).map(f=>f.id);
+  const substrate = document.getElementById('calcSubstrate').value;
+  const baseFert = document.getElementById('calcBaseFert').value;
+  const note = `Экспорт из калькулятора. Субстрат: ${substrate}. Базовое: ${BASE_FERTS[baseFert]?.name}. Группа: ${plantIds.map(pid=>{const p=plantsData.find(x=>x.id===pid);return p?p.name:pid;}).join(', ')}. PPM ${tgtPPM}, pH ${ph}.`;
+  const date = new Date().toISOString().slice(0,10);
+  logEntries.unshift({ id: Date.now(), date, plant: plantIds[0], stage, ppm: tgtPPM, ph, substrate, baseFert, ferts, note });
+  saveLog();
+  alert('Запись добавлена в журнал. Перейдите в журнал для просмотра.');
+  nav('log');
+  renderLog();
+  renderLogStats();
+}
+
 // ===================== LOG =====================
 function buildLogPlantSelect() {
   const sel = document.getElementById('logPlant');
