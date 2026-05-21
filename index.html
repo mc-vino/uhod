@@ -270,10 +270,12 @@ table tr:hover td{background:#f2f5ef}
           <option value="sphagnum">🌿 Мох сфагнум</option>
           <option value="coco_bark">🌳 Кокос + кора пинии</option>
           <option value="coco_perlite">🪨 Кокос + перлит (50/50)</option>
-          <option value="soil">🟤 Soil / торфяная земля</option>
+          <option value="soil">🟤 Соил (готовый грунт / земля, pH 6.0–7.0)</option>
+          <option value="peat_neutral">🟫 Торф нейтральный (pH 5.5–6.5)</option>
+          <option value="peat_acid">🔴 Торф верховой кислый (pH 3.5–4.5)</option>
           <option value="mineral">⚪ Перлит / вермикулит (чистый)</option>
-          <option value="semihydro">💧 Керамзит / полугидропоника</option>
-          <option value="carnivore">🪤 Торф + перлит (хищники)</option>
+          <option value="semihydro">💧 Керамзит / LECA (полугидропоника)</option>
+          <option value="carnivore">🪤 Хищники: торф кислый + перлит (0 ppm!)</option>
         </select>
       </div>
       <div class="form-group">
@@ -426,6 +428,41 @@ table tr:hover td{background:#f2f5ef}
   </div>
 
   <div class="card">
+    <div class="card-header">🍃 Листовые обработки — совместимость и расписание</div>
+    <div class="alert-info" style="margin-bottom:12px;">
+      <strong>Все листовые обработки — вечером или при выключенной лампе!</strong><br>
+      EC листового раствора: 0.3–0.5 мС/см. Разводить в чистом дистилляте отдельно от корневого.
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Препарат</th><th>Листовой способ</th><th>Доза (лист)</th><th>Частота</th><th>Совместимость по листу</th></tr></thead>
+      <tbody>
+        <tr style="background:#e6f5ec;"><td><strong>Фульвик</strong></td><td>✅ Корень + лист</td><td>0.3–0.5 мл/л</td><td>Раз в 1–2 нед</td><td>✅ Совместим с HB-101, Нитрозимом, Мегафолом</td></tr>
+        <tr style="background:#e6f5ec;"><td><strong>HB-101</strong></td><td>✅ Корень + лист</td><td>1–2 кап/л</td><td>Раз в 2 нед</td><td>✅ С Фульвиком, Нитрозимом. Интервал 2 дня от Превикура</td></tr>
+        <tr style="background:#e6f5ec;"><td><strong>Нитрозим</strong></td><td>✅ Корень + лист (лист эффективнее!)</td><td>2–3 мл/л</td><td>Раз в 2 нед</td><td>✅ С Фульвиком, HB-101. ⚠ Интервал 2–3 дня от Превикура</td></tr>
+        <tr style="background:#eaf4fb;"><td><strong>Мегафол</strong></td><td>🍃 ТОЛЬКО лист</td><td>3–4 мл/л</td><td>Раз в 10 дней</td><td>✅ С Фульвиком 0.3 мл/л. ⚠ НЕ с Супераминовитом в один день. ⚠ НЕ с Силиплантом (разрыв 2–3 дня)</td></tr>
+        <tr style="background:#eaf4fb;"><td><strong>Супераминовит</strong></td><td>🍃 ТОЛЬКО лист</td><td>2–3 мл/л</td><td>Раз в 10 дней</td><td>✅ С HB-101. ⚠ НЕ с Мегафолом в один день. ⚠ НЕ с Силиплантом (разрыв 2–3 дня)</td></tr>
+        <tr style="background:#fef8ec;"><td><strong>Силиплант ⚠</strong></td><td>⚠ ТОЛЬКО отдельным опрыскиванием</td><td>2–3 мл/л</td><td>Раз в 2 нед (отдельный день)</td><td>🚫 НЕ смешивать ни с чем! ⚠ Разрыв 2–3 дня от Мегафола и Супераминовита. Вечером, не смывать 6+ ч.</td></tr>
+        <tr style="background:#fdecea;"><td><strong>Радифарм</strong></td><td>🚫 Нельзя по листу</td><td>—</td><td>—</td><td>Стимулятор корней — через лист не работает</td></tr>
+        <tr style="background:#fdecea;"><td><strong>CalMag</strong></td><td>🚫 Нельзя по листу</td><td>—</td><td>—</td><td>Соли Ca/Mg вызывают ожоги листьев</td></tr>
+        <tr style="background:#fdecea;"><td><strong>Coco A+B / Terra / P13</strong></td><td>🚫 Нельзя по листу</td><td>—</td><td>—</td><td>NPK соли — ожоги. Только корневое внесение.</td></tr>
+        <tr style="background:#fdecea;"><td><strong>Превикур</strong></td><td>🚫 Только полив под корень</td><td>—</td><td>—</td><td>Системный фунгицид — неэффективен листовым путём</td></tr>
+      </tbody>
+    </table></div>
+    <div class="table-wrap" style="margin-top:14px;"><table>
+      <thead><tr><th colspan="3" style="background:#2E6DA4;color:#fff;">📅 Рекомендуемый 4-недельный цикл листовых обработок</th></tr>
+        <tr><th>День</th><th>Листовые препараты</th><th>Примечание</th></tr></thead>
+      <tbody>
+        <tr><td><strong>День 1</strong></td><td>Фульвик 0.4 мл/л + HB-101 2 кап/л + Нитрозим 2.5 мл/л</td><td>✅ Совместимы в одном растворе</td></tr>
+        <tr><td><strong>День 7</strong></td><td>Мегафол 3–4 мл/л + Фульвик 0.3 мл/л</td><td>✅ Совместимы</td></tr>
+        <tr><td><strong>День 10</strong></td><td>Силиплант 2–3 мл/л — ТОЛЬКО ОДИН</td><td>⚠ Ничего не добавлять! Разрыв от Мегафола 3 дня ✓</td></tr>
+        <tr><td><strong>День 17</strong></td><td>Супераминовит 2–3 мл/л + HB-101 2 кап/л</td><td>✅ Совместимы</td></tr>
+        <tr><td><strong>День 21</strong></td><td>Нитрозим 2–3 мл/л + Фульвик 0.4 мл/л</td><td>✅ Совместимы</td></tr>
+        <tr><td><strong>День 24</strong></td><td>Силиплант 2–3 мл/л — ТОЛЬКО ОДИН</td><td>⚠ Разрыв от Супераминовита 7 дней ✓</td></tr>
+        <tr><td><strong>День 28</strong></td><td>Мегафол 3–4 мл/л + Фульвик 0.3 мл/л</td><td>✅ Совместимы</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="card">
     <div class="card-header">🔄 Очерёдность внесения удобрений в раствор</div>
     <div class="table-wrap"><table>
       <thead><tr><th>#</th><th>Препарат</th><th>Причина</th></tr></thead>
@@ -459,8 +496,9 @@ table tr:hover td{background:#f2f5ef}
         <tr><td><strong>🌳 Кора пинии (10–20 мм)</strong></td><td>5.0–6.0</td><td>Низкая</td><td>Отличная</td><td>Филодендрон, антуриум, хойя</td><td>Прокипятить перед использованием. Быстро пересыхает</td></tr>
         <tr><td><strong>⚪ Перлит</strong></td><td>Нейтральный 7.0</td><td>Очень низкая</td><td>Отличная</td><td>Добавка (20–40%). Хойя, суккуленты</td><td>Промыть от пыли. Не удерживает питание</td></tr>
         <tr><td><strong>🔵 Вермикулит</strong></td><td>6.5–7.5</td><td>Высокая</td><td>Хорошая</td><td>Добавка (10–20%). Калатея, каладиум</td><td>Удерживает Ca, Mg, K</td></tr>
-        <tr><td><strong>🟤 Торф верховой</strong></td><td>3.5–4.5</td><td>Высокая</td><td>Средняя</td><td>Хищники, блехнум, кислолюбивые</td><td>Уплотняется! Обновлять раз в год</td></tr>
-        <tr><td><strong>🟫 Торф нейтральный</strong></td><td>5.5–6.5</td><td>Высокая</td><td>Средняя</td><td>Спатифиллум, нефролепис, птерис</td><td>pH контролировать. Уплотняется</td></tr>
+        <tr><td><strong>🟤 Соил (готовый грунт)</strong></td><td>6.0–7.0</td><td>Средняя</td><td>Средняя</td><td>Аглаонема, замиокулькас, папоротники</td><td>⚠ Это НЕ торф! Готовая земляная смесь с уже внесёнными удобрениями. Уплотняется. EC выше — учитывать при поливе. Обновлять раз в год.</td></tr>
+        <tr><td><strong>🟫 Торф нейтральный (низинный)</strong></td><td>5.5–6.5</td><td>Высокая</td><td>Средняя</td><td>Спатифиллум, нефролепис, птерис, аглаонема</td><td>⚠ Это НЕ соил! Чистый торф без добавок. pH 5.5–6.5. Уплотняется — добавлять перлит 30%. Обновлять раз в год.</td></tr>
+        <tr><td><strong>🔴 Торф верховой (кислый)</strong></td><td>3.5–4.5</td><td>Высокая</td><td>Средняя</td><td>Хищники (Drosera/Dionaea), блехнум, кислолюбивые</td><td>Очень кислый. Большинство удобрений неэффективны при pH <5.0. Уплотняется! Обновлять раз в год.</td></tr>
         <tr><td><strong>💧 Керамзит/LECA</strong></td><td>7.0+</td><td>Очень низкая</td><td>Отличная</td><td>Полугидропоника. Аглаонема, сингониум, спатифиллум</td><td>EC ×1.2. Промывка раз в 2 нед</td></tr>
         <tr><td><strong>🌿 Живой сфагнум</strong></td><td>4.0–5.5</td><td>Отличная</td><td>Хорошая</td><td>Хищники, адиантум, черенки</td><td>Естественный антибиотик. Идеален для росянок</td></tr>
       </tbody>
@@ -498,15 +536,15 @@ table tr:hover td{background:#f2f5ef}
     <div class="table-wrap"><table>
       <thead><tr><th>Препарат</th><th>Состав / действие</th><th>Способ</th><th>Доза</th><th>Частота</th><th>Совместимость</th></tr></thead>
       <tbody>
-        <tr><td><strong>CalMag (Simplex)</strong></td><td>Ca 3% + Mg 1.5%. Критично при дистилляте</td><td>Полив</td><td>0.5–1.5 мл/л</td><td>Каждый полив</td><td>✅ Добавлять ПЕРВЫМ (после fulvic, hb101), до Coco A</td></tr>
-        <tr><td><strong>Фульвик (Plantix)</strong></td><td>Фульвокислоты. Хелатирование, улучшение усвоения</td><td>Полив + лист</td><td>0.5–1 мл/л</td><td>Каждый полив</td><td>✅ Синергия с HB-101. Добавлять вторым</td></tr>
-        <tr><td><strong>HB-101</strong></td><td>Экстракт хвои + подорожник. Иммунитет</td><td>Полив + лист</td><td>1–3 капли/л</td><td>Раз в 2 нед</td><td>✅ Совместим с большинством. Слабо конфликтует с Превикуром</td></tr>
-        <tr><td><strong>Нитрозим</strong></td><td>Природные цитокинины (зеатин). Деление клеток</td><td>Полив + лист</td><td>1–3 мл/л полив; 2–3 мл/л лист</td><td>Каждый полив; лист раз в 2 нед</td><td>⚠ НЕ с Превикуром в один день</td></tr>
-        <tr><td><strong>Мегафол (Valagro)</strong></td><td>L-аминокислоты + B1 + бетаины. Антистресс</td><td>По листу</td><td>3–4 мл/л</td><td>Раз в 10 дней</td><td>⚠ Не с Супераминовитом в один день</td></tr>
-        <tr><td><strong>Радифарм (Valagro)</strong></td><td>Бетаины + аминокислоты. Корнеобразование</td><td>Полив</td><td>1.5–2 мл/л</td><td>Каждый полив при адаптации; раз в 2 нед взрослые</td><td>⚠ Постоянно с Coco A+B — чередовать блоками</td></tr>
-        <tr><td><strong>Силиплант</strong></td><td>Монокремниевая кислота. Укрепление клеток</td><td>Полив + лист</td><td>1–2 мл/л полив; 2–3 мл/л лист</td><td>Раз в 2 нед</td><td>⚠ Добавлять В КОНЦЕ — поднимает pH. После проверить pH!</td></tr>
-        <tr><td><strong>Супераминовит</strong></td><td>Гидролизат растительного белка. Аминокислоты</td><td>По листу</td><td>2–3 мл/л</td><td>Раз в 10–14 дней</td><td>⚠ Чередовать с Мегафолом, не в один день</td></tr>
-        <tr style="background:#faf7ff;"><td><strong>Превикур Energy ⚠</strong></td><td>Пропамокарб + фосэтил-Al. Против гнилей</td><td>Полив</td><td>3 мл/л</td><td>Профилакт. раз в 3–4 нед</td><td>🚫 ОТДЕЛЬНЫМ поливом! Интервал 2–3 дня от НБ-101, Нитрозима, Мегафола</td></tr>
+        <tr><td><strong>CalMag (Simplex)</strong></td><td>Ca 3% + Mg 1.5%. Критично при дистилляте</td><td>🌱 Только полив</td><td>0.5–1.5 мл/л</td><td>Каждый полив</td><td>✅ До Coco A. Листовое: нельзя (ожог солями). Добавлять 4-м по счёту в раствор.</td></tr>
+        <tr><td><strong>Фульвик (Plantix)</strong></td><td>Фульвокислоты. Хелатирование, улучшение усвоения</td><td>🌱🍃 Полив + лист</td><td>Полив: 0.5–1 мл/л · Лист: 0.3–0.5 мл/л</td><td>Полив — каждый · Лист — раз в 1–2 нед</td><td>✅ Синергия с HB-101. 2-й в раствор. Листовой совместим с HB-101, Нитрозимом, Мегафолом.</td></tr>
+        <tr><td><strong>HB-101</strong></td><td>Экстракт хвойных + подорожник. Иммунитет, антибактериальный эффект</td><td>🌱🍃 Полив + лист</td><td>Полив: 1–3 кап/л · Лист: 1–2 кап/л</td><td>Раз в 2 нед</td><td>✅ Листовой усиливает защиту от патогенов. Совместим с Фульвиком, Нитрозимом по листу. Интервал 2 дня от Превикура.</td></tr>
+        <tr><td><strong>Нитрозим</strong></td><td>Природные цитокинины (зеатин). Деление клеток, кущение</td><td>🌱🍃 Полив + лист</td><td>Полив: 1–3 мл/л · <strong>Лист: 2–3 мл/л (эффективнее!)</strong></td><td>Полив — каждый · Лист — раз в 2 нед</td><td>⚠ НЕ с Превикуром. Листовой эффективнее корневого для стимуляции роста. Совместим с Фульвиком, HB-101 по листу.</td></tr>
+        <tr><td><strong>Мегафол (Valagro)</strong></td><td>L-аминокислоты + витамин B1 + бетаины. Антистресс, восстановление</td><td>🍃 ТОЛЬКО по листу</td><td>3–4 мл/л</td><td>Раз в 10 дней</td><td>⚠ Только листовой! Корневой неэффективен. Не с Супераминовитом в один день. Не с Силиплантом (разрыв 2–3 дня). Совместим с Фульвиком по листу.</td></tr>
+        <tr><td><strong>Радифарм (Valagro)</strong></td><td>Бетаины + аминокислоты. Формирование корневой системы</td><td>🌱 ТОЛЬКО полив</td><td>1.5–2 мл/л</td><td>Каждый полив при адаптации; раз в 2 нед взрослые</td><td>⚠ Листовой: нецелесообразен (стимулятор корней — работает только через субстрат). Чередовать с Coco A+B блоками по 1–2 нед.</td></tr>
+        <tr><td><strong>Силиплант ⚠</strong></td><td>Монокремниевая кислота Si(OH)₄. Укрепление клеток, устойчивость к вредителям</td><td>🌱🍃 Полив + лист (⚠ раздельно!)</td><td>Полив: 1–2 мл/л · Лист: 2–3 мл/л</td><td>Раз в 2 нед</td><td>⚠ <strong>В корневом ПОСЛЕДНИМ</strong> (pH 11!). <strong>Листовой — ОТДЕЛЬНЫЙ день</strong> от Мегафола/Супераминовита (разрыв 2–3 дня). Несовместим с CalMag концентрат. Вечером, не смывать 6+ ч.</td></tr>
+        <tr><td><strong>Супераминовит</strong></td><td>Гидролизат растительного белка. Аминокислоты для роста</td><td>🍃 ТОЛЬКО по листу</td><td>2–3 мл/л</td><td>Раз в 10 дней</td><td>⚠ Только листовой! Чередовать с Мегафолом (интервал 10 дней). Не с Силиплантом в один день (интервал 2–3 дня). Совместим с HB-101 по листу.</td></tr>
+        <tr style="background:#fdecea;"><td><strong>Превикур Energy 🚫</strong></td><td>Пропамокарб + фосэтил-Al. Системный фунгицид против корневых гнилей</td><td>🌱 ТОЛЬКО полив (под корень)</td><td>3 мл/л</td><td>Профилакт. раз в 3–4 нед</td><td>🚫 ТОЛЬКО ОТДЕЛЬНЫМ поливом! Листовой: нельзя (не системный при листовом). Интервал 2–3 дня от HB-101, Нитрозима, Мегафола, Супераминовита.</td></tr>
       </tbody>
     </table></div>
   </div>
@@ -524,7 +562,10 @@ table tr:hover td{background:#f2f5ef}
         <tr class="incompat-strict"><td><strong>Превикур + Нитрозим</strong></td><td>Фунгицид угнетает живые компоненты. Нитрозим теряет эффективность</td><td>Интервал минимум 2–3 дня</td><td>🚫 Критично</td></tr>
         <tr class="incompat-strict"><td><strong>Превикур + Мегафол</strong></td><td>Фунгицид нейтрализует L-аминокислоты</td><td>Разделить поливы на 2+ дня</td><td>🚫 Критично</td></tr>
         <tr class="incompat-strict"><td><strong>Превикур + HB-101</strong></td><td>Терпены HB-101 деградируют под действием фосэтила</td><td>Интервал 2–3 дня</td><td>🚫 Критично</td></tr>
-        <tr class="incompat-warn"><td><strong>Силиплант + добавление в начале</strong></td><td>Поднимает pH раствора — другие препараты теряют доступность</td><td>Добавлять ПОСЛЕДНИМ перед pH-коррекцией</td><td>⚠ Важно</td></tr>
+        <tr class="incompat-strict"><td><strong>Силиплант + CalMag (до разведения)</strong></td><td>Si(OH)₄ + Ca²⁺ → нерастворимый CaSiO₃ (силикат кальция). В концентрате — осадок. В рабочем растворе: только строгий порядок.</td><td>Порядок: CalMag → Coco A → Coco B → … → Силиплант ПОСЛЕДНИМ. Никогда не смешивать концентраты!</td><td>🚫 Критично</td></tr>
+        <tr class="incompat-warn"><td><strong>Силиплант + Мегафол (листовая)</strong></td><td>Органика Мегафола конкурирует с Si за устьица — усвоение Si снижается на 30–40%</td><td>Разрыв 2–3 дня: день 7 — Мегафол, день 10 — Силиплант</td><td>⚠ Листовой конфликт</td></tr>
+        <tr class="incompat-warn"><td><strong>Силиплант + Супераминовит (листовая)</strong></td><td>Аминокислоты снижают усвоение Si при листовом нанесении</td><td>Разрыв 2–3 дня от любых аминокислотных препаратов</td><td>⚠ Листовой конфликт</td></tr>
+        <tr class="incompat-warn"><td><strong>Силиплант в начале раствора</strong></td><td>pH концентрата ~11 — резко поднимает pH раствора, другие питательные вещества теряют доступность</td><td>Добавлять ПОСЛЕДНИМ перед pH-коррекцией</td><td>⚠ Важно</td></tr>
         <tr class="incompat-warn"><td><strong>Мегафол + Супераминовит (один день)</strong></td><td>Избыток аминокислот не усваивается, азотная перегрузка</td><td>Чередовать: через 10 дней один, через 10 дней другой</td><td>⚠ Осторожно</td></tr>
         <tr class="incompat-warn"><td><strong>Радифарм + Coco A+B (постоянно)</strong></td><td>Ауксины и питательные соли конкурируют за рецепторы</td><td>Чередовать блоками по 1–2 недели</td><td>⚠ Осторожно</td></tr>
         <tr class="incompat-warn"><td><strong>Нитрозим высокая доза + Монстера Mint</strong></td><td>Зеатин может нарушить вариегатность у чувствительных форм</td><td>Снизить до 1 мл/л или исключить</td><td>⚠ Осторожно</td></tr>
@@ -551,7 +592,7 @@ table tr:hover td{background:#f2f5ef}
       <div class="form-group" style="min-width:130px;"><label>📊 Этап</label><select id="logStageSelect"><option value="">— этап —</option><option>Адаптация/клон</option><option>Молодое (1–3 мес)</option><option>Активный рост</option><option>Взрослое</option><option>Покой</option></select></div>
       <div class="form-group" style="min-width:90px;"><label>💧 PPM</label><input type="number" id="logPPM" placeholder="500" min="0"></div>
       <div class="form-group" style="min-width:75px;"><label>🧪 pH</label><input type="number" id="logPHVal" placeholder="6.0" step="0.1" min="4" max="8"></div>
-      <div class="form-group" style="min-width:140px;"><label>🪴 Субстрат</label><select id="logSubstrate"><option value="">—</option><option value="coco">Кокос</option><option value="coco_bark">Кокос+кора</option><option value="sphagnum">Мох</option><option value="soil">Soil/торф</option><option value="mineral">Перлит/мин.</option><option value="semihydro">Керамзит</option></select></div>
+      <div class="form-group" style="min-width:140px;"><label>🪴 Субстрат</label><select id="logSubstrate"><option value="">—</option><option value="coco">Кокос</option><option value="coco_bark">Кокос+кора</option><option value="sphagnum">Мох сфагнум</option><option value="soil">Соил (земля)</option><option value="peat_neutral">Торф нейтральный</option><option value="peat_acid">Торф верховой (кислый)</option><option value="mineral">Перлит/вермикулит</option><option value="semihydro">Керамзит/LECA</option></select></div>
       <div class="form-group" style="min-width:160px;"><label>🧴 Базовое</label><select id="logBaseFert"><option value="">—</option></select></div>
       <div class="form-group" style="flex:1;min-width:200px;"><label>💊 Препараты</label><div class="fert-multi-check" id="logFertCheck"></div></div>
       <div class="form-group" style="min-width:170px;"><label>📝 Заметка</label><input type="text" id="logNote" placeholder="Наблюдение..."></div>
@@ -588,41 +629,77 @@ table tr:hover td{background:#f2f5ef}
 const BASE_FERTS = {
   plagron_coco:  { name:'Plagron Coco A+B', components:['cocoA','cocoB'], substrate:['coco','coco_bark','coco_perlite'], note:'Кокос. A: NPK 4-0-1 Ca4.5%, B: NPK 1-4-2 MgO2%. Добавлять A→перемешать→B.' },
   simplex_coco:  { name:'Simplex Coco A+B',  components:['cocoA','cocoB'], substrate:['coco','coco_bark','coco_perlite'], note:'Кокос. A: NPK 4-0-0+Ca+Mg, B: NPK 0-5-4+Mg.' },
-  simplex_terra: { name:'Simplex Terra Vega', components:['terra'], substrate:['soil'], note:'Почва/торф. NPK 4-2-6. 2–3 мл/л. Нитратный+аммиачный+органический N.' },
+  simplex_terra: { name:'Simplex Terra Vega', components:['terra'], substrate:['soil','peat_neutral'], note:'Соил/нейтральный торф. NPK 4-2-6. 2–3 мл/л. Нитратный+аммиачный+органический N.' },
   plantix_p13:   { name:'Plantix P13 Aroid',  components:['p13'], substrate:['coco','coco_bark','sphagnum','mineral','semihydro'], note:'Универсальное сухое для ароидных. NPK 10-7-12 + микроэлементы. 1 порция/л.' },
   gota_vita:     { name:'Gota Vita универс.', components:['gotaVita'], substrate:['coco','soil','sphagnum','mineral','semihydro'], note:'Аминокислотное. NPK 3.5-2.3-5.0 + хелаты Fe,Mn,Zn. 2–4 мл/л.' },
-  aminosil:      { name:'Аминосил',           components:['aminosil'], substrate:['coco','soil','sphagnum','semihydro'], note:'Органоминеральное. NPK 2.3-1.2-1.0 + 40 аминокислот. 5 мл/л.' },
+  aminosil:      { name:'Аминосил',           components:['aminosil'], substrate:['coco','soil','peat_neutral','peat_acid','sphagnum','semihydro'], note:'Органоминеральное. NPK 2.3-1.2-1.0 + 40 аминокислот. 5 мл/л.' },
 };
 
 // All fertiliser definitions
+// leafMode: 'none'=корневой только | 'both'=корневой+листовой | 'leaf'=только листовой
+// leafDose: дозировка при листовом (мл/л или кап/л)
+// leafNote: особые условия листового применения
 const ALL_FERTS = [
-  // BASE components
-  { id:'cocoA',    name:'Coco A',        group:'base',  optional:false, leafOnly:false, desc:'N+Ca основа. Всегда до Coco B.' },
-  { id:'cocoB',    name:'Coco B',        group:'base',  optional:false, leafOnly:false, desc:'P+K+Mg. Только после A в разведённом виде.' },
-  { id:'terra',    name:'Terra Vega',    group:'base',  optional:false, leafOnly:false, desc:'NPK 4-2-6. Для почвенных субстратов.' },
-  { id:'p13',      name:'P13 Aroid',     group:'base',  optional:false, leafOnly:false, desc:'Сухое NPK 10-7-12. 1 порция/л.' },
-  { id:'gotaVita', name:'Gota Vita',     group:'base',  optional:false, leafOnly:false, desc:'Аминокислотное NPK 3.5-2.3-5.0.' },
-  { id:'aminosil', name:'Аминосил',      group:'base',  optional:false, leafOnly:false, desc:'NPK 2.3-1.2-1.0 + аминокислоты.' },
-  // ADDON
-  { id:'calmag',   name:'CalMag',        group:'addon', optional:false, leafOnly:false, desc:'Ca+Mg. Обязателен при дистилляте.' },
-  { id:'fulvic',   name:'Фульвик',       group:'addon', optional:false, leafOnly:false, desc:'Фульвокислоты. Хелатирование.' },
-  { id:'hb101',    name:'HB-101',        group:'addon', optional:false, leafOnly:false, desc:'Биостимулятор. 1–3 капли/л.' },
-  { id:'nitrozyme',name:'Нитрозим',      group:'addon', optional:false, leafOnly:false, desc:'Цитокинины (зеатин).' },
-  { id:'radifarm', name:'Радифарм',      group:'addon', optional:false, leafOnly:false, desc:'Корнеобразование.' },
-  { id:'siiplant', name:'Силиплант',     group:'addon', optional:false, leafOnly:false, desc:'Кремний. Добавлять ПОСЛЕДНИМ!' },
-  { id:'previcur', name:'Превикур ⚠',   group:'addon', optional:true,  leafOnly:false, desc:'Фунгицид. ОТДЕЛЬНЫЙ полив!' },
+  // BASE components — только корневые
+  { id:'cocoA',    name:'Coco A',        group:'base',  optional:false, leafOnly:false, leafMode:'none',
+    desc:'N+Ca основа. Всегда до Coco B. Листовое: нельзя — ожог солями.' },
+  { id:'cocoB',    name:'Coco B',        group:'base',  optional:false, leafOnly:false, leafMode:'none',
+    desc:'P+K+Mg. Только после A. Листовое: нельзя — ожог.' },
+  { id:'terra',    name:'Terra Vega',    group:'base',  optional:false, leafOnly:false, leafMode:'none',
+    desc:'NPK 4-2-6. Соил/нейтральный торф. Листовое: нельзя.' },
+  { id:'p13',      name:'P13 Aroid',     group:'base',  optional:false, leafOnly:false, leafMode:'none',
+    desc:'Сухое NPK 10-7-12. Листовое: нельзя.' },
+  { id:'gotaVita', name:'Gota Vita',     group:'base',  optional:false, leafOnly:false, leafMode:'none',
+    desc:'Аминокислотное NPK 3.5-2.3-5.0. Листовое: нельзя.' },
+  { id:'aminosil', name:'Аминосил',      group:'base',  optional:false, leafOnly:false, leafMode:'none',
+    desc:'NPK 2.3-1.2-1.0 + аминокислоты. Листовое: нельзя.' },
+  // ADDON — корневые + некоторые листовые
+  { id:'calmag',   name:'CalMag',        group:'addon', optional:false, leafOnly:false, leafMode:'none',
+    desc:'Ca+Mg. Обязателен при дистилляте. Листовое: нельзя (ожог солями Ca/Mg).' },
+  { id:'fulvic',   name:'Фульвик',       group:'addon', optional:false, leafOnly:false, leafMode:'both',
+    leafDose:'0.3–0.5 мл/л', leafFreq:'раз в 1–2 нед',
+    leafNote:'Совместим с HB-101, Нитрозимом, Мегафолом по листу. Хелатирует питательные вещества.',
+    desc:'Фульвокислоты. Корневой + листовой. Хелатирование, усвоение питания.' },
+  { id:'hb101',    name:'HB-101',        group:'addon', optional:false, leafOnly:false, leafMode:'both',
+    leafDose:'1–2 капли/л', leafFreq:'раз в 2 нед',
+    leafNote:'Иммунопрофилактика. Совместим с Фульвиком и Нитрозимом. Слабо конфликтует с Превикуром (интервал 2 дня).',
+    desc:'Биостимулятор. Корневой + листовой. Иммунитет, антибактериальный эффект.' },
+  { id:'nitrozyme',name:'Нитрозим',      group:'addon', optional:false, leafOnly:false, leafMode:'both',
+    leafDose:'2–3 мл/л', leafFreq:'раз в 2 нед',
+    leafNote:'Листовой эффективнее корневого для стимуляции роста. Совместим с Фульвиком и HB-101 по листу.',
+    desc:'Цитокинины (зеатин). Корневой + листовой. Деление клеток, ускорение роста.' },
+  { id:'radifarm', name:'Радифарм',      group:'addon', optional:false, leafOnly:false, leafMode:'none',
+    desc:'Корнеобразование. Только корневой — листовое неэффективно (стимулятор корней).' },
+  { id:'siiplant', name:'Силиплант',     group:'addon', optional:false, leafOnly:false, leafMode:'both',
+    leafDose:'2–3 мл/л', leafFreq:'раз в 2 нед (отдельный день!)',
+    leafNote:'⚠ ТОЛЬКО отдельным опрыскиванием — не смешивать с Мегафолом и Супераминовитом! Применять вечером при выключенной лампе. Не смывать 6+ ч. Интервал от других листовых: 2–3 дня.',
+    desc:'Кремний Si. ПОСЛЕДНИМ в корневой раствор (поднимает pH!). Листовой — отдельно, вечером. Несовместим с Мегафолом/Супераминовитом в один день.' },
+  { id:'previcur', name:'Превикур ⚠',   group:'addon', optional:true,  leafOnly:false, leafMode:'none',
+    desc:'Фунгицид. Только корневой (полив под корень). Листовое: нельзя — не системный при листовом.' },
   // LEAF ONLY
-  { id:'megafol',  name:'Мегафол',       group:'leaf',  optional:false, leafOnly:true,  desc:'Аминокислоты + B1. Антистресс.' },
-  { id:'aminovit', name:'Супераминовит', group:'leaf',  optional:false, leafOnly:true,  desc:'Гидролизат белка. Чередовать с Мегафолом.' },
+  { id:'megafol',  name:'Мегафол',       group:'leaf',  optional:false, leafOnly:true, leafMode:'leaf',
+    leafDose:'3–4 мл/л', leafFreq:'раз в 10 дней',
+    leafNote:'Совместим с Фульвиком по листу. НЕ смешивать с Силиплантом (разрыв 2–3 дня). НЕ в один день с Супераминовитом.',
+    desc:'L-аминокислоты + витамин B1 + бетаины. Только листовой. Антистресс, восстановление.' },
+  { id:'aminovit', name:'Супераминовит', group:'leaf',  optional:false, leafOnly:true, leafMode:'leaf',
+    leafDose:'2–3 мл/л', leafFreq:'раз в 10 дней (чередовать с Мегафолом)',
+    leafNote:'Совместим с HB-101 по листу. НЕ смешивать с Силиплантом (разрыв 2–3 дня). НЕ в один день с Мегафолом.',
+    desc:'Гидролизат растительного белка. Только листовой. Чередовать с Мегафолом.' },
 ];
 
 // Recommended addons per stage (mandatory / optional)
+// Meristem: based on 4-phase protocol average (not full nutrition!)
 const STAGE_ADDONS = {
-  meristem: { rec:['calmag','fulvic','hb101','nitrozyme','radifarm'], opt:['previcur'] },
-  0:        { rec:['calmag','fulvic','radifarm','nitrozyme'],         opt:['hb101','siiplant','previcur'] },
-  1:        { rec:['calmag','fulvic','hb101','nitrozyme','radifarm'], opt:['siiplant','previcur'] },
-  2:        { rec:['calmag','fulvic','hb101','nitrozyme','siiplant'], opt:['radifarm','previcur'] },
-  3:        { rec:['calmag','fulvic','hb101','nitrozyme','siiplant'], opt:['radifarm','previcur'] },
+  meristem: {
+    rec:['radifarm','fulvic','nitrozyme'],
+    opt:['calmag','hb101','megafol'],
+    // Note: calmag only from phase 3 (day 14+), cocoA/B only from phase 4 (day 28+)
+    info:'⚠ Меристема требует поэтапного введения! Фаза 1 (1–7д): только дистиллят. Фаза 2 (7–14д): Радифарм+Фульвик+Нитрозим. Фаза 3 (14–28д): +CalMag+HB-101. Фаза 4 (28–42д): +Coco A+B.'
+  },
+  0: { rec:['calmag','fulvic','radifarm','nitrozyme'],         opt:['hb101','siiplant','previcur'] },
+  1: { rec:['calmag','fulvic','hb101','nitrozyme','radifarm'], opt:['siiplant','previcur'] },
+  2: { rec:['calmag','fulvic','hb101','nitrozyme','siiplant'], opt:['radifarm','previcur'] },
+  3: { rec:['calmag','fulvic','hb101','nitrozyme','siiplant'], opt:['radifarm','previcur'] },
 };
 
 // Compatibility rules
@@ -631,8 +708,13 @@ const COMPAT_RULES = [
   { ids:['previcur','megafol'],   sev:'strict', title:'Превикур + Мегафол',  risk:'Фунгицид нейтрализует L-аминокислоты Мегафола.',  fix:'Разделить поливы на 2+ дня.' },
   { ids:['previcur','hb101'],     sev:'strict', title:'Превикур + HB-101',   risk:'Терпены HB-101 деградируют под действием фосэтила.', fix:'Интервал 2–3 дня.' },
   { ids:['previcur','aminovit'],  sev:'strict', title:'Превикур + Супераминовит', risk:'Фунгицид нейтрализует аминокислоты.', fix:'Разделить на 2+ дня.' },
+  // СИЛИПЛАНТ несовместимости
+  { ids:['siiplant','calmag'],           sev:'strict', title:'Силиплант + CalMag (порядок внесения)', risk:'Si(OH)₄ + Ca²⁺ → нерастворимый силикат кальция CaSiO₃. Критично при добавлении к концентратам. В рабочем разбавленном растворе допустимо ТОЛЬКО при строгом порядке.', fix:'Строгий порядок: CalMag → Coco A → Coco B → Нитрозим → Радифарм → Силиплант ПОСЛЕДНИМ. Никогда не смешивать концентраты!' },
+  { ids:['siiplant','megafol'],          sev:'warn',   title:'Силиплант + Мегафол (листовая обработка)', risk:'Органические аминокислоты Мегафола конкурируют с Si за устьица — усвоение кремния снижается на 30–40%.', fix:'Разделить листовые обработки: Мегафол — день N, Силиплант — день N+3.' },
+  { ids:['siiplant','aminovit'],         sev:'warn',   title:'Силиплант + Супераминовит (листовая)', risk:'Гидролизат белка снижает усвоение Si при листовой обработке.', fix:'Разделить: Силиплант — отдельным опрыскиванием. Интервал 2–3 дня от аминокислот.' },
+  // ОБЩИЕ
   { ids:['megafol','aminovit'],   sev:'warn',   title:'Мегафол + Супераминовит в один день', risk:'Избыток аминокислот не усваивается — азотная перегрузка.', fix:'Чередовать с интервалом 10 дней.' },
-  { ids:['cocoA','cocoB'],        sev:'info',   title:'Coco A + Coco B — очерёдность', risk:'Нельзя смешивать концентраты — осадок фосфата кальция.', fix:'Сначала A в воду → перемешать → затем B.' },
+  { ids:['cocoA','cocoB'],        sev:'info',   title:'Coco A + Coco B — очерёдность', risk:'Нельзя смешивать концентраты — осадок фосфата кальция.', fix:'Сначала CalMag → A в воду → перемешать → затем B.' },
   { ids:['radifarm','cocoA'],     sev:'warn',   title:'Радифарм + Coco A+B постоянно', risk:'Ауксины и питательные соли конкурируют при постоянном совместном применении.', fix:'Чередовать блоками по 1–2 нед: неделя с Радифармом, неделя без.' },
 ];
 
@@ -1184,9 +1266,9 @@ const SUBSTRATE_MIXES = [
   {plant:'Сингониум',      mix:'Кокос 60% + перлит 25% + вермикулит 15%',              ph:'5.8–6.5', note:'Фитиль — идеально'},
   {plant:'Хойя',           mix:'Кокос 35% + перлит 50% + кора 15%',                    ph:'6.0–6.5', note:'Быстрое пересыхание'},
   {plant:'Спатифиллум',    mix:'Кокос 65% + перлит 20% + кора 15%',                    ph:'6.0–6.5', note:'Фитиль — идеально'},
-  {plant:'Хищники',        mix:'Торф верховой 50% + перлит 50% ИЛИ живой сфагнум 100%', ph:'4.0–5.5', note:'⛔ Без удобрений!'},
+  {plant:'Хищники',        mix:'Торф ВЕРХОВОЙ кислый 50% + перлит 50% ИЛИ живой сфагнум 100%', ph:'4.0–5.5', note:'⛔ Без удобрений! Торф верховой (кислый, pH 3.5–4.5) — НЕ нейтральный торф и НЕ соил!'},
   {plant:'Калатея',        mix:'Кокос 55% + перлит 25% + вермикулит 20%',              ph:'6.0–6.5', note:'Только дистиллят!'},
-  {plant:'Аглаонема',      mix:'Кокос 55% + перлит 25% + торф 20%',                    ph:'5.8–6.3', note:'Универсальная смесь'},
+  {plant:'Аглаонема',      mix:'Кокос 55% + перлит 25% + торф нейтральный 20% (или соил 20%)', ph:'5.8–6.3', note:'Торф ≠ Соил! Торф — без добавок pH 5.5–6.5. Соил — готовый грунт pH 6.0–7.0.'},
   {plant:'Такка',          mix:'Кокос 40% + листовая земля 30% + перлит 20% + вермикулит 10%', ph:'6.0–6.5', note:'PPM до 400'},
   {plant:'Замиокулькас',   mix:'Кокос 40% + перлит 45% + кора 15%',                    ph:'5.8–6.5', note:'Полное просыхание'},
   {plant:'Нефролепис',     mix:'Кокос 50% + торф 30% + перлит 20%',                    ph:'5.5–6.5', note:'½ дозы удобрений'},
@@ -1382,32 +1464,76 @@ function buildBaseFertCheckboxes(baseFertKey) {
 function buildAddonCheckboxes(stageKey) {
   const container = document.getElementById('fertCheckboxesAddon');
   const addonFerts = ALL_FERTS.filter(f => f.group === 'addon');
-  const rec = stageKey ? (STAGE_ADDONS[stageKey]?.rec || []) : [];
-  const opt = stageKey ? (STAGE_ADDONS[stageKey]?.opt || []) : [];
+  const stageData = stageKey ? STAGE_ADDONS[stageKey] : null;
+  const rec = stageData?.rec || [];
+  const opt = stageData?.opt || [];
 
   container.innerHTML = addonFerts.map(f => {
     const isRec = rec.includes(f.id);
     const isOpt = opt.includes(f.id) || f.optional;
     const cls = isRec ? 'is-recommended' : isOpt ? 'is-optional' : '';
-    return `<label class="fert-checkbox-label ${cls}" id="alabel-${f.id}" title="${f.desc}">
+    const tooltip = f.desc + (f.leafMode && f.leafMode !== 'none' ? ` | Листовой: ${f.leafDose||'—'} ${f.leafFreq||''}` : '');
+    const leafBadge = f.leafMode === 'both'
+      ? '<span style="font-size:.65rem;background:#e6f5ec;color:#2d8a50;border-radius:6px;padding:1px 4px;margin-left:2px;border:1px solid #a8d8b4;">+лист</span>'
+      : f.leafMode === 'none'
+      ? '<span style="font-size:.65rem;background:#fdecea;color:#b83232;border-radius:6px;padding:1px 4px;margin-left:2px;border:1px dashed #e8a0a0;">корень</span>'
+      : '';
+    return `<label class="fert-checkbox-label ${cls}" id="alabel-${f.id}" title="${tooltip}">
       <input type="checkbox" id="chk-${f.id}" ${isRec?'checked':''} onchange="onFertChange()">
       ${f.name}
       ${f.optional ? '<span class="optional-marker">опц.</span>' : ''}
-      ${isRec ? '<span style="font-size:.68rem;color:var(--success);margin-left:3px;">✓рек</span>' : ''}
+      ${isRec ? '<span style="font-size:.68rem;color:var(--success);margin-left:2px;">✓рек</span>' : ''}
+      ${leafBadge}
     </label>`;
   }).join('');
+
+  // Show meristem protocol info
+  const existingInfo = document.getElementById('meristemAddonInfo');
+  if (existingInfo) existingInfo.remove();
+  if (stageKey === 'meristem' && stageData?.info) {
+    const infoDiv = document.createElement('div');
+    infoDiv.id = 'meristemAddonInfo';
+    infoDiv.className = 'alert-warning';
+    infoDiv.style.marginTop = '8px';
+    infoDiv.innerHTML = stageData.info;
+    container.parentNode.insertBefore(infoDiv, container.nextSibling);
+  }
 }
 
 function buildLeafCheckboxes() {
   const container = document.getElementById('fertCheckboxesLeaf');
-  const leafFerts = ALL_FERTS.filter(f => f.group === 'leaf');
-  container.innerHTML = leafFerts.map(f =>
-    `<label class="fert-checkbox-label is-leaf" id="llabel-${f.id}" title="${f.desc}">
-      <input type="checkbox" id="chk-${f.id}" onchange="onFertChange()">
+  // Build from ALL_FERTS leafMode data
+  // Show: group='leaf' + group='addon' with leafMode='both'
+  const leafItems = ALL_FERTS.filter(f => f.leafMode === 'leaf' || f.leafMode === 'both');
+  container.innerHTML = leafItems.map(f => {
+    const isBothMode = f.leafMode === 'both';
+    const isSiiplant = f.id === 'siiplant';
+    const tooltip = [f.leafDose ? `Доза: ${f.leafDose}` : '', f.leafFreq || '', f.leafNote || ''].filter(Boolean).join(' | ');
+    const warnBadge = isSiiplant
+      ? '<span class="optional-marker" style="background:#fef8ec;color:#7a5000;border-color:#f0d48a;">⚠ отдельно!</span>'
+      : '';
+    const bothBadge = isBothMode && !isSiiplant
+      ? '<span style="font-size:.65rem;background:#e6f5ec;color:#2d8a50;border-radius:6px;padding:1px 5px;margin-left:2px;border:1px solid #a8d8b4;">корень+лист</span>'
+      : '';
+    return `<label class="fert-checkbox-label is-leaf" id="llabel-leaf-${f.id}" title="${tooltip}">
+      <input type="checkbox" id="chk-leaf-${f.id}" onchange="onFertChange()">
       ${f.name}
       <span class="leaf-marker">лист</span>
-    </label>`
-  ).join('');
+      ${warnBadge}${bothBadge}
+    </label>`;
+  }).join('');
+
+  // Add info block
+  container.insertAdjacentHTML('afterend', `
+    <div id="leafInfoBlock" style="font-size:.78rem;color:var(--text-muted);margin-top:6px;padding:8px 12px;background:#f5f9ff;border:1px solid #c8ddf5;border-radius:var(--radius-sm);">
+      <strong>📋 Рекомендуемые листовые дни:</strong><br>
+      День 1: Фульвик 0.5 + HB-101 2кап + Нитрозим 2–3 мл/л → совместимы<br>
+      День 7: Мегафол 3–4 мл/л + Фульвик 0.3 мл/л → совместимы<br>
+      День 14: <strong>Силиплант 2–3 мл/л — ТОЛЬКО один</strong>, без других препаратов<br>
+      День 17: Супераминовит 2–3 мл/л + HB-101 2кап → совместимы<br>
+      <em>⏱ Все листовые — вечером или при выключенной лампе (за 30 мин до темноты)</em>
+    </div>`
+  );
 }
 
 // =====================================================================
@@ -1415,11 +1541,26 @@ function buildLeafCheckboxes() {
 // =====================================================================
 function onSubstrateChange() {
   const sub = document.getElementById('calcSubstrate').value;
-  // Auto-select best base fert
-  const bestFert = Object.entries(BASE_FERTS).find(([k,v]) => v.substrate.includes(sub));
-  if (bestFert) {
-    document.getElementById('calcBaseFert').value = bestFert[0];
+  // Auto-select best base fert for substrate
+  const subToFert = {
+    coco: 'plagron_coco', coco_bark: 'plagron_coco', coco_perlite: 'plagron_coco',
+    sphagnum: 'plantix_p13', mineral: 'simplex_coco', semihydro: 'plagron_coco',
+    soil: 'simplex_terra', peat_neutral: 'simplex_terra', peat_acid: 'aminosil',
+    carnivore: null
+  };
+  const bestKey = subToFert[sub];
+  if (bestKey) document.getElementById('calcBaseFert').value = bestKey;
+
+  // Carnivore warning
+  const calcGroupInfo = document.getElementById('calcGroupInfo');
+  if (sub === 'peat_acid') {
+    calcGroupInfo.innerHTML = '<div class="alert-warning">⚠ Торф верховой кислый (pH 3.5–4.5): только для хищных растений, кислолюбивых папоротников (Блехнум). Большинство удобрений противопоказаны при pH <5.0!</div>';
+    calcGroupInfo.style.display = 'block';
+  } else if (sub === 'carnivore') {
+    calcGroupInfo.innerHTML = '<div class="alert-danger">⛔ Субстрат для хищников: ТОЛЬКО дистиллят! Никаких удобрений. PPM = 0.</div>';
+    calcGroupInfo.style.display = 'block';
   }
+
   onBaseFertChange();
   calcUpdate();
 }
@@ -1489,12 +1630,48 @@ function getSelectedPlants() {
 // =====================================================================
 // CALCULATOR — GROUP STAGE
 // =====================================================================
+// Meristem 4-phase adaptation protocol
+const MERISTEM_PHASES = [
+  {
+    phase: 1, name:'Фаза 1: Карантин', period:'1–7 дней',
+    ppm: 0, ph: '—',
+    cocoA:0, cocoB:0, calmag:0, radifarm:0, nitrozyme:0, megafol:0, siiplant:0, fulvic:0, hb101:0,
+    note:'⛔ НОЛЬ удобрений. Только дистиллят. Влажность 80–90% (пакет/купол). Свет 50–100 PPFD. T=24–26°C. Цель: выжить, начать фотосинтез.',
+    allowed: [], forbidden: ['Все удобрения', 'CalMag', 'Coco A+B', 'Силиплант'],
+  },
+  {
+    phase: 2, name:'Фаза 2: Первые корни', period:'7–14 дней',
+    ppm: 80, ph: '5.8–6.0',
+    cocoA:0, cocoB:0, calmag:0, radifarm:1.0, nitrozyme:0.5, megafol:1.5, siiplant:0, fulvic:0.3, hb101:1,
+    note:'PPM 50–100. Только Радифарм + Фульвик + Нитрозим. Мегафол 1.5 мл/л по листу раз в нед. БЕЗ CalMag и Coco A+B — корни ещё не готовы.',
+    allowed: ['Радифарм 1 мл/л', 'Фульвик 0.3 мл/л', 'Нитрозим 0.5 мл/л', 'Мегафол 1.5 мл/л (лист)'],
+    forbidden: ['Coco A+B', 'CalMag', 'Силиплант', 'HB-101 (пока не нужен)'],
+  },
+  {
+    phase: 3, name:'Фаза 3: Укрепление', period:'14–28 дней',
+    ppm: 130, ph: '5.8–6.1',
+    cocoA:0, cocoB:0, calmag:0.3, radifarm:1.5, nitrozyme:1.0, megafol:2, siiplant:0, fulvic:0.5, hb101:1,
+    note:'PPM 100–150. Вводим CalMag 0.3 мл/л. Нитрозим 1 мл/л. Мегафол 2 мл/л по листу. HB-101 1 кап/л. Coco A+B ещё нет.',
+    allowed: ['Радифарм 1.5 мл/л', 'Фульвик 0.5 мл/л', 'CalMag 0.3 мл/л', 'Нитрозим 1 мл/л', 'HB-101 1 кап/л', 'Мегафол 2 мл/л (лист)'],
+    forbidden: ['Coco A+B (ещё рано)', 'Силиплант', 'Превикур'],
+  },
+  {
+    phase: 4, name:'Фаза 4: Переход', period:'28–42 дней',
+    ppm: 180, ph: '5.8–6.2',
+    cocoA:0.3, cocoB:0.3, calmag:0.5, radifarm:1.5, nitrozyme:1.0, megafol:3, siiplant:0, fulvic:0.7, hb101:1,
+    note:'PPM 150–200. Начало базового питания Coco A+B по 0.3 мл/л. CalMag 0.5 мл/л. После этой фазы — переход к Этапу 1 (Черенок/клон).',
+    allowed: ['Coco A 0.3 мл/л', 'Coco B 0.3 мл/л', 'CalMag 0.5 мл/л', 'Радифарм 1.5 мл/л', 'Нитрозим 1 мл/л', 'Фульвик 0.7 мл/л', 'HB-101 1 кап/л', 'Мегафол 3 мл/л (лист)'],
+    forbidden: ['Силиплант (ещё рано)', 'Превикур (не профилактически)'],
+  },
+];
+
 const MERISTEM_STAGE = {
-  name:'Меристемный клон', period:'адаптация',
-  ppm:120, ph:'5.8–6.0',
-  cocoA:0, cocoB:0, calmag:0.3, radifarm:2.0, nitrozyme:1.0,
-  megafol:3, siiplant:0, fulvic:0.5, hb101:1,
-  note:'Нет базового питания. Только Радифарм + Нитрозим + Мегафол (лист) + Фульвик.'
+  name:'Меристемный клон (усреднённые данные)', period:'1–42 дня',
+  ppm:120, ph:'5.8–6.1',
+  cocoA:0.1, cocoB:0.1, calmag:0.2, radifarm:1.5, nitrozyme:0.8,
+  megafol:2, siiplant:0, fulvic:0.5, hb101:1,
+  note:'⚠ Меристемный клон требует поэтапного введения удобрений! Смотрите 4-фазный протокол ниже. Дозы усреднены по 4 фазам — не применять все сразу на 1-й день!',
+  _isMeristem: true,
 };
 
 function getStageData(plantId, stageKey) {
@@ -1634,8 +1811,15 @@ function calcUpdate() {
 
   // Substrate factor
   const sub = document.getElementById('calcSubstrate').value;
-  const subFactor = { sphagnum:0.8, mineral:1.1, semihydro:1.2 }[sub] || 1.0;
-  const subPH = { sphagnum:'5.0–5.5', mineral:'5.5–6.0', semihydro:'5.5–6.0', carnivore:'4.0–5.5' }[sub] || s.ph;
+  const subFactor = {
+    sphagnum: 0.8, mineral: 1.1, semihydro: 1.2,
+    peat_neutral: 0.9, peat_acid: 0.7, carnivore: 0.0
+  }[sub] || 1.0;
+  const subPH = {
+    sphagnum: '5.0–5.5', mineral: '5.5–6.0', semihydro: '5.5–6.0',
+    peat_neutral: '5.5–6.5', peat_acid: '4.0–5.5', carnivore: '4.0–5.0',
+    soil: '6.0–7.0'
+  }[sub] || s.ph;
 
   const srcPPM = parseInt(document.getElementById('calcSrcPPM').value) || 0;
   const userTgt = document.getElementById('calcTgtPPM').value;
@@ -1652,21 +1836,84 @@ function calcUpdate() {
   document.getElementById('calcVolDisplay').textContent = vol;
   document.getElementById('calcVolLeaf').textContent = vol;
 
-  // Group info
+  // Group info + meristem protocol
   const groupEl = document.getElementById('calcGroupInfo');
-  if (calcIds.length > 1 || hasCarnivore) {
-    const names = calcIds.map(pid => { const p = plantsData.find(x=>x.id===pid); return p?p.emoji+p.name:pid; });
-    const carnNote = hasCarnivore ? '<br><span style="color:var(--danger);font-size:.8rem;">⚠ Хищники исключены из расчёта — для них только дистиллят!</span>' : '';
-    const warnNote = s.maxPpm && (s.maxPpm - s.ppm) > 150
-      ? `<br><span style="color:var(--danger);font-size:.8rem;">⚠ Большой разброс PPM (${s.ppm}–${s.maxPpm}). Рекомендуется готовить отдельные растворы.</span>` : '';
-    groupEl.innerHTML = `<div style="background:var(--accent-light);border:1px solid #e8c88a;border-radius:var(--radius);padding:10px 14px;font-size:.85rem;">
-      <strong>🌿 Групповой раствор:</strong> ${names.join(', ')}<br>
-      <span style="font-size:.8rem;color:var(--text-muted);">PPM используется минимальный: <strong>${tgtPPM}</strong> (безопасно для всех растений в группе).</span>
-      ${warnNote}${carnNote}
+  let groupHTML = '';
+
+  // Meristem protocol panel
+  if (stageKey === 'meristem') {
+    groupHTML += `<div style="background:#f0f8ff;border:1.5px solid #4472c4;border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;">
+      <div style="font-weight:700;color:#1a3a5c;margin-bottom:10px;font-size:.95rem;">🧬 4-фазный протокол адаптации меристемного клона</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;">
+      ${MERISTEM_PHASES.map(ph => `
+        <div style="background:#fff;border:1px solid #c8d8f0;border-radius:8px;padding:10px 12px;">
+          <div style="font-weight:700;color:#2e6da4;font-size:.85rem;">${ph.name}</div>
+          <div style="font-size:.75rem;color:#888;margin-bottom:6px;">${ph.period}</div>
+          <div style="font-size:.82rem;margin-bottom:4px;"><strong>PPM:</strong> ${ph.ppm} | <strong>pH:</strong> ${ph.ph}</div>
+          <div style="font-size:.78rem;color:#2d8a50;margin-bottom:4px;">
+            ✅ ${ph.allowed.length ? ph.allowed.join(', ') : '—'}
+          </div>
+          <div style="font-size:.78rem;color:#b83232;">
+            ⛔ ${ph.forbidden.join(', ')}
+          </div>
+          <div style="font-size:.75rem;color:#555;margin-top:5px;border-top:1px solid #eee;padding-top:5px;">${ph.note}</div>
+        </div>`).join('')}
+      </div>
+      <div style="font-size:.78rem;color:#7a5000;margin-top:10px;padding:7px 10px;background:#fef8ec;border-radius:6px;">
+        ⚠ Дозировки в калькуляторе ниже = усреднённые значения по всем 4 фазам. Для точного соблюдения протокола — выбирайте фазу вручную.
+      </div>
     </div>`;
+  }
+
+  // Multi-plant info
+  if (calcIds.length > 1 || hasCarnivore) {
+    const names = calcIds.map(pid => { const p = plantsData.find(x=>x.id===pid); return p?p.emoji+' '+p.name:pid; });
+    const carnNote = hasCarnivore ? '<br><span style="color:var(--danger);font-size:.8rem;">⚠ Хищники исключены из расчёта — для них только дистиллят!</span>' : '';
+
+    // PPM table per plant sorted ascending
+    let ppmRows = '';
+    if (stageKey !== 'meristem') {
+      const stageIdx = parseInt(stageKey);
+      const plantPPMs = calcIds
+        .map(pid => {
+          const p = plantsData.find(x=>x.id===pid);
+          if (!p || !p.stages[stageIdx]) return null;
+          return { name: p.emoji+' '+p.name, ppm: p.stages[stageIdx].ppm, ph: p.stages[stageIdx].ph };
+        })
+        .filter(Boolean)
+        .sort((a,b) => a.ppm - b.ppm);
+
+      if (plantPPMs.length > 1) {
+        ppmRows = `<br><div style="margin-top:8px;font-size:.8rem;">
+          <strong>📊 PPM по каждому растению (от меньшего к большему):</strong><br>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;">
+            ${plantPPMs.map((p,i) => `
+              <span style="padding:3px 9px;border-radius:10px;font-weight:600;
+                background:${i===0?'#e6f5ec':i===plantPPMs.length-1?'#fdecea':'#fef8ec'};
+                color:${i===0?'#2d8a50':i===plantPPMs.length-1?'#b83232':'#7a5000'};">
+                ${p.name}: ${p.ppm} ppm (pH ${p.ph})
+              </span>`).join('')}
+          </div>
+          <div style="margin-top:5px;color:#888;">▶ Калькулятор использует <strong>${tgtPPM} ppm</strong> — минимум группы (безопасно для всех)</div>
+        </div>`;
+      }
+    }
+
+    const warnNote = s.maxPpm && (s.maxPpm - s.ppm) > 150
+      ? `<br><span style="color:var(--danger);font-size:.8rem;">⚠ Разброс PPM > 150 (${s.ppm}–${s.maxPpm}). Рекомендуется готовить отдельные растворы.</span>` : '';
+
+    groupHTML += `<div style="background:var(--accent-light);border:1px solid #e8c88a;border-radius:var(--radius);padding:10px 14px;font-size:.85rem;">
+      <strong>🌿 Групповой раствор:</strong> ${names.join(', ')}
+      ${ppmRows}${warnNote}${carnNote}
+    </div>`;
+    groupEl.innerHTML = groupHTML;
+    groupEl.style.display = 'block';
+  } else if (stageKey === 'meristem') {
+    groupEl.innerHTML = groupHTML;
     groupEl.style.display = 'block';
   } else {
-    groupEl.style.display = 'none';
+    groupEl.innerHTML = groupHTML;
+    groupEl.style.display = groupHTML ? 'block' : 'none';
   }
 
   // Get all checked fert IDs
@@ -1715,12 +1962,65 @@ function calcUpdate() {
   if (isChecked('previcur')) rootDoseItems.push({label:'Превикур ⚠', val:(3*vol).toFixed(1)+' мл', cls:'is-optional', warn:'ОТДЕЛЬНЫМ поливом!'});
 
   // --- LEAF DOSES ---
+  // Helper: check if leaf checkbox is checked (uses chk-leaf-{id} IDs)
+  const isLeafChecked = id => { const cb = document.getElementById('chk-leaf-'+id); return cb ? cb.checked : false; };
+
   const leafDoseItems = [];
   if (leafActive) {
-    if (isChecked('megafol')  && s.megafol > 0) leafDoseItems.push({label:'Мегафол', val:(s.megafol*vol).toFixed(2)+' мл', freq:'раз в 10 дней'});
-    if (isChecked('aminovit'))  leafDoseItems.push({label:'Супераминовит', val:(2.5*vol).toFixed(2)+' мл', freq:'раз в 10 дней (чередовать с Мегафолом)'});
-    if (isChecked('nitrozyme') && s.nitrozyme > 0) leafDoseItems.push({label:'Нитрозим (лист)', val:(s.nitrozyme*vol*0.8).toFixed(2)+' мл', freq:'раз в 2 нед'});
-    if (isChecked('hb101'))    leafDoseItems.push({label:'HB-101 (лист)', val:Math.max(1,Math.round(2*vol))+' кап', freq:'раз в 2 нед'});
+    const leafHasSi    = isLeafChecked('siiplant');
+    const leafHasMega  = isLeafChecked('megafol');
+    const leafHasAmino = isLeafChecked('aminovit');
+    const leafHasFulvic= isLeafChecked('fulvic');
+    const leafHasHB    = isLeafChecked('hb101');
+    const leafHasNitro = isLeafChecked('nitrozyme');
+
+    // Build leaf dose items in recommended order
+    if (leafHasFulvic) leafDoseItems.push({
+      label:'Фульвик', val:(0.4*vol).toFixed(2)+' мл',
+      freq:'раз в 1–2 нед | Совместим с HB-101, Нитрозимом, Мегафолом'
+    });
+    if (leafHasHB) leafDoseItems.push({
+      label:'HB-101', val:Math.max(1,Math.round(1.5*vol))+' кап',
+      freq:'раз в 2 нед | Совместим с Фульвиком, Нитрозимом'
+    });
+    if (leafHasNitro) leafDoseItems.push({
+      label:'Нитрозим', val:(2.5*vol).toFixed(2)+' мл',
+      freq:'раз в 2 нед | Листовой эффективнее корневого для роста!'
+    });
+    if (leafHasMega) leafDoseItems.push({
+      label:'Мегафол', val:(s.megafol>0?(s.megafol*vol):(3.5*vol)).toFixed(2)+' мл',
+      freq:'раз в 10 дней | + Фульвик 0.3 мл/л можно совместить'
+    });
+    if (leafHasAmino) leafDoseItems.push({
+      label:'Супераминовит', val:(2.5*vol).toFixed(2)+' мл',
+      freq:'раз в 10 дней | Чередовать с Мегафолом через 10 дней'
+    });
+    // Силиплант — ОТДЕЛЬНО, добавляем как отдельную инструкцию
+    if (leafHasSi) {
+      leafDoseItems.push({
+        label:'Силиплант ⚠ (ОТДЕЛЬНЫЙ ДЕНЬ)',
+        val:(2.5*vol).toFixed(2)+' мл',
+        freq:'раз в 2 нед | Вечером при выкл. лампе. Не смывать 6+ ч.',
+        warn:'Применять отдельно — не смешивать ни с чем!'
+      });
+    }
+    // Conflict warnings
+    if (leafHasSi && (leafHasMega || leafHasAmino || leafHasFulvic || leafHasHB || leafHasNitro)) {
+      leafDoseItems.push({
+        label:'⚠ ВНИМАНИЕ: Силиплант — отдельный день!',
+        val:'—',
+        freq:'Силиплант несовместим с Мегафолом и Супераминовитом в один день листовой обработки. Разделить на 2–3 дня: сначала остальные препараты, потом Силиплант отдельно.',
+        warn:'конфликт'
+      });
+    }
+    if (leafHasMega && leafHasAmino) {
+      leafDoseItems.push({
+        label:'⚠ Мегафол + Супераминовит в один день',
+        val:'—',
+        freq:'Рекомендуется чередовать: день 7 — Мегафол, день 17 — Супераминовит.',
+        warn:'предупреждение'
+      });
+    }
   }
 
   const renderRow = d =>
@@ -1959,7 +2259,7 @@ function renderLog() {
 
   const getPName = id => { const p=plantsData.find(x=>x.id===id); return p?p.emoji+' '+p.name:id; };
   const getFName = id => { const f=ALL_FERTS.find(x=>x.id===id); return f||{name:id,group:'',optional:false}; };
-  const getSub   = v => ({coco:'Кокос',coco_bark:'Кокос+кора',sphagnum:'Мох',soil:'Soil',mineral:'Перлит/мин.',semihydro:'Керамзит'})[v]||v||'—';
+  const getSub   = v => ({coco:'Кокос',coco_bark:'Кокос+кора',coco_perlite:'Кокос+перлит',sphagnum:'Мох',soil:'Соил',peat_neutral:'Торф нейтр.',peat_acid:'Торф кислый',mineral:'Перлит/верм.',semihydro:'Керамзит/LECA',carnivore:'Торф хищники'})[v]||v||'—';
   const getBF    = v => BASE_FERTS[v]?.name||v||'—';
 
   tbody.innerHTML = entries.map(e =>
