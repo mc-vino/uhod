@@ -3,189 +3,234 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Martian+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <title>🌿 Зеленое безумие</title>
 <style>
-:root {
-  --bg:#f5f6f0;--card:#fff;--primary:#3d6b3a;--primary-light:#e8f0e6;--primary-dark:#2c4f2a;
-  --accent:#c8873a;--accent-light:#fdf0e2;--text:#1e1e1e;--text-light:#4a4a4a;--text-muted:#888;
-  --border:#e0e2d8;--border-light:#eceee6;--shadow:0 2px 10px rgba(0,0,0,.07);
-  --shadow-sm:0 1px 4px rgba(0,0,0,.05);--radius:10px;--radius-sm:6px;--radius-lg:14px;
-  --danger:#b83232;--warning:#d4791a;--info:#2572a8;--success:#2d8a50;--optional:#6b4fa8;
-  --sidebar-w:270px;--header-h:58px;
-  --font:'Georgia','Times New Roman',serif;--font-ui:'Segoe UI',system-ui,sans-serif;
+:root{
+  /* === A+C palette: brutalism × bento === */
+  --bg:#F2F0E6; --bg-2:#ECE8DA; --card:#FBFAF4; --paper:#FBFAF4;
+  --ink:#17150F; --text:#17150F; --text-light:#54503F; --text-muted:#8B856F;
+  --primary:#1E4A2D; --primary-light:#DEE7D2; --primary-dark:#16331F;
+  --accent:#A6D227; --lime:#C6F03C; --lime-deep:#A6D227;
+  --terra:#CC5E2E; --terra-soft:#F7E2D2;
+  --sage:#DEE7D2; --sky:#D6E6EE; --peach:#F8E2D1; --lilac:#E8E0F1; --butter:#F6EBC6;
+  --border:#17150F; --border-light:#D9D4C4; --bw:2.5px;
+  --shadow:5px 5px 0 var(--ink); --shadow-sm:3px 3px 0 var(--ink);
+  --shadow-lime:5px 5px 0 var(--lime-deep);
+  --radius:20px; --radius-sm:13px; --radius-lg:22px;
+  --danger:#C0341F; --warning:#C77B14; --info:#256C9E; --success:#1F8A4C; --optional:#7A4FC0;
+  --sidebar-w:264px; --header-h:62px;
+  --font:'Bricolage Grotesque',sans-serif;
+  --font-ui:'Hanken Grotesk','Segoe UI',sans-serif;
+  --mono:'Martian Mono','ui-monospace',monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:var(--font-ui);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
-.header{position:sticky;top:0;z-index:100;height:var(--header-h);background:var(--primary-dark);color:#fff;display:flex;align-items:center;padding:0 20px;gap:14px;box-shadow:0 2px 12px rgba(0,0,0,.18)}
-.header-logo{font-family:var(--font);font-weight:700;font-size:1.15rem;color:#fff;cursor:pointer;white-space:nowrap;text-decoration:none;display:flex;align-items:center;gap:8px;letter-spacing:.01em}
-.header-logo span{color:#a8d5a0}
-.header-search-wrap{flex:1;max-width:480px;position:relative}
-.header-search{width:100%;padding:9px 16px 9px 40px;border:none;border-radius:20px;font-size:.9rem;background:rgba(255,255,255,.15);color:#fff;outline:none;transition:.2s}
-.header-search::placeholder{color:rgba(255,255,255,.55)}
-.header-search:focus{background:rgba(255,255,255,.25)}
-.header-search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);opacity:.7;font-size:.9rem}
-.search-dropdown{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 6px 20px rgba(0,0,0,.12);max-height:380px;overflow-y:auto;display:none;z-index:300}
+body{
+  font-family:var(--font-ui);background:var(--bg);color:var(--ink);line-height:1.55;
+  min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;
+  background-image:radial-gradient(120% 80% at 88% -8%,rgba(198,240,60,.18),transparent 58%),radial-gradient(90% 70% at -8% 8%,rgba(204,94,46,.08),transparent 55%);
+  background-attachment:fixed;
+}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:multiply}
+::selection{background:var(--lime);color:var(--ink)}
+h1,h2,h3,h4{font-family:var(--font);font-weight:800;letter-spacing:-.025em;line-height:1.04}
+
+/* ===== HEADER ===== */
+.header{position:sticky;top:0;z-index:200;height:var(--header-h);background:rgba(242,240,230,.82);backdrop-filter:blur(12px);border-bottom:var(--bw) solid var(--ink);display:flex;align-items:center;padding:0 20px;gap:14px}
+.header-logo{font-family:var(--font);font-weight:800;font-size:1.14rem;color:var(--ink);cursor:pointer;white-space:nowrap;text-decoration:none;display:flex;align-items:center;gap:9px;letter-spacing:-.02em}
+.header-logo span{color:var(--ink)}
+.header-search-wrap{flex:1;max-width:460px;position:relative}
+.header-search{width:100%;padding:10px 16px 10px 40px;border:var(--bw) solid var(--ink);border-radius:999px;font-size:.88rem;background:var(--paper);color:var(--ink);outline:none;transition:.15s;font-family:var(--font-ui);font-weight:600}
+.header-search::placeholder{color:var(--text-muted);font-weight:500}
+.header-search:focus{box-shadow:var(--shadow-sm)}
+.header-search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.6;font-size:.85rem}
+.search-dropdown{position:absolute;top:calc(100% + 8px);left:0;right:0;background:var(--paper);border:var(--bw) solid var(--ink);border-radius:var(--radius-sm);box-shadow:var(--shadow);max-height:380px;overflow-y:auto;display:none;z-index:300}
 .search-dropdown.active{display:block}
-.search-result-item{padding:10px 16px;cursor:pointer;border-bottom:1px solid var(--border-light);font-size:.88rem;color:var(--text);transition:.15s}
-.search-result-item:hover{background:var(--primary-light)}
-.search-result-sub{font-size:.78rem;color:var(--text-muted);margin-top:2px}
+.search-result-item{padding:11px 16px;cursor:pointer;border-bottom:2px solid var(--border-light);font-size:.88rem;color:var(--ink);transition:.12s}
+.search-result-item:last-child{border-bottom:none}
+.search-result-item:hover{background:var(--lime)}
+.search-result-sub{font-family:var(--mono);font-size:.66rem;color:var(--text-muted);margin-top:3px;text-transform:uppercase;letter-spacing:.05em}
 .no-results{padding:18px;text-align:center;color:var(--text-muted);font-size:.9rem}
-.menu-toggle{display:none;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;padding:4px}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:16px;font-size:.85rem;font-weight:600;cursor:pointer;border:none;transition:.2s;text-decoration:none;white-space:nowrap;font-family:var(--font-ui)}
-.btn-accent{background:var(--accent);color:#fff}
-.btn-accent:hover{background:#b5722e}
-.btn-outline{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3)}
-.btn-outline:hover{background:rgba(255,255,255,.25)}
-.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:150}
+.menu-toggle{display:none;background:var(--lime);border:var(--bw) solid var(--ink);border-radius:10px;width:40px;height:40px;color:var(--ink);font-size:1.2rem;cursor:pointer;padding:0;box-shadow:var(--shadow-sm)}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:999px;font-size:.85rem;font-weight:800;cursor:pointer;border:var(--bw) solid var(--ink);transition:.15s;text-decoration:none;white-space:nowrap;font-family:var(--font-ui);background:var(--paper);color:var(--ink)}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow-sm)}
+.btn:active{transform:translate(2px,2px);box-shadow:none}
+.btn-accent{background:var(--lime);color:var(--ink);box-shadow:var(--shadow-sm)}
+.btn-accent:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.btn-accent:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn-outline{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn-outline:hover{background:var(--ink);color:var(--bg)}
+
+/* ===== SIDEBAR ===== */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(23,21,15,.45);z-index:150}
 .sidebar-overlay.active{display:block}
 .main-layout{display:flex;flex:1}
-.sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--card);border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;position:sticky;top:var(--header-h);height:calc(100vh - var(--header-h));z-index:50}
-.sidebar-section{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);font-weight:700;padding:14px 16px 5px}
-.sidebar-divider{border:none;border-top:1px solid var(--border-light);margin:6px 14px}
-.sidebar-nav{list-style:none;padding:0 8px}
-.sidebar-nav a{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:var(--radius-sm);text-decoration:none;color:var(--text-light);font-size:.9rem;cursor:pointer;transition:.15s}
-.sidebar-nav a:hover{background:var(--primary-light);color:var(--primary-dark)}
-.sidebar-nav a.active{background:var(--primary);color:#fff;font-weight:600}
-.content{flex:1;padding:22px 26px;max-width:1060px;width:100%;margin:0 auto}
-.page{display:none;animation:fadeIn .22s ease}
+.sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--bg-2);border-right:var(--bw) solid var(--ink);overflow-y:auto;padding:14px 0;position:sticky;top:var(--header-h);height:calc(100vh - var(--header-h));z-index:50}
+.sidebar-section{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-muted);font-weight:600;padding:16px 18px 6px}
+.sidebar-divider{border:none;border-top:2px solid var(--border-light);margin:8px 16px}
+.sidebar-nav{list-style:none;padding:0 10px}
+.sidebar-nav a{display:flex;align-items:center;gap:10px;padding:10px 13px;border-radius:11px;text-decoration:none;color:var(--text-light);font-size:.9rem;font-weight:600;cursor:pointer;transition:.13s;border:2px solid transparent}
+.sidebar-nav a:hover{background:var(--paper);border-color:var(--ink);color:var(--ink)}
+.sidebar-nav a.active{background:var(--lime);color:var(--ink);font-weight:800;border-color:var(--ink);box-shadow:var(--shadow-sm)}
+
+.content{flex:1;padding:24px 26px 80px;max-width:1100px;width:100%;margin:0 auto}
+.page{display:none;animation:rise .35s cubic-bezier(.2,.7,.3,1)}
 .page.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 22px;margin-bottom:18px;box-shadow:var(--shadow-sm)}
-.card-header{font-weight:700;font-size:1.05rem;margin-bottom:14px;color:var(--primary-dark);display:flex;align-items:center;gap:8px}
-.card-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table{width:100%;border-collapse:collapse;font-size:.83rem;min-width:480px}
-table th{background:var(--primary-light);color:var(--primary-dark);font-weight:700;padding:9px 10px;border:1px solid var(--border);text-align:left;white-space:nowrap}
-table td{padding:8px 10px;border:1px solid var(--border-light);vertical-align:top}
-table tr:nth-child(even) td{background:#fafbf8}
-table tr:hover td{background:#f2f5ef}
-.badge{display:inline-block;padding:2px 9px;border-radius:10px;font-size:.73rem;font-weight:700;white-space:nowrap}
-.badge-blue{background:#e8f2fb;color:#2572a8}
-.badge-green{background:#e6f5ec;color:#2d8a50}
-.badge-accent{background:var(--accent-light);color:#8a5c1a}
-.badge-orange{background:#fef4e8;color:#c47316}
-.badge-red{background:#fdecea;color:#b83232}
-.badge-purple{background:#f0eafa;color:#6b4fa8}
-.badge-optional{background:#f0eafa;color:#6b4fa8;border:1px dashed #9b79d4}
-/* CALCULATOR */
-.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.form-group{margin-bottom:10px}
-.form-group label{display:block;font-weight:600;font-size:.83rem;margin-bottom:4px;color:var(--text-light)}
-.form-group select,.form-group input{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.92rem;background:#fff;color:var(--text);transition:.2s;font-family:var(--font-ui)}
-.form-group select:focus,.form-group input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(61,107,58,.09)}
-.form-group .hint{font-size:.73rem;color:var(--text-muted);margin-top:2px}
-/* FERT CHECKBOXES - two separate sections */
-.fert-section-title{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--primary-dark);margin:12px 0 6px;padding:5px 10px;background:var(--primary-light);border-radius:var(--radius-sm)}
-.fert-checkboxes{display:flex;flex-wrap:wrap;gap:8px;padding:10px 12px;background:var(--bg);border-radius:var(--radius);border:1px solid var(--border-light);margin-bottom:10px}
-.fert-checkbox-label{display:flex;align-items:center;gap:6px;font-size:.85rem;cursor:pointer;user-select:none;padding:4px 10px;border-radius:14px;transition:.15s;border:1px solid var(--border);background:#fff}
-.fert-checkbox-label:hover{border-color:var(--primary);background:var(--primary-light)}
-.fert-checkbox-label.is-recommended{border-color:var(--primary);background:var(--primary-light)}
-.fert-checkbox-label.is-optional{border-color:#c8b8e8;background:#faf7ff;color:var(--optional)}
-.fert-checkbox-label.is-leaf{border-color:#9ecde0;background:#eaf4fb}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== CARDS / TILES ===== */
+.card{background:var(--paper);border:var(--bw) solid var(--ink);border-radius:var(--radius-lg);padding:22px;margin-bottom:18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card-header{font-family:var(--font);font-weight:800;font-size:1.18rem;margin-bottom:15px;color:var(--ink);display:flex;align-items:center;gap:9px;letter-spacing:-.02em}
+.card-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;gap:12px}
+
+/* ===== TABLES (data = mono) ===== */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:var(--bw) solid var(--ink);border-radius:var(--radius-sm)}
+table{width:100%;border-collapse:collapse;font-size:.84rem;min-width:480px;background:var(--paper)}
+table th{background:var(--ink);color:var(--bg);font-family:var(--mono);font-weight:600;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;padding:11px 11px;border:1px solid var(--ink);text-align:left;white-space:nowrap}
+table td{padding:10px 11px;border:1px solid var(--border-light);vertical-align:top}
+table tr:nth-child(even) td{background:#F6F4EA}
+table tr:hover td{background:var(--sage)}
+
+/* ===== BADGES → tags ===== */
+.badge{display:inline-block;padding:3px 10px;border-radius:8px;font-family:var(--mono);font-size:.64rem;font-weight:600;letter-spacing:.04em;white-space:nowrap;border:2px solid var(--ink);background:var(--paper)}
+.badge-blue{background:var(--sky)} .badge-green{background:var(--sage)} .badge-accent{background:var(--lime)}
+.badge-orange{background:var(--peach)} .badge-red{background:var(--terra);color:#fff;border-color:var(--terra)}
+.badge-purple{background:var(--lilac)} .badge-optional{background:var(--lilac);color:var(--optional);border-style:dashed}
+
+/* ===== CALCULATOR ===== */
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{margin-bottom:12px}
+.form-group label{display:block;font-family:var(--mono);font-weight:600;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;color:var(--text-light)}
+.form-group select,.form-group input{width:100%;padding:10px 13px;border:var(--bw) solid var(--ink);border-radius:11px;font-size:.92rem;background:var(--paper);color:var(--ink);transition:.15s;font-family:var(--font-ui);font-weight:600}
+.form-group select:focus,.form-group input:focus{outline:none;box-shadow:var(--shadow-sm)}
+.form-group .hint{font-family:var(--mono);font-size:.62rem;color:var(--text-muted);margin-top:4px;letter-spacing:.03em}
+.fert-section-title{font-family:var(--mono);font-size:.66rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink);margin:14px 0 7px;padding:7px 11px;background:var(--lime);border:2px solid var(--ink);border-radius:9px;display:inline-block}
+.fert-checkboxes{display:flex;flex-wrap:wrap;gap:8px;padding:12px;background:var(--bg-2);border-radius:var(--radius-sm);border:2px solid var(--border-light);margin-bottom:10px}
+.fert-checkbox-label{display:flex;align-items:center;gap:7px;font-size:.85rem;font-weight:600;cursor:pointer;user-select:none;padding:6px 12px;border-radius:999px;transition:.13s;border:var(--bw) solid var(--ink);background:var(--paper)}
+.fert-checkbox-label:hover{background:var(--sage)}
+.fert-checkbox-label.is-recommended{background:var(--lime);box-shadow:var(--shadow-sm)}
+.fert-checkbox-label.is-optional{border-style:dashed;background:var(--lilac);color:var(--optional)}
+.fert-checkbox-label.is-leaf{background:var(--sky)}
 .fert-checkbox-label input[type=checkbox]{width:15px;height:15px;accent-color:var(--primary)}
-.optional-marker{font-size:.68rem;background:#f0eafa;color:var(--optional);border-radius:8px;padding:1px 5px;margin-left:2px;font-weight:700;border:1px dashed #9b79d4}
-.leaf-marker{font-size:.68rem;background:#eaf4fb;color:#2572a8;border-radius:8px;padding:1px 5px;margin-left:2px;font-weight:700;border:1px dashed #9ecde0}
-.result-box{background:var(--primary-light);border:1.5px solid #9dbd9a;border-radius:var(--radius);padding:14px 16px;margin-top:10px}
-.result-item{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dotted var(--border);font-size:.88rem}
+.optional-marker{font-family:var(--mono);font-size:.58rem;background:var(--lilac);color:var(--optional);border-radius:6px;padding:2px 5px;margin-left:2px;font-weight:600;border:1.5px dashed var(--optional)}
+.leaf-marker{font-family:var(--mono);font-size:.58rem;background:var(--sky);color:var(--info);border-radius:6px;padding:2px 5px;margin-left:2px;font-weight:600;border:1.5px solid var(--info)}
+
+.result-box{background:var(--bg-2);border:var(--bw) solid var(--ink);border-radius:var(--radius-sm);padding:15px 16px;margin-top:10px}
+.result-item{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px dotted var(--border-light);font-size:.86rem}
 .result-item:last-child{border-bottom:none}
-.result-item .val{font-weight:700;color:var(--primary-dark)}
+.result-item .val{font-family:var(--mono);font-weight:700;color:var(--primary)}
+
+/* mixing steps */
 .mixing-steps{list-style:none;counter-reset:step;padding:0}
-.mixing-steps li{counter-increment:step;padding:9px 12px 9px 44px;position:relative;margin:5px 0;background:#fff;border-radius:var(--radius-sm);border:1px solid var(--border-light);font-size:.87rem}
-.mixing-steps li::before{content:counter(step);position:absolute;left:9px;top:50%;transform:translateY(-50%);width:26px;height:26px;background:var(--primary);color:#fff;border-radius:50%;text-align:center;line-height:26px;font-weight:700;font-size:.75rem}
-.mixing-steps li.step-warn{background:#fef8ec;border-color:#f0d48a}
-.mixing-steps li.step-warn::before{background:var(--warning)}
-.mixing-steps li.step-final{background:var(--primary-light);font-weight:600}
-.mixing-steps li.step-final::before{background:var(--success)}
-.mixing-steps li.step-info{background:#eaf4fb;border-color:#b8d8ef}
+.mixing-steps li{counter-increment:step;padding:11px 13px 11px 46px;position:relative;margin:7px 0;background:var(--bg-2);border:2px solid var(--ink);border-radius:11px;font-size:.86rem}
+.mixing-steps li::before{content:counter(step);position:absolute;left:9px;top:50%;transform:translateY(-50%);width:27px;height:27px;background:var(--ink);color:var(--lime);border-radius:8px;text-align:center;line-height:27px;font-family:var(--mono);font-weight:700;font-size:.72rem}
+.mixing-steps li.step-warn{background:var(--butter)}
+.mixing-steps li.step-final{background:var(--lime);font-weight:700}
+.mixing-steps li.step-final::before{background:var(--primary);color:#fff}
+.mixing-steps li.step-info{background:var(--sky)}
 .mixing-steps li.step-info::before{background:var(--info)}
-.alert-info{background:#eaf4fb;border:1px solid #b8d8ef;border-radius:var(--radius-sm);padding:10px 14px;font-size:.85rem;color:#1e5580;margin-top:10px}
-.alert-warning{background:#fef8ec;border:1px solid #f0d48a;border-radius:var(--radius-sm);padding:10px 14px;font-size:.85rem;color:#7a5000;margin-top:10px}
-.alert-danger{background:#fdecea;border:1px solid #e8a0a0;border-radius:var(--radius-sm);padding:10px 14px;font-size:.85rem;color:#7a1a1a;margin-top:10px}
-/* PLANT GRID */
-.plant-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-top:4px}
-.plant-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 14px;cursor:pointer;transition:.2s;text-align:center}
-.plant-card:hover{box-shadow:var(--shadow);border-color:var(--primary);transform:translateY(-2px)}
-.plant-card-emoji{font-size:2rem;margin-bottom:6px}
-.plant-card h3{font-size:.95rem;font-weight:700;color:var(--primary-dark);margin-bottom:3px}
-.plant-card p{font-size:.75rem;color:var(--text-muted)}
-/* STAGE TABS */
-.stage-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.stage-tab{padding:5px 12px;border-radius:14px;border:1.5px solid var(--border);background:#fff;font-size:.82rem;cursor:pointer;transition:.15s;font-family:var(--font-ui);color:var(--text-light)}
-.stage-tab.active{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600}
+
+.alert-info{background:var(--sky);border:2px solid var(--ink);border-radius:var(--radius-sm);padding:11px 14px;font-size:.85rem;color:var(--ink);margin-top:10px}
+.alert-warning{background:var(--butter);border:2px solid var(--ink);border-radius:var(--radius-sm);padding:11px 14px;font-size:.85rem;color:var(--ink);margin-top:10px}
+.alert-danger{background:var(--terra-soft);border:2px solid var(--ink);border-radius:var(--radius-sm);padding:11px 14px;font-size:.85rem;color:var(--ink);margin-top:10px}
+
+/* ===== PLANT GRID (bento-ish cards) ===== */
+.plant-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(184px,1fr));gap:16px;margin-top:4px}
+.plant-card{background:var(--paper);border:var(--bw) solid var(--ink);border-radius:var(--radius-lg);padding:18px 16px;cursor:pointer;transition:.2s;text-align:left;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+.plant-card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.plant-card:nth-child(4n+1){background:var(--sage)} .plant-card:nth-child(4n+2){background:var(--sky)}
+.plant-card:nth-child(4n+3){background:var(--peach)} .plant-card:nth-child(4n){background:var(--lilac)}
+.plant-card-emoji{font-size:2.1rem;margin-bottom:7px;display:block}
+.plant-card h3{font-size:1.16rem;font-weight:800;color:var(--ink);margin-bottom:3px;letter-spacing:-.02em}
+.plant-card p{font-family:var(--mono);font-size:.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+
+/* ===== STAGE TABS ===== */
+.stage-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:15px}
+.stage-tab{padding:7px 14px;border-radius:999px;border:var(--bw) solid var(--ink);background:var(--paper);font-size:.82rem;font-weight:700;cursor:pointer;transition:.13s;font-family:var(--font-ui);color:var(--ink)}
+.stage-tab:hover{background:var(--sage)}
+.stage-tab.active{background:var(--lime);color:var(--ink);font-weight:800;box-shadow:var(--shadow-sm)}
 .stage-detail{display:none}
 .stage-detail.active{display:block}
-.stage-params{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-bottom:14px}
-.stage-param{background:var(--bg);border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:10px 12px;text-align:center}
-.stage-param-val{font-size:1.05rem;font-weight:700;color:var(--primary-dark)}
-.stage-param-label{font-size:.7rem;color:var(--text-muted);margin-top:2px}
-.fert-doses{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:12px}
-.fert-dose-item{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;display:flex;justify-content:space-between;align-items:center;font-size:.85rem}
-.fert-dose-item.is-optional{border-color:#c8b8e8;background:#faf7ff}
-.fert-dose-item.is-leaf{border-color:#9ecde0;background:#eaf4fb}
-/* LOG */
-.log-form-inline{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:16px}
+.stage-params{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:9px;margin-bottom:15px}
+.stage-param{background:var(--ink);border:var(--bw) solid var(--ink);border-radius:12px;padding:12px;text-align:center;color:var(--bg)}
+.stage-param-val{font-family:var(--mono);font-size:1.05rem;font-weight:700;color:var(--lime)}
+.stage-param-label{font-family:var(--mono);font-size:.56rem;color:#b9b4a0;margin-top:4px;text-transform:uppercase;letter-spacing:.08em}
+.fert-doses{display:grid;grid-template-columns:repeat(auto-fill,minmax(164px,1fr));gap:9px;margin-bottom:12px}
+.fert-dose-item{background:var(--paper);border:2px solid var(--ink);border-radius:11px;padding:10px 13px;display:flex;justify-content:space-between;align-items:center;font-size:.85rem;font-weight:600}
+.fert-dose-item.is-optional{border-style:dashed;background:var(--lilac)}
+.fert-dose-item.is-leaf{background:var(--sky)}
+.fert-dose-val{font-family:var(--mono);font-weight:700;color:var(--primary)}
+
+/* ===== LOG ===== */
+.log-form-inline{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;background:var(--bg-2);border:var(--bw) solid var(--ink);border-radius:var(--radius-sm);padding:15px 16px;margin-bottom:16px}
 .log-form-inline .form-group{margin-bottom:0;min-width:130px}
-.fert-multi-check{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
-.fert-multi-check label{display:flex;align-items:center;gap:5px;font-size:.8rem;cursor:pointer;padding:3px 8px;background:#fff;border:1px solid var(--border);border-radius:12px;transition:.15s}
-.fert-multi-check label:hover{border-color:var(--primary)}
-.fert-multi-check input:checked+span{color:var(--primary);font-weight:600}
+.fert-multi-check{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.fert-multi-check label{display:flex;align-items:center;gap:5px;font-size:.8rem;font-weight:600;cursor:pointer;padding:4px 9px;background:var(--paper);border:2px solid var(--ink);border-radius:999px;transition:.12s}
+.fert-multi-check label:hover{background:var(--sage)}
+.fert-multi-check input:checked+span{color:var(--primary);font-weight:800}
 .fert-multi-check input{width:13px;height:13px;accent-color:var(--primary)}
-.log-table{width:100%;border-collapse:collapse;font-size:.83rem}
-.log-table th{background:var(--primary-light);color:var(--primary-dark);font-weight:700;padding:8px 10px;border:1px solid var(--border);text-align:left;white-space:nowrap}
-.log-table td{padding:7px 10px;border:1px solid var(--border-light);vertical-align:middle}
-.log-table tr:nth-child(even) td{background:#fafbf8}
-.fert-tag{font-size:.7rem;padding:1px 7px;border-radius:8px;background:var(--primary-light);color:var(--primary-dark);font-weight:600;white-space:nowrap;display:inline-block;margin:1px}
-.fert-tag.opt{background:#f0eafa;color:var(--optional)}
-.fert-tag.leaf{background:#eaf4fb;color:var(--info)}
-.log-delete,.log-copy{background:none;border:none;cursor:pointer;font-size:1rem;padding:2px 6px;border-radius:4px;transition:.15s}
-.log-delete{color:var(--danger)}.log-delete:hover{background:#fdecea}
-.log-copy{color:var(--info)}.log-copy:hover{background:#e8f2fb}
-.log-empty{text-align:center;color:var(--text-muted);padding:32px;font-size:.9rem}
-.log-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:16px}
-.log-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px}
-.log-stat-val{font-size:1.5rem;font-weight:700;color:var(--primary-dark)}
-.log-stat-label{font-size:.75rem;color:var(--text-muted)}
+.log-table{width:100%;border-collapse:collapse;font-size:.83rem;background:var(--paper)}
+.log-table th{background:var(--ink);color:var(--bg);font-family:var(--mono);font-weight:600;font-size:.64rem;text-transform:uppercase;letter-spacing:.05em;padding:10px;border:1px solid var(--ink);text-align:left;white-space:nowrap}
+.log-table td{padding:9px 10px;border:1px solid var(--border-light);vertical-align:middle}
+.log-table tr:nth-child(even) td{background:#F6F4EA}
+.fert-tag{font-family:var(--mono);font-size:.6rem;padding:2px 7px;border-radius:7px;background:var(--sage);color:var(--primary-dark);font-weight:600;white-space:nowrap;display:inline-block;margin:1px;border:1.5px solid var(--ink)}
+.fert-tag.opt{background:var(--lilac);color:var(--optional)}
+.fert-tag.leaf{background:var(--sky);color:var(--info)}
+.log-delete,.log-copy{background:none;border:2px solid transparent;cursor:pointer;font-size:1rem;padding:3px 7px;border-radius:8px;transition:.12s}
+.log-delete{color:var(--danger)} .log-delete:hover{background:var(--terra-soft);border-color:var(--ink)}
+.log-copy{color:var(--info)} .log-copy:hover{background:var(--sky);border-color:var(--ink)}
+.log-empty{text-align:center;color:var(--text-muted);padding:32px;font-size:.9rem;font-family:var(--mono);letter-spacing:.05em}
+.log-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(136px,1fr));gap:11px;margin-bottom:16px}
+.log-stat{background:var(--paper);border:var(--bw) solid var(--ink);border-radius:var(--radius-sm);padding:14px;box-shadow:var(--shadow-sm)}
+.log-stat:nth-child(1){background:var(--lime)} .log-stat:nth-child(2){background:var(--sage)}
+.log-stat:nth-child(3){background:var(--sky)} .log-stat:nth-child(4){background:var(--peach)}
+.log-stat-val{font-family:var(--font);font-size:1.6rem;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+.log-stat-label{font-family:var(--mono);font-size:.6rem;color:var(--text-light);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
 .log-filter-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
-.log-filter-row select,.log-filter-row input{padding:7px 11px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.85rem;background:#fff;font-family:var(--font-ui)}
-.problem-row td:first-child{font-weight:500;color:var(--danger)}
-.tips-list{padding-left:20px}
-.tips-list li{margin:5px 0;font-size:.87rem}
-.tips-list li::marker{color:var(--primary)}
-.scroll-top{position:fixed;bottom:22px;right:22px;width:38px;height:38px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;font-size:1.1rem;box-shadow:0 3px 10px rgba(0,0,0,.2);z-index:60;display:none;transition:.2s}
+.log-filter-row select,.log-filter-row input{padding:8px 12px;border:var(--bw) solid var(--ink);border-radius:10px;font-size:.85rem;background:var(--paper);font-family:var(--font-ui);font-weight:600}
+.problem-row td:first-child{font-weight:600;color:var(--danger)}
+.tips-list{padding-left:4px;list-style:none}
+.tips-list li{margin:8px 0;font-size:.88rem;padding-left:24px;position:relative}
+.tips-list li::before{content:"";position:absolute;left:2px;top:8px;width:9px;height:9px;background:var(--lime-deep);border:1.5px solid var(--ink);border-radius:3px}
+
+.scroll-top{position:fixed;bottom:22px;right:22px;width:44px;height:44px;border-radius:12px;background:var(--lime);color:var(--ink);border:var(--bw) solid var(--ink);cursor:pointer;font-size:1.1rem;box-shadow:var(--shadow-sm);z-index:60;display:none;transition:.15s}
+.scroll-top:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
 .scroll-top.visible{display:flex;align-items:center;justify-content:center}
-/* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.5);align-items:center;justify-content:center}
+
+/* ===== MODAL ===== */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(23,21,15,.5);align-items:center;justify-content:center}
 .modal-overlay.active{display:flex}
-.modal-box{background:#fff;border-radius:var(--radius-lg);padding:24px 28px;max-width:540px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,.2);position:relative;max-height:85vh;overflow-y:auto}
-/* INCOMPAT TABLE */
-.incompat-strict{background:#fdecea}
-.incompat-warn{background:#fef8ec}
-.incompat-info{background:#eaf4fb}
-/* SUBSTRATE BADGE */
-.sub-badge{display:inline-block;padding:2px 8px;border-radius:8px;font-size:.72rem;font-weight:600;margin:1px}
-.sub-ok{background:#e6f5ec;color:#2d8a50}
-.sub-warn{background:#fef8ec;color:#7a5000}
-.sub-no{background:#fdecea;color:#7a1a1a}
-@media(max-width:860px){
-  .sidebar{position:fixed;left:-100%;top:var(--header-h);height:calc(100vh - var(--header-h));z-index:160;transition:.28s;width:270px}
+.modal-box{background:var(--paper);border:var(--bw) solid var(--ink);border-radius:var(--radius-lg);padding:26px 28px;max-width:540px;width:90%;box-shadow:8px 8px 0 var(--ink);position:relative;max-height:85vh;overflow-y:auto}
+
+/* ===== INCOMPAT ===== */
+.incompat-strict{background:var(--terra-soft)!important} .incompat-strict td{background:transparent!important}
+.incompat-warn{background:var(--butter)!important} .incompat-warn td{background:transparent!important}
+.incompat-info{background:var(--sky)!important} .incompat-info td{background:transparent!important}
+.sub-badge{display:inline-block;padding:3px 9px;border-radius:7px;font-family:var(--mono);font-size:.62rem;font-weight:600;margin:1px;border:2px solid var(--ink)}
+.sub-ok{background:var(--sage)} .sub-warn{background:var(--butter)} .sub-no{background:var(--terra-soft)}
+
+@media(max-width:900px){
+  .sidebar{position:fixed;left:-110%;top:var(--header-h);height:calc(100vh - var(--header-h));z-index:160;transition:.28s;width:270px}
   .sidebar.open{left:0}
   .menu-toggle{display:block}
-  .content{padding:14px}
+  .content{padding:16px}
   .calc-grid{grid-template-columns:1fr}
-  .plant-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+  .plant-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
   #calcDosageGrid{grid-template-columns:1fr!important}
 }
+@media(max-width:760px){.home-hero,.home-stat{grid-column:span 12!important}.home-row2>*{grid-column:span 12!important}}
 @media(max-width:480px){
   .plant-grid{grid-template-columns:1fr 1fr}
   .stage-params{grid-template-columns:repeat(3,1fr)}
+  .header-search-wrap{max-width:none}
 }
-@media print{
-  .sidebar,.header,.scroll-top,.log-form-inline,.log-filter-row,.btn,.menu-toggle{display:none!important}
-  .main-layout{display:block}
-  .content{max-width:100%;padding:0}
-  .card{box-shadow:none;border:none}
-}
+@media print{.sidebar,.header,.scroll-top,.log-form-inline,.log-filter-row,.btn,.menu-toggle{display:none!important}.main-layout{display:block}.content{max-width:100%;padding:0}.card{box-shadow:none}}
 </style>
 </head>
 <body>
@@ -229,28 +274,60 @@ table tr:hover td{background:#f2f5ef}
 <main class="content">
 <!-- HOME PAGE -->
 <div class="page active" id="page-home">
-  <div class="card">
-    <div class="card-header">🌿 Зеленое безумие</div>
-    <p style="color:var(--text-light);font-size:.9rem;margin-bottom:6px;">Персональная база знаний по уходу за коллекцией тропических растений</p>
-    <p style="font-size:.82rem;color:var(--text-muted);">Субстрат: кокос (буферизованный) · Вода: дистиллят 0–10 ppm · 19 растений · 10+ препаратов</p>
-  </div>
-  <div class="card">
-    <div class="card-header">🧴 Удобрения в арсенале</div>
-    <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px;">
-      <span class="badge badge-blue">Plagron Coco A+B</span>
-      <span class="badge badge-green">Фульвик (фульвокислоты)</span>
-      <span class="badge badge-green">CalMag (Simplex)</span>
-      <span class="badge badge-green">HB-101</span>
-      <span class="badge badge-green">Нитрозим</span>
-      <span class="badge badge-green">Мегафол</span>
-      <span class="badge badge-green">Радифарм</span>
-      <span class="badge badge-green">Силиплант</span>
-      <span class="badge badge-green">Супераминовит</span>
-      <span class="badge badge-optional">Превикур ⚠ опц.</span>
+  <!-- BENTO HERO -->
+  <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-bottom:18px;">
+    <div style="grid-column:span 8;background:var(--ink);color:var(--bg);border:var(--bw) solid var(--ink);border-radius:var(--radius-lg);padding:32px 30px;position:relative;overflow:hidden;box-shadow:var(--shadow-lime);" class="home-hero">
+      <div style="position:absolute;right:-60px;top:-60px;width:240px;height:240px;background:radial-gradient(circle,var(--lime),transparent 65%);opacity:.45;"></div>
+      <div style="font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:#b9b4a0;position:relative;">Коллекция · 20 видов · фитиль / LECA / триферн</div>
+      <h1 style="font-size:clamp(2.2rem,5.5vw,3.6rem);color:var(--bg);margin:13px 0 8px;position:relative;">Точность<br>как у <span style="color:var(--lime);">прибора.</span></h1>
+      <p style="color:#cdc8b6;font-size:1rem;max-width:46ch;position:relative;">Рассчитай питательный раствор по виду, субстрату и стадии — с правильной очерёдностью внесения и контролем EC/pH. Никаких «на глаз».</p>
+      <div style="display:flex;gap:18px;margin-top:20px;flex-wrap:wrap;position:relative;">
+        <div style="font-family:var(--mono);font-size:.72rem;color:#e8e3d2;">0–10<br><span style="font-size:.62rem;color:#b9b4a0;">ppm дистиллят</span></div>
+        <div style="font-family:var(--mono);font-size:.72rem;color:#e8e3d2;"><span style="font-size:1.6rem;color:var(--lime);font-weight:700;">5.8</span><br><span style="font-size:.62rem;color:#b9b4a0;">целевой pH</span></div>
+        <div style="font-family:var(--mono);font-size:.72rem;color:#e8e3d2;"><span style="font-size:1.6rem;color:var(--lime);font-weight:700;">Si→Ca→AB</span><br><span style="font-size:.62rem;color:#b9b4a0;">порядок</span></div>
+      </div>
+      <div style="display:flex;gap:11px;margin-top:22px;flex-wrap:wrap;position:relative;">
+        <button class="btn btn-accent" onclick="nav('calculator')" style="padding:12px 20px;">Открыть калькулятор →</button>
+        <button class="btn btn-outline" onclick="nav('substrates')" style="border-color:var(--bg);color:var(--bg);" onmouseover="this.style.background='var(--bg)';this.style.color='var(--ink)'" onmouseout="this.style.background='transparent';this.style.color='var(--bg)'">Субстраты</button>
+      </div>
     </div>
-    <div class="alert-warning" style="margin-top:0;">
-      <strong>⚠️ Правильная очерёдность внесения:</strong> Дистиллят → <strong>Силиплант ПЕРВЫМ</strong> (5 мин) → КалМаг → База A → (перемешать) → База B → (перемешать) → биостимуляторы последними (Фульвик, Радифарм, Нитрозим, HB-101) → pH-коррекция → замер EC.
-      <br><em style="font-size:.78rem;">Превикур — только отдельным поливом, не смешивать с биостимуляторами.</em>
+    <div style="grid-column:span 4;background:var(--lime);border:var(--bw) solid var(--ink);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;justify-content:center;" class="home-stat">
+      <div style="font-family:var(--font);font-weight:800;font-size:3rem;letter-spacing:-.03em;line-height:1;">20</div>
+      <div style="font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);margin-top:6px;">видов в базе</div>
+      <div style="margin-top:auto;padding-top:16px;display:flex;gap:7px;">
+        <span style="font-family:var(--mono);font-size:.6rem;border:2px solid var(--ink);border-radius:7px;padding:3px 8px;background:var(--paper);">11 удо</span>
+        <span style="font-family:var(--mono);font-size:.6rem;border:2px solid var(--ink);border-radius:7px;padding:3px 8px;background:var(--paper);">10 субстр.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MIX OF DAY + ORDER -->
+  <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-bottom:18px;" class="home-row2">
+    <div class="card" style="grid-column:span 6;margin-bottom:0;background:var(--sky);">
+      <div style="font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-light);">Раствор дня · Монстера · рост</div>
+      <h3 style="font-size:1.35rem;margin:9px 0 0;">Кокос · 650 ppm · pH 5.8</h3>
+      <div style="background:var(--ink);border-radius:13px;padding:14px 16px;margin-top:13px;font-family:var(--mono);">
+        <div style="display:flex;justify-content:space-between;padding:4px 0;color:#e8e3d2;font-size:.76rem;border-bottom:1px dotted rgba(255,255,255,.15);"><span>Силиплант (первым)</span><b style="color:var(--lime);">1.5 мл</b></div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;color:#e8e3d2;font-size:.76rem;border-bottom:1px dotted rgba(255,255,255,.15);"><span>КалМаг</span><b style="color:var(--lime);">1.0 мл</b></div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;color:#e8e3d2;font-size:.76rem;border-bottom:1px dotted rgba(255,255,255,.15);"><span>База A → B</span><b style="color:var(--lime);">2.0 / 2.0 мл</b></div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;color:#e8e3d2;font-size:.76rem;"><span>EC итог</span><b style="color:var(--lime);">1.30 mS</b></div>
+      </div>
+    </div>
+    <div class="card" style="grid-column:span 6;margin-bottom:0;">
+      <div class="card-header" style="font-size:1.05rem;">🧴 Очерёдность внесения</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
+        <span class="badge badge-accent">Силиплант 1-м</span><span class="badge badge-green">КалМаг</span><span class="badge badge-green">База A→B</span><span class="badge badge-green">биостимуляторы</span><span class="badge badge-optional">Превикур отдельно</span>
+      </div>
+      <div class="alert-warning" style="margin-top:0;">
+        <strong>Силиплант ПЕРВЫМ</strong> в чистую воду (5 мин) → КалМаг → База A → B → биостимуляторы (Фульвик, Радифарм, Нитрозим, HB-101) → pH → EC. <em style="font-size:.78rem;">Превикур — только отдельным поливом.</em>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;margin:6px 0 14px;">
+    <div>
+      <div style="font-family:var(--mono);font-size:.66rem;color:var(--text-muted);letter-spacing:.1em;">/ 01 — коллекция</div>
+      <h2 style="font-size:1.7rem;margin-top:2px;">Виды под рукой</h2>
     </div>
   </div>
   <div class="plant-grid" id="plantCardsGrid"></div>
@@ -266,19 +343,16 @@ table tr:hover td{background:#f2f5ef}
       <div class="form-group">
         <label>🪴 Субстрат</label>
         <select id="calcSubstrate" onchange="onSubstrateChange()">
-          <option value="coco">🥥 Кокос (промытый, буферизованный)</option>
-          <option value="coco_bark">🌳 Кокос + кора пинии</option>
-          <option value="coco_perlite">🪨 Кокос + перлит (50/50)</option>
-          <option value="sphagnum">🌿 Мох сфагнум</option>
-          <option value="trifern_fine">🌾 Триферн МЕЛКИЙ (как сфагнум, кислый)</option>
-          <option value="trifern_coarse">🪵 Триферн КРУПНЫЙ (как кора, эпифиты)</option>
-          <option value="semihydro">💧 Керамзит / LECA (полугидро)</option>
-          <option value="lechuza_pon">⚪ Lechuza-Pon (цеолит + осмокот)</option>
-          <option value="soil">🟤 Соил (готовый грунт, pH 6.0–7.0)</option>
-          <option value="peat_neutral">🟫 Торф нейтральный (pH 5.5–6.5)</option>
-          <option value="peat_acid">🔴 Торф верховой кислый (pH 3.5–4.5)</option>
-          <option value="mineral">▫️ Перлит / вермикулит (чистый)</option>
-          <option value="carnivore">🪤 Хищники: торф+перлит (0 ppm!)</option>
+          <option value="coco">🥥 Кокос + разрыхлитель (перлит/пемза)</option>
+          <option value="sphagnum">🌿 Сфагновый мох</option>
+          <option value="peat">🟫 Торф</option>
+          <option value="trifern_fine">🌾 Триферн МЕЛКИЙ (как сфагнум)</option>
+          <option value="trifern_coarse">🪵 Триферн КРУПНЫЙ (как кора)</option>
+          <option value="leca">💧 Керамзит / LECA (полугидро)</option>
+          <option value="soil">🟤 Соил / аква-грунт</option>
+          <option value="pon_new">⚪ Lechuza-Pon (0–6 мес — НЕ кормить)</option>
+          <option value="pon_old">⚪ Lechuza-Pon (6+ мес)</option>
+          <option value="carnivore">🪤 Хищники: торф+песок / сфагнум (0 ppm!)</option>
         </select>
       </div>
       <div class="form-group">
@@ -360,6 +434,17 @@ table tr:hover td{background:#f2f5ef}
     <div id="compatWarningInline" style="display:none;" class="alert-warning"></div>
 
     <div id="calcResults" style="display:none;">
+      <!-- INSTRUMENT READOUT -->
+      <div style="background:var(--ink);border:var(--bw) solid var(--ink);border-radius:var(--radius-lg);padding:20px 22px;margin-top:14px;position:relative;overflow:hidden;box-shadow:var(--shadow);">
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,.022) 3px,rgba(255,255,255,.022) 4px);pointer-events:none;"></div>
+        <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#b9b4a0;position:relative;">Показания · live</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-top:14px;position:relative;" id="calcReadoutGrid">
+          <div style="background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.12);border-radius:11px;padding:12px 13px;"><b style="font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--lime);display:block;line-height:1;" id="roPPM">—</b><span style="font-family:var(--mono);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:#b9b4a0;margin-top:5px;display:block;">PPM цель</span></div>
+          <div style="background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.12);border-radius:11px;padding:12px 13px;"><b style="font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--lime);display:block;line-height:1;" id="roEC">—</b><span style="font-family:var(--mono);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:#b9b4a0;margin-top:5px;display:block;">EC mS/см</span></div>
+          <div style="background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.12);border-radius:11px;padding:12px 13px;"><b style="font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--lime);display:block;line-height:1;" id="roPH">—</b><span style="font-family:var(--mono);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:#b9b4a0;margin-top:5px;display:block;">pH цель</span></div>
+          <div style="background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.12);border-radius:11px;padding:12px 13px;"><b style="font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--lime);display:block;line-height:1;" id="roVol">—</b><span style="font-family:var(--mono);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:#b9b4a0;margin-top:5px;display:block;">объём, л</span></div>
+        </div>
+      </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;" id="calcDosageGrid">
         <div>
           <div style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--primary-dark);margin-bottom:8px;padding:6px 10px;background:var(--primary-light);border-radius:var(--radius-sm);">🪴 Корневой полив · <span id="calcVolDisplay">1</span> л</div>
@@ -511,20 +596,17 @@ table tr:hover td{background:#f2f5ef}
     <div class="table-wrap"><table>
       <thead><tr><th>Субстрат</th><th>pH буфер</th><th>Влагоёмкость</th><th>Аэрация</th><th>Для кого</th><th>Особенности</th></tr></thead>
       <tbody>
-        <tr><td><strong>🥥 Кокос буферизованный</strong></td><td>5.5–6.5</td><td>Высокая</td><td>Хорошая</td><td>Большинство ароидных, папоротники</td><td>Промывать раз в 3–6 нед. Обязателен CalMag при дистилляте</td></tr>
-        <tr><td><strong>🌿 Мох сфагнум</strong></td><td>4.5–6.0</td><td>Очень высокая</td><td>Средняя</td><td>Черенки, адиантум, платицериум</td><td>Снизить EC на 20% от стандарта. Риск анаэробных зон</td></tr>
-        <tr><td><strong>🌳 Кора пинии (10–20 мм)</strong></td><td>5.0–6.0</td><td>Низкая</td><td>Отличная</td><td>Филодендрон, антуриум, хойя</td><td>Прокипятить перед использованием. Быстро пересыхает</td></tr>
-        <tr><td><strong>⚪ Перлит</strong></td><td>Нейтральный 7.0</td><td>Очень низкая</td><td>Отличная</td><td>Добавка (20–40%). Хойя, суккуленты</td><td>Промыть от пыли. Не удерживает питание</td></tr>
-        <tr><td><strong>🔵 Вермикулит</strong></td><td>6.5–7.5</td><td>Высокая</td><td>Хорошая</td><td>Добавка (10–20%). Калатея, каладиум</td><td>Удерживает Ca, Mg, K</td></tr>
-        <tr style="background:#f0f8f0;"><td><strong>🌾 Триферн МЕЛКИЙ</strong></td><td>4.0–5.8 (кислый!)</td><td>Высокая</td><td>Высокая</td><td>Тонкие корни, черенки, адиантум, калатея. Замена сфагнума</td><td>★ Волокно древовидного папоротника (NZ). НЕ требует CalMag! Кормить слабо ~30%. В высокой влажности тонкие черенки гниют — +перлит</td></tr>
-        <tr style="background:#f0f8f0;"><td><strong>🪵 Триферн КРУПНЫЙ</strong></td><td>4.0–5.8 (кислый!)</td><td>Низкая</td><td>Очень высокая</td><td>Эпифиты: хойя, антуриум, орхидеи, ароидные. Монтаж/тотемы</td><td>★ Как кора, но лучше. НЕ требует CalMag! Долговечен 3–5 лет. Со временем уплотняется → +перлит. Покупать NZ (не бразильский xaxim, CITES II)</td></tr>
-        <tr style="background:#f5f5fc;"><td><strong>⚪ Lechuza-Pon</strong></td><td>~нейтральный (цеолит)</td><td>Средняя</td><td>Очень высокая</td><td>Ароидные, ZZ, антуриум, калатея, спатифиллум</td><td>⚠ Первые 6 мес НЕ кормить (встроенный осмокот)! После 6 мес — жидкое EC 0.6–0.9. Цеолит копит соли — промывка осмосом раз в месяц</td></tr>
-        <tr><td><strong>🟤 Соил (готовый грунт)</strong></td><td>6.0–7.0</td><td>Средняя</td><td>Средняя</td><td>Аглаонема, замиокулькас, папоротники</td><td>⚠ Это НЕ торф! Готовая земляная смесь с уже внесёнными удобрениями. Уплотняется. EC выше — учитывать при поливе. Обновлять раз в год.</td></tr>
-        <tr><td><strong>🟫 Торф нейтральный (низинный)</strong></td><td>5.5–6.5</td><td>Высокая</td><td>Средняя</td><td>Спатифиллум, нефролепис, птерис, аглаонема</td><td>⚠ Это НЕ соил! Чистый торф без добавок. pH 5.5–6.5. Уплотняется — добавлять перлит 30%. Обновлять раз в год.</td></tr>
-        <tr><td><strong>🔴 Торф верховой (кислый)</strong></td><td>3.5–4.5</td><td>Высокая</td><td>Средняя</td><td>Хищники (Drosera/Dionaea), блехнум, кислолюбивые</td><td>Очень кислый. Большинство удобрений неэффективны при pH <5.0. Уплотняется! Обновлять раз в год.</td></tr>
-        <tr><td><strong>💧 Керамзит/LECA</strong></td><td>7.0+</td><td>Очень низкая</td><td>Отличная</td><td>Полугидропоника. Аглаонема, сингониум, спатифиллум</td><td>EC ×1.2. Промывка раз в 2 нед</td></tr>
-        <tr><td><strong>🌿 Живой сфагнум</strong></td><td>4.0–5.5</td><td>Отличная</td><td>Хорошая</td><td>Хищники, адиантум, черенки</td><td>Естественный антибиотик. Идеален для росянок</td></tr>
-      </tbody>
+        <tr><td><strong>🥥 Кокос + разрыхлитель</strong></td><td>5.5–6.5</td><td>Высокая</td><td>Средняя</td><td>Ароидные, фитиль; универсально</td><td>Обязателен КалМаг — кокос связывает Ca/Mg. Промывать раз в 3–6 нед</td></tr>
+        <tr><td><strong>🌿 Сфагновый мох</strong></td><td>3.5–5.0</td><td>Очень высокая</td><td>Высокая</td><td>Укоренение, реанимация, эпифитные папоротники</td><td>Слёживается за 6–12 мес, кислый, кормить слабо</td></tr>
+        <tr><td><strong>🟫 Торф</strong></td><td>3.5–5.5</td><td>Очень высокая</td><td>Низкая (один)</td><td>Компонент смесей; основа для хищников (без удобрений!)</td><td>Слёживается; один не используют — нужен перлит</td></tr>
+        <tr style="background:#f0f8f0;"><td><strong>🌾 Триферн МЕЛКИЙ</strong></td><td>4.0–5.8 (кислый!)</td><td>Высокая</td><td>Высокая</td><td>Тонкие корни, черенки, сеянцы; ЗАМЕНА сфагнума; влаголюбивые (калатея, адиантум)</td><td>★ Волокно древовидного папоротника (NZ). НЕ требует КалМаг! Кормить ~30%. В высокой влажности тонкие черенки гниют → +перлит</td></tr>
+        <tr style="background:#f0f8f0;"><td><strong>🪵 Триферн КРУПНЫЙ</strong></td><td>4.0–5.8 (кислый!)</td><td>Низкая (быстро сохнет)</td><td>Очень высокая</td><td>Эпифиты: орхидеи, хойя, антуриум; ароидные; монтаж/тотемы</td><td>★ Как кора, но лучше. НЕ требует КалМаг! Долговечен 3–5 лет. Уплотняется → +перлит/пемза. Покупать NZ (не бразильский xaxim, CITES II)</td></tr>
+        <tr><td><strong>💧 Керамзит / LECA</strong></td><td>нейтр. (промытый)</td><td>Низкая</td><td>Очень высокая</td><td>Ароидные, хойя, спатифиллум, монстера (полугидро)</td><td>Всё питание из раствора; жёсткий контроль EC/pH. EC ×1.2, промывка раз в 2 нед</td></tr>
+        <tr><td><strong>🟤 Соил / аква-грунт</strong></td><td>6.0–7.0</td><td>Высокая</td><td>Средняя</td><td>Аглаонема, неприхотливые; прощает ошибки</td><td>⚠ Это НЕ торф! Стартовое питание встроено. Уплотняется; НЕ для хищников. Обновлять раз в год</td></tr>
+        <tr style="background:#f5f5fc;"><td><strong>⚪ Lechuza-Pon (0–6 мес)</strong></td><td>~нейтральный</td><td>Средняя</td><td>Очень высокая</td><td>Ароидные, ZZ, антуриум, калатея, спатифиллум</td><td>⚠ НЕ кормить первые ~6 мес — встроенный осмокот (Perfect Leaf) на 6–8 мес. Двойная доза = ожог</td></tr>
+        <tr style="background:#f5f5fc;"><td><strong>⚪ Lechuza-Pon (6+ мес)</strong></td><td>~нейтральный</td><td>Средняя</td><td>Очень высокая</td><td>Те же; ведёт себя как обогащённый LECA</td><td>Осмокот выработан → жидкое питание EC 0.6–0.9. Цеолит копит соли — промывка осмосом раз в месяц</td></tr>
+        <tr style="background:#fdecea;"><td><strong>🪤 Хищники: торф+песок / сфагнум</strong></td><td>3.5–5.0</td><td>Высокая</td><td>Средняя</td><td>Drosera, Dionaea (только!)</td><td>⛔ НИКАКИХ удобрений/минералов/LECA/Pon/соил/триферна. Только дистиллят, метод поддона. Торф+песок 50:50 или живой сфагнум</td></tr>
+        </tbody>
     </table></div>
   </div>
 
@@ -663,7 +745,7 @@ table tr:hover td{background:#f2f5ef}
       <div class="form-group" style="min-width:130px;"><label>📊 Этап</label><select id="logStageSelect"><option value="">— этап —</option><option>Адаптация/клон</option><option>Молодое (1–3 мес)</option><option>Активный рост</option><option>Взрослое</option><option>Покой</option></select></div>
       <div class="form-group" style="min-width:90px;"><label>💧 PPM</label><input type="number" id="logPPM" placeholder="500" min="0"></div>
       <div class="form-group" style="min-width:75px;"><label>🧪 pH</label><input type="number" id="logPHVal" placeholder="6.0" step="0.1" min="4" max="8"></div>
-      <div class="form-group" style="min-width:140px;"><label>🪴 Субстрат</label><select id="logSubstrate"><option value="">—</option><option value="coco">Кокос</option><option value="coco_bark">Кокос+кора</option><option value="coco_perlite">Кокос+перлит</option><option value="sphagnum">Мох сфагнум</option><option value="trifern_fine">Триферн мелкий</option><option value="trifern_coarse">Триферн крупный</option><option value="semihydro">Керамзит/LECA</option><option value="lechuza_pon">Lechuza-Pon</option><option value="soil">Соил (земля)</option><option value="peat_neutral">Торф нейтральный</option><option value="peat_acid">Торф верховой</option><option value="mineral">Перлит/вермикулит</option></select></div>
+      <div class="form-group" style="min-width:140px;"><label>🪴 Субстрат</label><select id="logSubstrate"><option value="">—</option><option value="coco">Кокос+разрыхл.</option><option value="sphagnum">Сфагнум</option><option value="peat">Торф</option><option value="trifern_fine">Триферн мелк.</option><option value="trifern_coarse">Триферн крупн.</option><option value="leca">Керамзит/LECA</option><option value="soil">Соил</option><option value="pon_new">Pon 0–6м</option><option value="pon_old">Pon 6+м</option><option value="carnivore">Хищники</option></select></div>
       <div class="form-group" style="min-width:160px;"><label>🧴 Базовое</label><select id="logBaseFert"><option value="">—</option></select></div>
       <div class="form-group" style="flex:1;min-width:200px;"><label>💊 Препараты</label><div class="fert-multi-check" id="logFertCheck"></div></div>
       <div class="form-group" style="min-width:170px;"><label>📝 Заметка</label><input type="text" id="logNote" placeholder="Наблюдение..."></div>
@@ -700,50 +782,50 @@ table tr:hover td{background:#f2f5ef}
 const BASE_FERTS = {
   // --- Двухкомпонентные (A+B), используют дозы стадии растения ---
   terra_aquatica:{ name:'Terra Aquatica TriPart (Grow+Micro+Bloom)', kind:'2part', components:['baseA','baseB'],
-    substrate:['coco','coco_perlite','coco_bark','semihydro','lechuza_pon','trifern_coarse','trifern_fine','mineral','sphagnum'],
+    substrate:['coco','leca','pon_old','trifern_coarse','trifern_fine','soil','sphagnum'],
     regime:'★ Лучший единый комплект для LECA / Pon / триферна — Ca/Mg/микро встроены. Grow+Micro+Bloom раздельно. Hard Micro если Ca>70 мг/л, Soft на осмосе.',
     note:'Укоренение 0.5 мл/л каждого; рост 1.8 Grow / 1.2 Micro / 0.6 Bloom; диапазон 0.5–2.4 мл/л. EC 0.8–1.3 для антуриума/орхидей; черенки 0.3–0.6.' },
   plagron_cocos: { name:'Plagron Cocos A+B', kind:'2part', components:['baseA','baseB'],
-    substrate:['coco','coco_perlite','coco_bark'],
+    substrate:['coco'],
     regime:'Линия точно под кокос. CalMag Pro 0.75 мл/л → EC 0.4. Natural/Alga — НЕ для стерильного LECA/Pon.',
     note:'Cocos A+B 15→35 мл/10 л (1.5–3.5 мл/л). pH 5.5–6.0.' },
   plagron_hydro: { name:'Plagron Hydro A+B', kind:'2part', components:['baseA','baseB'],
-    substrate:['semihydro','lechuza_pon'],
+    substrate:['leca','pon_old'],
     regime:'Для LECA / полугидро. Промывка раз в месяц.',
     note:'Hydro A+B 14→25 мл/10 л (1.4–2.5 мл/л). pH 5.5–6.0.' },
   simplex_hydro: { name:'Simplex Hydro Vega A+B', kind:'2part', components:['baseA','baseB'],
-    substrate:['coco','semihydro','mineral'],
+    substrate:['coco','leca'],
     regime:'A 5-0-5 / B 0-2-1. EC рассчитан на жёсткую воду 0.4–0.6 — на осмосе сперва КалМаг до EC 0.4–0.6.',
     note:'Вега А/Б 0.5–1.5 мл/л. EC 0.7–1.3, pH 5.5–6.5.' },
   // --- Однокомпонентные минеральные ---
   plagron_terra: { name:'Plagron Terra (соил)', kind:'1part', components:['mineral1'],
-    substrate:['soil','peat_neutral'],
+    substrate:['soil','peat'],
     regime:'Минеральное + органика для соила/торфа.',
     note:'Terra Bloom до 5 мл/л. pH 5.8–6.5.' },
   fertika:       { name:'Fertika (Lux / Kristalon)', kind:'1part', components:['mineral1'],
-    substrate:['soil','peat_neutral','coco','semihydro'],
+    substrate:['soil','peat','coco','leca'],
     regime:'Кристаллическое, без хлора. Для нежных — вдвое слабее.',
     note:'Lux 16-20-27+ME; Kristalon 18-18-18+3Mg+ME. Активный сезон 1.5–2 г/л, интервал 10–14 дн.' },
   valagro_master:{ name:'Valagro Master', kind:'1part', components:['mineral1'],
-    substrate:['soil','coco','semihydro'],
+    substrate:['soil','coco','leca'],
     regime:'Водорастворимое +ME. Хорош для фертигации по нижней границе.',
     note:'18-18-18+3MgO старт; 13-40-13 предцвет.; 3-11-38 цвет. Корнев. 1–1.2 г/л старт.' },
   bona_forte:    { name:'Bona Forte (Здоровье / Красота)', kind:'1part', components:['mineral1'],
-    substrate:['soil','coco','peat_neutral'],
+    substrate:['soil','coco','peat'],
     regime:'Чередовать: 2–3 мес «Красота» ↔ 2–3 мес «Здоровье». НЕ кормить 7–14 дней после пересадки.',
     note:'Здоровье 5-3-4+9ME (листв.); Красота 3-4-8+Mg (цвет.). Корнев. ~6.7 мл/л.' },
   // --- Медленное ---
   lechuza_slow:  { name:'Lechuza Perfect Leaf (медленное)', kind:'slow', components:['slow1'],
-    substrate:['lechuza_pon','semihydro'],
+    substrate:['pon_old','pon_new','leca'],
     regime:'Медленное 15-11-14+2MgO+микро. Для Pon после 6 мес — перезарядка.',
     note:'3 г/л в резервуар (на 6–8 мес) ИЛИ жидкое 1 нажатие/л.' },
   // --- Органические (НЕ для стерильного LECA/Pon!) ---
   aminosil:      { name:'Аминосил (органика)', kind:'organic', components:['organic1'],
-    substrate:['coco','soil','peat_neutral','peat_acid','sphagnum'],
+    substrate:['coco','soil','peat','sphagnum'],
     regime:'⛔ НЕ для стерильного LECA/Pon (гниёт)! Тоник/реанимация в грунте.',
     note:'NPK ~1.6-1.8-2 + 40+ аминокислот. 5 мл/л. Май–окт раз в 2 нед, нояб–апр раз/мес.' },
   gota_vita:     { name:'Gota Vita (органика)', kind:'organic', components:['organic1'],
-    substrate:['coco','soil','peat_neutral'],
+    substrate:['coco','soil','peat'],
     regime:'⛔ НЕ для стерильного LECA/Pon! Дозировки скудные — по этикетке бутылки.',
     note:'«Капля Жизни». Защита суперконц. ~1 мл/л; листовое 20 мл/10 л.' },
 };
@@ -1708,11 +1790,9 @@ function autoResolveConflicts() {
 function onSubstrateChange() {
   const sub = document.getElementById('calcSubstrate').value;
   const subToFert = {
-    coco:'plagron_cocos', coco_bark:'plagron_cocos', coco_perlite:'plagron_cocos',
-    sphagnum:'terra_aquatica', mineral:'simplex_hydro', semihydro:'terra_aquatica',
-    lechuza_pon:'terra_aquatica', trifern_fine:'terra_aquatica', trifern_coarse:'terra_aquatica',
-    soil:'plagron_terra', peat_neutral:'plagron_terra', peat_acid:'aminosil',
-    carnivore:null
+    coco:'plagron_cocos', sphagnum:'terra_aquatica', peat:'plagron_terra',
+    trifern_fine:'terra_aquatica', trifern_coarse:'terra_aquatica', leca:'terra_aquatica',
+    soil:'plagron_terra', pon_new:null, pon_old:'terra_aquatica', carnivore:null
   };
   const bestKey = subToFert[sub];
   if (bestKey && BASE_FERTS[bestKey]) document.getElementById('calcBaseFert').value = bestKey;
@@ -1990,15 +2070,15 @@ function calcUpdate() {
 
   const sub = document.getElementById('calcSubstrate').value;
   const subFactor = {
-    sphagnum:0.8, mineral:1.1, semihydro:1.2, lechuza_pon:1.0,
-    trifern_fine:0.3, trifern_coarse:0.3, peat_neutral:0.9, peat_acid:0.7, carnivore:0.0
+    coco:1.0, sphagnum:0.8, peat:0.7, trifern_fine:0.3, trifern_coarse:0.3,
+    leca:1.2, soil:0.9, pon_new:0.0, pon_old:1.0, carnivore:0.0
   }[sub] ?? 1.0;
 
   // pH: substrate override OR group intersection
   const subPHmap = {
-    sphagnum:'5.0–5.5', mineral:'5.5–6.0', semihydro:'5.5–6.5', lechuza_pon:'5.8–6.3',
-    trifern_fine:'4.0–5.8', trifern_coarse:'4.0–5.8', peat_neutral:'5.5–6.5',
-    peat_acid:'4.0–5.5', carnivore:'4.0–5.0', soil:'6.0–7.0'
+    coco:'5.5–6.5', sphagnum:'3.5–5.0', peat:'3.5–5.5', trifern_fine:'4.0–5.8',
+    trifern_coarse:'4.0–5.8', leca:'5.5–6.5', soil:'6.0–7.0', pon_new:'~6.5',
+    pon_old:'5.8–6.3', carnivore:'4.0–5.0'
   };
   const phInfo = s._phInfo || computeGroupPH([s.ph]);
   let displayPH = subPHmap[sub] || phInfo.ph;
@@ -2025,11 +2105,15 @@ function calcUpdate() {
 
   // Trifern / Pon / substrate notes
   if (sub === 'trifern_fine' || sub === 'trifern_coarse') {
-    groupHTML += `<div class="alert-warning">🌿 <strong>Триферн</strong> (волокно древовидного папоротника): кормить СЛАБО (~30% нормы), КалМаг НЕ нужен (нет связывания Ca/Mg). Кислый pH 4.0–5.8. ${sub==='trifern_fine'?'Мелкая фракция — как сфагнум, влагоёмкая.':'Крупная фракция — как кора, быстро сохнет, +перлит от уплотнения.'}</div>`;
-  } else if (sub === 'lechuza_pon') {
-    groupHTML += `<div class="alert-warning">⚪ <strong>Lechuza-Pon</strong>: первые ~6 мес НЕ докармливать (встроенный осмокот = двойная доза). После 6 мес — жидкое EC 0.6–0.9, промывка осмосом раз в месяц (цеолит копит соли).</div>`;
-  } else if (sub === 'peat_acid') {
-    groupHTML += `<div class="alert-warning">🔴 Торф верховой кислый (pH 3.5–4.5): для хищников и кислолюбивых (Блехнум). Большинство удобрений неэффективны при pH <5.0!</div>`;
+    groupHTML += `<div class="alert-warning">🌾 <strong>Триферн</strong> (волокно новозеландского древовидного папоротника): кормить СЛАБО (~30% нормы), КалМаг НЕ нужен (нет связывания Ca/Mg). Кислый pH 4.0–5.8. ${sub==='trifern_fine'?'Мелкая фракция — как сфагнум, влагоёмкая, для тонких корней/черенков.':'Крупная фракция — как кора, быстро сохнет, для эпифитов; +перлит от уплотнения.'}</div>`;
+  } else if (sub === 'pon_new') {
+    groupHTML += `<div class="alert-danger">⚪ <strong>Lechuza-Pon 0–6 мес</strong>: НЕ докармливать! Встроенный осмокот (Perfect Leaf 15-11-14) отдаёт питание 6–8 мес — добавки = двойная доза и ожог. PPM = 0, только промывка/полив.</div>`;
+  } else if (sub === 'pon_old') {
+    groupHTML += `<div class="alert-warning">⚪ <strong>Lechuza-Pon 6+ мес</strong>: осмокот выработан, ведёт себя как обогащённый LECA. Жидкое EC 0.6–0.9, промывка осмосом раз в месяц (цеолит копит соли). Перезарядка: Lechuza 3 г/л.</div>`;
+  } else if (sub === 'peat') {
+    groupHTML += `<div class="alert-warning">🟫 <strong>Торф</strong> (pH 3.5–5.5): компонент смесей, один не используют — нужен перлит. Для хищников — без удобрений! Слёживается, обновлять раз в год.</div>`;
+  } else if (sub === 'sphagnum') {
+    groupHTML += `<div class="alert-warning">🌿 <strong>Сфагновый мох</strong> (pH 3.5–5.0): укоренение, реанимация, эпифитные папоротники. Кормить слабо (~½). Слёживается за 6–12 мес.</div>`;
   }
 
   if (stageKey === 'meristem') {
@@ -2100,11 +2184,14 @@ function calcUpdate() {
   const baseBDose = +(s.cocoB * scale * vol).toFixed(2);
 
   const rootDoseItems = [];
+  const triNoCal = (sub === 'trifern_fine' || sub === 'trifern_coarse');
   // Order reflects mixing: Силиплант → КалМаг → база A → база B → одиночная база/органика → биостимуляторы
   if (isChecked('siiplant') && s.siiplant > 0)
     rootDoseItems.push({label:'① Силиплант (ПЕРВЫМ!)', val:(s.siiplant*scale*vol).toFixed(2)+' мл', warn:'В чистую воду, 5 мин'});
-  if (isChecked('calmag') && s.calmag > 0)
+  if (isChecked('calmag') && s.calmag > 0 && !triNoCal)
     rootDoseItems.push({label:'② КалМаг', val:(s.calmag*scale*vol).toFixed(2)+' мл', warn:'до базы'});
+  else if (isChecked('calmag') && triNoCal)
+    rootDoseItems.push({label:'② КалМаг — пропустить', val:'0 мл', warn:'триферн не требует Ca/Mg'});
   if (bf && bf.components.includes('baseA') && isChecked('baseA') && baseADose > 0)
     rootDoseItems.push({label:'③ База A', val:baseADose+' мл', warn:'перемешать'});
   if (bf && bf.components.includes('baseB') && isChecked('baseB') && baseBDose > 0)
@@ -2157,8 +2244,15 @@ function calcUpdate() {
 
   document.getElementById('calcLeafBlock').style.display = leafActive ? 'block' : 'none';
 
+  window.__triNoCal = triNoCal;
   buildMixingSteps(s, scale, vol, srcPPM, tgtPPM, checkedIds, baseFertKey);
   buildCompatTable(checkedIds);
+
+  // instrument readout
+  document.getElementById('roPPM').textContent = tgtPPM;
+  document.getElementById('roEC').textContent = (tgtPPM/500).toFixed(2);
+  document.getElementById('roPH').textContent = (displayPH||'—').split('–')[0];
+  document.getElementById('roVol').textContent = vol.toFixed(1);
 
   document.getElementById('calcResults').style.display = 'block';
   document.getElementById('calcEmpty').style.display = 'none';
@@ -2193,9 +2287,11 @@ function buildMixingSteps(s, scale, vol, srcPPM, tgtPPM, checkedIds, baseFertKey
     steps.push({text:`<strong>Силиплант</strong> — ${(s.siiplant*scale*vol).toFixed(2)} мл, ПЕРВЫМ в чистую воду. Дать разойтись ~5 мин (иначе полимеризуется с кислыми солями!).`, runPPM, cls:'step-warn'});
   }
   // 2. КалМаг
-  if (checkedIds.includes('calmag') && s.calmag > 0) {
+  if (checkedIds.includes('calmag') && s.calmag > 0 && !window.__triNoCal) {
     runPPM += Math.round(s.calmag * scale * calmagPerMl);
     steps.push({text:`<strong>КалМаг</strong> — ${(s.calmag*scale*vol).toFixed(2)} мл. Перемешать. Довести до EC ~0.4 (на осмосе). До базы!`, runPPM, cls:'step-warn'});
+  } else if (checkedIds.includes('calmag') && window.__triNoCal) {
+    steps.push({text:`<strong>КалМаг — пропустить.</strong> Триферн не связывает Ca/Mg, КалМаг не нужен.`, runPPM:null, cls:'step-info'});
   }
   // 3. База A
   if (bf && bf.components.includes('baseA') && checkedIds.includes('baseA') && s.cocoA > 0) {
@@ -2365,7 +2461,7 @@ function renderLog() {
 
   const getPName = id => { const p=plantsData.find(x=>x.id===id); return p?p.emoji+' '+p.name:id; };
   const getFName = id => { const f=ALL_FERTS.find(x=>x.id===id); return f||{name:id,group:'',optional:false}; };
-  const getSub   = v => ({coco:'Кокос',coco_bark:'Кокос+кора',coco_perlite:'Кокос+перлит',sphagnum:'Мох',trifern_fine:'Триферн мелк.',trifern_coarse:'Триферн крупн.',semihydro:'Керамзит/LECA',lechuza_pon:'Lechuza-Pon',soil:'Соил',peat_neutral:'Торф нейтр.',peat_acid:'Торф кислый',mineral:'Перлит/верм.',carnivore:'Торф хищники'})[v]||v||'—';
+  const getSub   = v => ({coco:'Кокос+разрыхл.',sphagnum:'Сфагнум',peat:'Торф',trifern_fine:'Триферн мелк.',trifern_coarse:'Триферн крупн.',leca:'Керамзит/LECA',soil:'Соил',pon_new:'Pon 0–6м',pon_old:'Pon 6+м',carnivore:'Хищники'})[v]||v||'—';
   const getBF    = v => BASE_FERTS[v]?.name||v||'—';
 
   tbody.innerHTML = entries.map(e =>
